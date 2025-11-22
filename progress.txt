@@ -1,0 +1,515 @@
+Hemlo AI – Progress Log
+Last updated: 2025-11-22
+
+Format: each section notes what was done and which folders/files were involved.
+
+------------------------------------------------------------
+GLOBAL STACK, MODULES & VERSIONS (SO FAR)
+------------------------------------------------------------
+Backend (Python packages from apps/backend/requirements.txt):
+- fastapi==0.115.0              – HTTP API server for agents and device endpoints
+- uvicorn[standard]==0.30.1     – ASGI server for local/dev hosting
+- celery==5.3.6                 – background worker for long-running agent tasks
+- redis==5.0.1                  – Redis client (OTP store, path cache, Skyvern support)
+- httpx==0.27.0                 – outbound HTTP to Skyvern and future external APIs
+- pydantic==2.8.2               – request/response schema validation
+- pydantic-settings==2.4.0      – env-driven configuration (Settings model)
+- python-dotenv==1.0.1          – local .env loading
+- openai==1.40.0                – OpenAI-compatible client used for Groq + Sarvam LLMs
+- qdrant-client==1.7.3          – vector DB client for encrypted user profiles
+- chromadb==0.5.3               – semantic memory store (wired via docker-compose)
+- firebase-admin==6.5.0         – Firebase Admin SDK (Firestore screenshot streaming)
+
+Infrastructure (Docker images / services from docker-compose.yml):
+- redis:7-alpine                – Redis server for queues, OTPs, path cache
+- qdrant/qdrant:v1.9.0          – vector DB backing encrypted user profile storage
+- chromadb/chroma:latest        – ChromaDB for semantic memory
+- ghcr.io/skyvern-dev/skyvern:latest – Skyvern browser automation service (new /tasks API)
+- hemlo-backend (built from apps/backend/Dockerfile) – FastAPI/Celery code
+- hemlo-worker  (built from apps/backend/Dockerfile) – Celery worker process
+
+LLM providers and models (conceptual stack):
+- Groq Llama 3.1 70B            – primary LLM for parsing electricity intents and crafting refund messages
+- Sarvam / Bhashini Hindi model – Hindi-heavy fallback for refund negotiation (via OpenAI-compatible client)
+- Local Llama 70B via Ollama    – planned offline mode, base URL configured but not yet wired into flows
+
+Cross-cutting techniques / patterns:
+- OpenAI-compatible client abstraction for both Groq and Sarvam, so code only depends on one client library.
+- Encrypted user profile storage in Qdrant using symmetric XOR + base64 with SECRET_KEY-derived key.
+- Redis-backed short-lived state:
+  - OTP capture from Android Accessibility Service.
+  - Path caching flags per (user, provider) for repeat bill payments.
+- Skyvern integration pattern:
+  - POST /tasks/run with detailed natural-language instructions.
+  - Polling GET /tasks/{task_id} until status == "completed".
+  - Artifacts[0].file_url used as canonical screenshot proof URL.
+- Firebase Firestore streaming:
+  - Celery tasks push screenshot URLs into collection task_screenshots/{task_id}.
+  - Flutter/mobile can subscribe for live UI updates.
+- Android Accessibility Service:
+  - Listens to notifications and window changes.
+  - Regex-based OTP extraction (4–8 digits) and POST to backend /device/otp.
+
+------------------------------------------------------------
+STEP 1 – Monorepo structure & README
+------------------------------------------------------------
+Folder: ./
+- Created top-level Hemlo AI monorepo structure.
+- Added README.md with:
+  - Overall vision and promise.
+  - Architecture diagram (LLM brain + Skyvern + FastAPI + Celery + Redis + Qdrant + ChromaDB + Flutter + Firebase).
+  - Internal flow from voice -> LLM -> router -> Skyvern/API -> proofs -> Hindi confirmation.
+  - Local development and run instructions (via Docker Compose).
+
+Files touched (examples):
+- README.md
+
+------------------------------------------------------------
+STEP 2 – Docker Compose & .env
+------------------------------------------------------------
+Folder: ./
+- Added docker-compose.yml to run core services with one command:
+  - backend (FastAPI)
+  - worker (Celery)
+  - redis
+  - qdrant
+  - chromadb
+  - skyvern (self-hosted, new API)
+- Added .env.example with placeholders for:
+  - Redis, Qdrant, ChromaDB, Skyvern base URL.
+  - Groq, Grok, Sarvam, Ollama.
+  - Firebase project and client keys.
+  - Indian APIs: Razorpay, WhatsApp Cloud, Google Calendar/OAuth, PhonePe, GPay.
+  - SECRET_KEY for app encryption.
+
+Files touched:
+- docker-compose.yml
+- .env.example
+
+------------------------------------------------------------
+STEP 3 – Electricity bill payment agent (BESCOM/MSPDCL/TSSPDCL)
+------------------------------------------------------------
+Folder: apps/backend/
+- Created backend service and core config:
+  - Dockerfile for backend.
+  - requirements.txt with FastAPI, Celery, Redis, httpx, Pydantic, Qdrant client, ChromaDB, OpenAI client, firebase-admin.
+  - app/core/config.py with env-driven settings (Redis, Qdrant, ChromaDB, Groq keys, Skyvern base URL, Firebase project ID, secret key).
+
+Folder: apps/backend/app/
+- Added FastAPI app and Celery wiring:
+  - app/main.py with health check and electricity bill endpoints.
+  - app/celery_app.py for Celery configuration.
+  - app/worker.py with Celery task `agents.pay_electricity_bill`.
+  - app/schemas.py with:
+    - ElectricityProvider enum (BESCOM, MSPDCL, TSSPDCL).
+    - Request/response models for electricity bill tasks.
+
+Folder: apps/backend/app/services/
+- Skyvern client (new API usage):
+  - app/services/skyvern_client.py:
+    - Uses SKYVERN_BASE_URL and header x-api-key: skyvern.
+    - Calls POST /tasks/run and polls GET /tasks/{task_id} until status == "completed".
+    - Chooses correct portal URL per provider.
+    - Builds instructions including user profile details (phone/email/consumer_id).
+    - Extracts screenshot URL from artifacts.
+
+- LLM parsing for natural language bill requests:
+  - app/services/llm_parsing.py:
+    - Uses Groq Llama 3.1 70B via OpenAI-compatible API.
+    - Parses user text into {provider, phone, email, consumer_id}.
+
+- Encrypted user profile storage in Qdrant:
+  - app/services/user_profiles.py:
+    - Stores per-user, per-provider payloads with encrypted phone/email/consumer_id.
+    - Uses symmetric XOR + base64 based on SECRET_KEY.
+    - Fetches and decrypts profile for use in Skyvern instructions.
+
+Behavioral wiring:
+- POST /agents/pay-electricity-bill:
+  - Accepts natural-language text + optional hints.
+  - Calls parse_electricity_bill_request.
+  - Upserts user profile into Qdrant.
+  - Enqueues Celery task `agents.pay_electricity_bill` with payload (user_id, provider, phone, email).
+- GET /agents/pay-electricity-bill/{task_id}:
+  - Polls Celery AsyncResult.
+  - Returns PayElectricityBillTaskResult plus a friendly message:
+    - "Ho gaya bro" on success.
+    - "Kuch gadbad ho gaya" otherwise.
+
+------------------------------------------------------------
+STEP 4 – Android OTP + live screenshot streaming
+------------------------------------------------------------
+Folder: apps/backend/app/
+- OTP ingestion API:
+  - app/schemas.py: OtpSubmitRequest, OtpSubmitResponse.
+  - app/services/otp_store.py:
+    - Redis-based save_otp / get_latest_otp keyed by user_id + channel with TTL.
+  - app/main.py:
+    - POST /device/otp storing OTP from Android Accessibility Service.
+
+- Firebase screenshot streaming:
+  - app/services/firebase_streaming.py:
+    - Initializes firebase_admin using FIREBASE_PROJECT_ID.
+    - update_task_screenshot(task_id, image_url) writes to Firestore collection `task_screenshots`.
+  - app/worker.py:
+    - Electricity bill task is bound (bind=True) and pushes screenshot_url to Firestore using its own Celery task id.
+
+Folder: apps/mobile/android/app/src/main/java/com/hemlo/ai/
+- OtpAccessibilityService.kt:
+  - Android AccessibilityService listening to notifications and window changes.
+  - Extracts 4–8 digit OTP using regex.
+  - Sends POST to BACKEND_BASE_URL/device/otp with {user_id, otp, channel, source}.
+
+Folder: apps/mobile/android/app/src/main/
+- AndroidManifest.xml:
+  - Registers OtpAccessibilityService with BIND_ACCESSIBILITY_SERVICE permission and XML config.
+
+Folder: apps/mobile/android/app/src/main/res/xml/
+- otp_accessibility_service_config.xml:
+  - Accessibility service configuration (event types, feedback, timeout).
+
+Folder: apps/mobile/android/app/src/main/res/values/
+- strings.xml:
+  - app_name (Hemlo AI) and otp_accessibility_description.
+
+Result:
+- Android device can auto-read OTPs and send them to backend.
+- Backend pushes final bill payment screenshots into Firestore for mobile live feed.
+
+------------------------------------------------------------
+STEP 5 – Path caching for fast repeat bill payments
+------------------------------------------------------------
+Folder: apps/backend/app/services/
+- path_cache.py:
+  - is_path_cached(user_id, provider) using Redis.
+  - mark_path_cached(user_id, provider) to remember successful flows.
+
+Folder: apps/backend/app/services/
+- skyvern_client.py:
+  - _build_instructions now accepts use_cached_path flag.
+  - When use_cached_path=True, instructions tell Skyvern to reuse previously learned navigation path and button locations.
+
+Folder: apps/backend/app/
+- worker.py:
+  - pay_electricity_bill_task checks Redis via is_path_cached() before calling Skyvern.
+  - Passes use_cached_path to run_electricity_payment_task.
+  - After a successful run with screenshot, marks path cached.
+
+Result:
+- First run per (user, provider) explores portal and caches path.
+- Subsequent runs for same (user, provider) are instructed to reuse the cached path for sub-4-second behavior (subject to Skyvern performance).
+
+------------------------------------------------------------
+STEP 6 – Swiggy/Zomato refund bargaining agent
+------------------------------------------------------------
+Folder: apps/backend/app/
+- schemas.py:
+  - FoodPlatform enum (SWIGGY, ZOMATO).
+  - RefundNegotiationRequest (text, platform_hint, order_id).
+  - RefundNegotiationTaskCreateResponse.
+  - RefundNegotiationResult (status, platform, order_id, refund_amount, screenshot_url, raw_result).
+  - RefundNegotiationTaskStatusResponse.
+
+Folder: apps/backend/app/services/
+- refund_agent.py:
+  - _choose_client_for_negotiation: picks Sarvam for heavy Hindi text if available, otherwise Groq Llama 70B.
+  - generate_negotiation_message: creates a short, strong but polite refund request in Hinglish/Hindi.
+  - parse_refund_outcome: best-effort extraction of refund_amount from Skyvern result metadata.
+
+- skyvern_refund_client.py:
+  - _platform_refund_url: Swiggy/Zomato orders page URLs.
+  - run_refund_negotiation_task: calls Skyvern /tasks/run and polls /tasks/{task_id} once for result, with instructions to open help/chat, send negotiation message, secure refund/credits, and screenshot confirmation.
+  - extract_refund_screenshot_url: returns artifacts[0].file_url if present.
+
+Folder: apps/backend/app/
+- worker.py:
+  - New Celery task agents.refund_bargain (bind=True):
+    - Uses generate_negotiation_message to craft text.
+    - Calls run_refund_negotiation_task.
+    - Extracts screenshot_url and refund_amount.
+    - Pushes screenshot to Firestore for live feed via update_task_screenshot.
+    - Returns status, platform, order_id, refund_amount, screenshot_url, raw_result.
+
+Folder: apps/backend/app/
+- main.py:
+  - POST /agents/refund-bargain:
+    - Accepts RefundNegotiationRequest.
+    - Picks platform from platform_hint or by detecting "zomato" in text, defaulting to Swiggy.
+    - Enqueues Celery task agents.refund_bargain and returns task_id.
+  - GET /agents/refund-bargain/{task_id}:
+    - Polls Celery AsyncResult.
+    - Returns RefundNegotiationResult and message:
+      - "Ho gaya bro" on success.
+      - "Kuch gadbad ho gaya" otherwise.
+
+Result:
+- Hemlo can now negotiate Swiggy/Zomato refunds end-to-end:
+  - Use Llama/Sarvam to draft a strong but polite message.
+  - Use Skyvern to navigate to orders, open support, send message, and capture confirmation screenshot.
+  - Stream proof screenshots via Firebase to the mobile app.
+
+------------------------------------------------------------
+CURRENT STATUS SUMMARY
+------------------------------------------------------------
+- Completed steps: 1, 2, 3, 4, 5, 6.
+- Remaining high-level steps:
+  - STEP 7: Minimal Flutter app UI (mic, live feed using Firestore, approve/deny, chat history with proofs).
+  - STEP 8: Additional MVP actions (train booking, job applications, WhatsApp send, recharge, reminders).
+  - STEP 9: One-click Railway deployment script.
+  - STEP 10: Viral demo video script + launch tasks for Twitter/Instagram.
+
+This file should be updated whenever new features/edits are made, noting which folder/file was changed and what behavior was added or modified.
+
+------------------------------------------------------------
+PIVOT – US/EU API-first plan + Stripe refund agent
+------------------------------------------------------------
+Date: 2025-11-22
+
+Note: Sections above describe the original India-first, Skyvern-based flows. On this date
+the project pivoted to a US/EU, API-first plan with Playwright and Stripe/Twilio/etc.
+
+Folder: ./
+- Updated README.md to describe the new US/EU API-first vision:
+  - Focus on Stripe refunds, Twilio alerts, LinkedIn/HubSpot/Slack/Google Calendar flows.
+  - Replaced Skyvern with Playwright on Chromium as the browser automation layer.
+  - Updated architecture diagram to route: Llama 3.1 70B (Groq) -> CrewAI/LangGraph router ->
+    stable APIs first (Stripe, Twilio, etc.), Playwright only when no stable API exists.
+
+- Updated docker-compose.yml:
+  - Stack is now: backend, worker, redis, qdrant, chromadb.
+  - Removed Skyvern service and all skyvern-related dependencies.
+  - Cleaned worker environment to drop Sarvam/Ollama-specific variables.
+
+- Updated .env.example:
+  - Removed Skyvern and India-specific API keys (Razorpay, WhatsApp Cloud, PhonePe, etc.).
+  - Added STRIPE_SECRET_KEY, TWILIO_*, HUBSPOT_API_KEY, LINKEDIN_ACCESS_TOKEN, SLACK_BOT_TOKEN.
+
+Folder: apps/backend/app/core/
+- config.py:
+  - Removed Skyvern/Sarvam/Ollama fields, added stripe_secret_key.
+
+Folder: apps/backend/app/services/
+- llm_parsing.py:
+  - Kept original electricity bill parser (historical, now unused) for reference.
+  - Added parse_stripe_refund_request(text) using Groq Llama 3.1 70B via OpenAI-compatible API.
+    - Returns {charge_id, amount_cents, currency, reason} from natural-language refund text.
+
+- stripe_refunds.py (new):
+  - create_stripe_refund(charge_id, amount_cents, reason):
+    - Reads STRIPE_SECRET_KEY from settings.
+    - Calls Stripe HTTPS API POST https://api.stripe.com/v1/refunds with form-encoded data.
+    - Returns parsed JSON response from Stripe (refund object).
+
+- playwright_stripe_refunds.py (new):
+  - run_playwright_stripe_refund(charge_id, amount_cents, currency, reason, user_id, use_cached_path):
+    - Uses Playwright + Chromium with a persistent user_data_dir per user to reuse Stripe login cookies.
+    - Opens https://dashboard.stripe.com/payments.
+    - If login form is detected, returns status="login_required" so the app can prompt the user to log in once.
+    - Otherwise, best-effort navigates to the payment, clicks Refund, fills amount if provided, confirms, and
+      captures a final screenshot to /tmp/stripe_refund_{charge_id}.png.
+    - Returns a dict with status, charge_id, amount_cents, currency, reason, proof_url (local screenshot path).
+
+Folder: apps/backend/app/
+- schemas.py:
+  - Added StripeRefundRequest with fields: text, charge_id, amount_cents, currency, reason.
+  - Added StripeRefundTaskCreateResponse {task_id, status}.
+  - Added StripeRefundResult {status, charge_id, refund_id, amount_cents, currency, reason, proof_url, raw_result}.
+  - Added StripeRefundTaskStatusResponse {status, message, result}.
+
+- worker.py:
+  - Added Celery task agents.stripe_refund(payload):
+    - Validates presence of charge_id.
+    - Default path: calls run_playwright_stripe_refund() to drive Stripe dashboard via Chromium.
+      - Uses Redis-backed path_cache (keyed by user_id + "stripe_refund") to mark flow as cached after
+        first success, enabling faster subsequent runs.
+      - If status="login_required", returns early so the client can guide the user through first-time login.
+    - On Playwright failure (non-login errors) or when use_api=True, falls back to create_stripe_refund()
+      using STRIPE_SECRET_KEY for power users.
+    - Constructs proof_url either from the local screenshot path (Playwright) or Stripe dashboard refund URL (API).
+
+- main.py:
+  - Kept /healthz and /device/otp endpoints.
+  - Added POST /agents/stripe-refund:
+    - Accepts StripeRefundRequest.
+    - Uses parse_stripe_refund_request(text) to infer missing fields from natural language.
+    - Requires a final charge_id (from body or LLM); otherwise returns 400.
+    - Enqueues Celery task agents.stripe_refund with the assembled payload.
+    - Returns StripeRefundTaskCreateResponse {task_id, status="queued"}.
+
+  - Added GET /agents/stripe-refund/{task_id}:
+    - Uses Celery AsyncResult to check task state.
+    - While pending/started: returns StripeRefundTaskStatusResponse with status="running".
+    - On success: maps worker result into StripeRefundResult and returns status with
+      message "Done!".
+    - On failure or unexpected state: raises 500 with error details.
+
+Result:
+- First US/EU API-first agent is live: "Refund Stripe charge".
+- Flow: natural-language refund request -> Groq Llama 3.1 70B parses charge/amount/reason ->
+  Celery task calls Stripe refund API -> backend exposes status + proof_url (Stripe dashboard link)
+  and returns a friendly "Done!" message on success.
+
+Additional US/EU Playwright agent – Amazon cart order
+------------------------------------------------------------
+Folder: apps/backend/app/services/
+- playwright_amazon_order.py (new):
+  - run_playwright_amazon_order_cart(user_id, use_cached_path):
+    - Uses Playwright + Chromium with a persistent user_data_dir per user to reuse Amazon login cookies.
+    - Opens https://www.amazon.com/cart.
+    - If login form is detected, returns status="login_required" + login URL so the app can prompt the user to log in once.
+    - Otherwise, clicks "Proceed to checkout" and then repeatedly clicks the main yellow button (e.g. Continue / Place your order)
+      until the order confirmation page is reached.
+    - Extracts a best-effort order number from the confirmation page.
+    - Captures a final screenshot to /tmp/amazon_order_{user_id}.png.
+    - Returns a dict with status, order_id, proof_url (local screenshot path).
+
+Folder: apps/backend/app/
+- schemas.py:
+  - Added AmazonOrderCartRequest {text} for natural-language triggers like "order the thing in my cart".
+  - Added AmazonOrderCartTaskCreateResponse {task_id, status}.
+  - Added AmazonOrderCartResult {status, order_id, proof_url, raw_result}.
+  - Added AmazonOrderCartTaskStatusResponse {status, message, result}.
+
+- worker.py:
+  - Added Celery task agents.amazon_order_cart(payload):
+    - Uses Redis-backed path_cache with provider key "amazon_cart" to mark the flow as cached per user
+      after first success.
+    - Calls run_playwright_amazon_order_cart(user_id, use_cached_path).
+    - On success: returns {status="succeeded", order_id, proof_url, raw_result} and marks path cached.
+    - On login_required: returns the structured login_required payload so the client can drive first-time login.
+    - On other failures: returns a failed status with error and raw_result for debugging.
+
+- main.py:
+  - Added POST /agents/amazon-order-cart:
+    - Accepts AmazonOrderCartRequest {text} from the agent brain.
+    - Enqueues Celery task agents.amazon_order_cart with payload {user_id="demo-user", text}.
+    - Returns AmazonOrderCartTaskCreateResponse {task_id, status="queued"}.
+
+  - Added GET /agents/amazon-order-cart/{task_id}:
+    - Uses Celery AsyncResult to check task state.
+    - While pending/started: returns AmazonOrderCartTaskStatusResponse with status="running".
+    - If worker returns status="login_required": surfaces that status/message directly so the app can
+      guide the user to log into Amazon once.
+    - On success: maps worker result into AmazonOrderCartResult and returns status with message "Done!".
+    - On failure or unexpected state: raises 500 with error details.
+
+Result:
+- Second viral US/EU demo agent is live: "Order the most recent thing in my Amazon cart".
+- Flow: natural-language request -> agent brain routes to /agents/amazon-order-cart -> Celery task drives
+  Amazon cart and checkout via Playwright + persistent cookies and path cache -> returns final order
+  confirmation screenshot and best-effort order number.
+
+------------------------------------------------------------
+LATEST PROGRESS – Visible Stripe/Amazon demos + Dynamic Do-Anything Agent
+------------------------------------------------------------
+Date: 2025-11-22 (evening)
+
+Goal for this phase
+- Have **demo-ready, visible browser flows** for Stripe refund and Amazon cart ordering.
+- Add a **generic "do anything" agent** that can take any natural-language request, plan steps with Llama 3.1 70B (Groq), and drive arbitrary sites via Playwright with proof screenshots and approval gating.
+
+1) Visible local demos via demo.py (no Docker, no Celery required)
+------------------------------------------------------------
+Folder: ./ 
+- Added demo.py to run simple local demos using the existing backend virtualenv and Playwright Chromium.
+
+Behaviors:
+- Common:
+  - Uses Playwright Chromium with headless=False, slow_mo=800ms, viewport 1920x1080.
+  - Uses persistent user_data_dir folders (e.g. .playwright-amazon-demo, .playwright-stripe-demo) so logins and cookies are reused across runs.
+  - Writes final proof screenshots to ./proofs for quick Loom/OBS recording.
+
+- amazon mode:
+  - Opens https://www.amazon.in/gp/cart/view.html in a visible Chromium window.
+  - Detects login state (email field or "Sign in to your account" text).
+  - If not logged in, instructs the user to complete login manually, then reloads the cart.
+  - Attempts to click through checkout using labels like "Proceed to checkout", "Proceed to Buy", "Checkout", "Place your order".
+  - Captures a final full-page screenshot: proofs/amazon_final.png.
+  - Keeps the browser window open until the user presses Enter in the terminal so it looks great on video.
+
+- stripe mode:
+  - Asks for a natural-language description, e.g. "refund $20 for the last charge".
+  - Uses Groq Llama 3.1 70B (via the OpenAI-compatible client) to parse text into {charge_id, amount_cents, currency, reason}.
+  - Opens https://dashboard.stripe.com/payments in visible Chromium.
+  - Detects login state via email field; if needed, asks the user to log in and press Enter once the Payments list is visible.
+  - If a charge_id is available, types it into the search box and presses Enter.
+  - Best-effort clicks a "Refund" button; if automation fails, the user can click manually and press Enter when done.
+  - Captures a final full-page screenshot: proofs/stripe_refund_final.png.
+  - Keeps the browser window open until the user presses Enter.
+
+- agent mode:
+  - When the full backend stack is running on http://localhost:8000, demo.py can act as a thin client for the dynamic do-anything agent (see below).
+  - Asks the user: "Describe what Hemlo should do (any site, any task)" and whether to auto-approve money actions.
+  - Calls POST /agents/do-anything with {text, confirm}, polls GET /agents/do-anything/{task_id}, and prints the final status, target site, planned steps, and proof URL.
+
+2) Dynamic generic agent – /agents/do-anything
+------------------------------------------------------------
+Folder: apps/backend/app/services/
+- llm_parsing.py:
+  - Added parse_do_anything_request(text) which uses Groq Llama 3.1 70B via the OpenAI-compatible client.
+  - Given a free-form request like "buy the cheapest iPhone on Amazon.in" or "post this text as a tweet", it returns:
+    - site: hostname like "amazon.in", "flipkart.com", "twitter.com".
+    - steps: ordered list of short textual steps (e.g. ["search iPhone 15", "sort by price", "add to cart", "checkout"]).
+
+- playwright_do_anything.py (new):
+  - run_playwright_do_anything(site, steps, user_id, text, use_cached_path, confirm):
+    - Normalizes site into a hostname and opens https://{hostname}.
+    - Uses a persistent user_data_dir per (user, site) at /tmp/playwright-do-anything/{user}/{hostname} to reuse logins.
+    - Writes sequential screenshots into apps/backend/proofs:
+      - do_anything_{hostname}_{user}_{ts}_step0.png, step1.png, ..., preview.png, final.png.
+    - Basic login detection:
+      - If an email field or generic "Sign in" text is visible, returns status="login_required" with login_url and the first screenshot as proof_url.
+    - For each planned step:
+      - If the text contains "search", tries to locate a search box (role=searchbox or placeholder="Search") and types the query.
+      - If the text suggests a money/checkout action ("checkout", "place order", "buy now", "pay"):
+        - If confirm=False: captures a preview screenshot and returns status="needs_approval" with proof_url, without pressing any dangerous buttons.
+        - If confirm=True: best-effort clicks common buttons like "Buy Now", "Place your order", "Proceed to checkout", "Checkout".
+      - After each step, saves a full-page screenshot so the flow can be replayed visually.
+    - On success: returns status="succeeded" with site, steps and proof_url=..._final.png.
+    - On error: returns status="failed" with error string and raw_result.
+
+Folder: apps/backend/app/
+- worker.py:
+  - Added Celery task agents.do_anything(payload):
+    - Payload includes text, site, steps, confirm, user_id.
+    - Derives a flow_key based on the site (e.g. "do_anything:amazon.in") and uses the existing Redis-backed path_cache helpers:
+      - is_path_cached(user_id, provider=flow_key).
+      - mark_path_cached(user_id, provider=flow_key) on success.
+    - Calls run_playwright_do_anything() with the parsed plan.
+    - On status="succeeded": marks path cached and returns a structured result with site, steps, proof_url, raw_result.
+    - On status="login_required" or "needs_approval": returns the result directly so the client can handle login/approval UX.
+    - On any other status: returns {status="failed", error, site, steps, raw_result}.
+
+- main.py:
+  - Added POST /agents/do-anything:
+    - Accepts DoAnythingRequest {text, confirm}.
+    - Calls parse_do_anything_request(text) to get site and steps.
+    - Enqueues Celery task agents.do_anything with payload {user_id="demo-user", text, site, steps, confirm}.
+    - Returns DoAnythingTaskCreateResponse {task_id, status="queued"}.
+  - Added GET /agents/do-anything/{task_id}:
+    - Uses Celery AsyncResult to report status while running.
+    - After completion, maps the worker result into DoAnythingResult with a public proof_url built via the existing /proofs static mount.
+    - Distinguishes between:
+      - status="succeeded"   -> message="Done!".
+      - status="login_required" -> message="Login required on target site".
+      - status="needs_approval" -> message="Preview ready; needs approval".
+      - anything else          -> message="Something went wrong".
+
+3) Final direction – Composable, dynamic agent
+------------------------------------------------------------
+- Stripe refund and Amazon.in cart flows are now concrete examples built on the same primitives:
+  - Groq Llama 3.1 70B for parsing.
+  - Playwright + Chromium with persistent cookies for browser automation.
+  - Celery + Redis for long-running tasks and path caching.
+  - Proof screenshots written to a shared proofs directory and exposed via FastAPI static files.
+
+- The new /agents/do-anything agent is the first step toward a **general Comet-style system**:
+  - Any natural-language prompt ("buy an iPhone from Flipkart", "cancel my last Uber trip", "post this tweet")
+    is first parsed into a site + ordered plan.
+  - The same Playwright + proof + approval infrastructure reuses selectors and patterns across sites.
+  - For money-sensitive actions, the confirm flag and needs_approval status guarantee a human-in-the-loop gate.
+
+Next immediate iteration items (not yet implemented):
+- Teach the planner about more concrete API shortcuts (e.g. Twitter API, Slack API) and route to those when available instead of always going through Playwright.
+- Enrich path caching to remember not just that a path exists, but also higher-level step templates per (user, site, intent) for sub-4s repeat runs.
+- Tighten selectors and heuristics for specific high-value sites (Flipkart, Amazon.in checkout variants, Stripe refunds) while keeping the generic do-anything surface stable.

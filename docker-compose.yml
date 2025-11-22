@@ -1,0 +1,94 @@
+version: "3.9"
+
+services:
+  backend:
+    container_name: hemlo-backend
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=${APP_ENV}
+      - REDIS_URL=${REDIS_URL}
+      - QDRANT_URL=${QDRANT_URL}
+      - CHROMADB_HOST=${CHROMADB_HOST}
+      - CHROMADB_PORT=${CHROMADB_PORT}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROK_API_KEY=${GROK_API_KEY}
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - ./proofs:/app/proofs
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    depends_on:
+      - redis
+      - qdrant
+      - chromadb
+    profiles:
+      - dev
+
+  worker:
+    container_name: hemlo-worker
+    build:
+      context: ./apps/backend
+      dockerfile: Dockerfile
+    command: ["celery", "-A", "app.celery_app:celery_app", "worker", "-l", "info"]
+    env_file:
+      - .env
+    environment:
+      - APP_ENV=${APP_ENV}
+      - REDIS_URL=${REDIS_URL}
+      - QDRANT_URL=${QDRANT_URL}
+      - CHROMADB_HOST=${CHROMADB_HOST}
+      - CHROMADB_PORT=${CHROMADB_PORT}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      - GROK_API_KEY=${GROK_API_KEY}
+    volumes:
+      - ./proofs:/app/proofs
+    depends_on:
+      - redis
+      - qdrant
+      - chromadb
+    profiles:
+      - dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: hemlo-redis
+    restart: unless-stopped
+    volumes:
+      - redis-data:/data
+    profiles:
+      - dev
+
+  qdrant:
+    image: qdrant/qdrant:v1.9.0
+    container_name: hemlo-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+    volumes:
+      - qdrant-data:/qdrant/storage
+    profiles:
+      - dev
+
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: hemlo-chromadb
+    restart: unless-stopped
+    environment:
+      - IS_PERSISTENT=TRUE
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma-data:/chroma
+    profiles:
+      - dev
+
+volumes:
+  redis-data:
+  qdrant-data:
+  chroma-data:

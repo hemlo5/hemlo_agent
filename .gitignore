@@ -1,0 +1,26 @@
+# Python virtual environments
+.venv/
+*/.venv/
+env/
+*/env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Environment / secrets
+.env
+*.env
+*.key
+*.pem
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated proofs and artifacts
+proofs/
+*.log
