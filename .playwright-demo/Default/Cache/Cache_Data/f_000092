@@ -1,0 +1,1155 @@
+@media screen and (min-width:280px) and (max-width:388px) {
+    #navArea .logo_1 img { height: auto; width: 168px; }
+    .lang-btn { display: none; }
+    .top-hegt-space { margin-top: 0; } 
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { max-width: 100%; padding: 0 12px; }
+	.hero .menu-btn { position: relative; top: 7px; right: 0; height: 37px; }
+    #header-top .admissn_btn { display: none; }
+    #header-top .lang-btn { padding: 5px 14px; }
+    #header-top .header-right-items { padding: 0px 0; }
+    #header-top { overflow: inherit; border-top: 5px solid #27327a;}
+    #our-campuses-sectn { display: none; }
+    #home-banner .carousel { height: auto; }
+    #home-banner .banner-announcemnt { border-radius: 0; background:#27327a; position: static; width: 100%; padding: 19px 30px 19px 30px; }
+    #home-banner .banner-announcemnt h2 { font-size: 17px; line-height: 28px; }
+    #home-banner .banner-announcemnt h4 { font-size: 17px; margin: 0px auto 9px; }
+    #smicons { top: 52%; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #find-your-degree .progrms-4box { height: auto; padding: 14px 4px; }
+    #find-your-degree .progrms-4box:hover { height: auto; padding: 14px 4px; }
+    #find-your-degree .find-paragrph-hdd p { width: 100%; margin-bottom: 28px; font-size: 16px; line-height: 28px; }
+    #campus-adventures .adventure-hdd { width: 100%; position: static; float: left; }
+    #campus-adventures .life-camp-adv ul li:nth-child(1) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li { padding: 0 22px; width: 49%; float: left; display: block;}
+    #campus-adventures { height: auto; padding: 31px 0;}
+    #campus-adventures .ech-items-adventres h4 { font-size: 15px; margin: 14px auto 0; }
+    #events-campus-w .evnt-itm-mmg { top: auto; bottom: 0; display:none; }
+    #vignteeee { height: auto; }
+    #vignteeee .vignte-wrpr ul li { width: 50%; padding: 0 5px; }
+    #vignteeee .vignte-wrpr { width: 100%; }
+    .red-morr-vign svg { width: 23px; }
+    #vignteeee .red-morr-vign { bottom: 25px; right: 6px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(3) { top: 16px; } 
+    #vignteeee .vignte-wrpr ul li:nth-child(5) { top: 40px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(2) { top: 28px; }
+    #vignteeee .vigntee-mmgg-wrpr h4 { font-size: 15px; }
+    #achivements-on-home .achvmn-mmg { display: none; } 
+    #achivements-on-home .achiv-wdth-box-tab { width: 99%; position: relative; margin: 0px auto 29px; }
+    #tab-select { word-wrap: normal; width: 100%; padding:6px 10px; }
+    #achivements-on-home .comn-hd-home { text-align: center; padding-left: 0; padding-bottom: 31px; }
+    .comn-hd-home h1 { font-size: 28px; }
+    #cam-resource-news .cmp-resourc-wdth { padding: 32px 24px; }
+    #cam-resource-news .cmp-resourc-wdth_2 { padding: 20px 24px 20px 16px; margin-top: 24px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { float: left; position: static; padding: 3px 26px 51px; width: 100%; height: auto; background: #0c4d8b; }
+    .bg-intern-stdent { display: none; }
+    #intrnational-studnts figure.effect-lily p { width: 100%; }
+    #emint-vistor .comn-hd-home { padding: 0 0px; }
+    #lab-christ .labs-texts { width: 100%; position: static; }
+    #prod-alumni #owl-demo-5 .item { margin: 10px 4px; }
+    #panoramic-aleery .contner-fld-new { padding: 0 17px; } 
+    #panoramic-aleery .col-lg-3 { width: 100%; }
+    #panoramic-aleery .glry-1st-immg { margin: 0px auto 18px; height: auto; }
+    #panoramic-aleery .glry-2st-immg { margin: 0px auto 14px; height: auto; }
+    #panoramic-aleery .glry-3st-immg { margin: 0px auto 20px; height: auto; }
+    .item_1 { margin-top: 0 !important; }
+    .item_2 { margin-top: 0 !important; }
+    .item_3 { margin-top: 0px !important; }
+    .item_4 { margin-top: 0 !important; }
+    .item_5 { margin-top: 0 !important; }
+    #video-pp-bg h4 { width: 85%; line-height: 28px; font-size: 16px; position: static; padding: 21px 0; }
+    #video-pp-bg .rgt-video-box { padding: 4px 0; }
+    #statistics-wdth .funfact h2 { font-size: 30px; margin:4px auto; }
+    #statistics-wdth .funfact { margin-bottom: 11px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #statistics-wdth .lefr-radius_2 { right: -10px; }
+    .fotr-itm123 { margin: 25px auto; float: left; width: 100%; }
+    .bottomMenu { display: none; }
+    #intrnational-studnts figure.effect-lily h2 { font-size: 25px; }
+	.cax-texts2 { position: relative !important; width: 92% !important; margin: -12px auto; z-index: 9; top: 0 !important; left: 0 !important; right: 0 !important; background: #f0f0f0 !important; }
+	#schollls-sectn .owl-theme .owl-nav.disabled + .owl-dots { position: static; margin-bottom: 36px; }
+	#schollls-sectn .owl-theme .owl-dots .owl-dot span { background: #D7D4D4; }
+	.schol-hdd-1233 h1 { font-size: 23px !important;}
+	#find-your-degree .progrms-4box h4 { font-size: 14px; }
+	.owl-dots { display:none !important; }
+	 #home-banner .carousel, #home-banner .carousel-inner, #home-banner .carousel-item { height: 32vh; }
+     #video-pp-bg .exper-pp { position: static; }
+     #video-pp-bg .video-ovrly { display: none; }
+     #video-pp-bg { background: #0c4d8b; padding-bottom: 38px; }
+     #smicons { height: 40px; width: 328px; }
+     .social-media-icons-flt ul li { padding: 7px 5px; }
+     .social-media-icons-flt ul li svg { width: 19px; height: 19px; }
+     .socl-png-icn { width: 20px; }
+     .search__icon { width: 43px; height: 43px; }
+	 #find-your-degree .find-paragrph-hdd h1 { font-size: 28px; }
+     #find-your-degree { padding: 30px 0; }
+     #campus-adventures .comn-hd-home h1 { font-size: 28px; }
+     #campus-adventures .adventure-hdd { font-size: 22px; line-height: 33px; }
+     #cam-resource-news .camp-news-rgt h3 { font-size: 16px; line-height: 27px; }
+     #achivements-on-home { padding: 37px 0 46px; }
+     #cam-resource-news { padding: 29px 0 0; }
+     #emint-vistor { padding: 38px 0; }
+     #lab-christ .labs-texts:hover { width: 100%; position: static; line-height: 29px; }
+     #lab-christ .labs-texts { width: 100%; position: static; line-height: 29px; }
+     #statistics-wdth .lefr-radius_2 { display: none; }
+     #statistics-wdth .lefr-radius { display: none; }
+     #footert { padding: 19px 0px; }
+     #vignteeee .vigntee-mmgg-ii { width: 100%; height: 100%; }
+     #recognitn-awards .accrd-item_wrpr { height: 217px !important; padding: 16px !important; width: 100% !important; margin: 0px auto !important; }
+     #video-pp-bg #videoModal { width: 97%; background: none; top: 80px; }
+	 #intrnational-studnts figure.effect-lily p { opacity: 9; }
+	 .carousel-control-next, .carousel-control-prev { top: 78px; }
+	 #home-banner .vimeo-wrapper { height: 100%; }
+	 
+	 .for-mob-camp-advntr { display: inherit !important; }
+	 .life-camp-adv { display:none; }
+	 #campus-adventures .advntr-icon { width: 78px; height: 78px; padding: 20px; }
+	#campus-adventures .advntr-icon:hover { width: 78px; height: 78px; padding: 20px; }
+	 #campus-adventures .ech-items-adventres { padding: 25px 7px; rotate: 0deg !important; }
+	 #cam-resource-news .news-cam-wrpr { margin-top: 22px; }
+	 #cam-resource-news .inpt-search { margin-top: 23px !important; }
+	 #prod-alumni .produd-amni-wrpr { height: auto; }
+	 #emint-vistor .shde-emint { display: none; } 
+	 #recognitn-awards { padding: 41px 0; }
+	 #home-banner .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-prev span { position: relative;  }
+	 #home-banner .owl-next span { position: relative; }
+	 
+	 #schollls-sectn .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; left: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; right: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-prev span { position: relative; top: -4px; }
+	 #schollls-sectn .owl-next span { position: relative; top: -4px; }
+	 
+	 #campus-adventures .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-prev span { position: relative; top: -3px; color:#fff; }
+	 #campus-adventures .owl-next span { position: relative; top: -3px;  color:#fff;}
+	 
+	 #events-campus-w .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #events-campus-w .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #emint-vistor .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; }
+	 #emint-vistor .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; top: 175px !important; }
+	 #emint-vistor .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #emint-vistor .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 #emint-vistor .owl-prev { position: static; position: absolute; left: 0;} 
+	 #emint-vistor .owl-next { position: static; position: absolute; right: 0;} 
+	 
+	 #prod-alumni .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; left: -10px; top: 36%; }
+	 #prod-alumni .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; right: -10px; top: 36%; }
+	 #prod-alumni .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #prod-alumni .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #recognitn-awards .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #recognitn-awards .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #socialmedia-wdgt .item_1 { margin-top: 0px !important; } #socialmedia-wdgt .item_2 { margin-top: 0px !important; } #socialmedia-wdgt .item_3 { margin-top: 0px !important; } #socialmedia-wdgt .item_4 { margin-top: 0px !important; } #socialmedia-wdgt .item_5 { margin-top: 0px !important; }
+	 
+	 
+	 #socialmedia-wdgt .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #socialmedia-wdgt .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #christ_itemfor-mob .owl-prev { display:none !important; }
+	 #christ_itemfor-mob .owl-next { display:none !important; }
+	 #panoramic-aleery .col-6 { width: 33% !important; padding: 5px; }
+	 .col-6-hgt { display:none !important; } 
+	 .vp-center { display: block !important; }
+	 #video-pp-bg .close { top: 31% !important; }
+	 #video-pp-bg .modal-content { background:none !important; border: none !important; }
+	 #emint-vistor .emint-vstr-box { height: auto; }
+	 .search-box-onflot { display:none; }
+	 #smicons { margin-right: -291px; }
+	 #prod-alumni .vew-all-event { margin: 0 auto 0; }
+	 #prod-alumni { padding: 0px 0 60px; }
+	 #events-campus-w .event-wdth-item-wrpr h2 { height: auto; }
+}
+@media screen and (min-width:389px) and (max-width:476px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { max-width: 100%; padding: 0 12px; }
+	.hero .menu-btn { position: relative; top: 7px; right: 0; height: 37px; }
+    #header-top .admissn_btn { display: none; }
+    #header-top .lang-btn { padding: 5px 14px; }
+    #header-top .header-right-items { padding: 0px 0; }
+    #header-top { overflow: inherit; }
+    #our-campuses-sectn { display: none; }
+    #home-banner .carousel { height: auto; }
+    #home-banner .banner-announcemnt { border-radius: 0; background:#27327a; position: static; width: 100%; padding: 19px 61px 19px 19px; }
+    #home-banner .banner-announcemnt h2 { font-size: 22px; }
+    #home-banner .banner-announcemnt h4 { font-size: 17px; margin: 0px auto 9px; }
+    #smicons { top: auto; bottom: 31%; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #find-your-degree .progrms-4box { height: auto; }
+    #find-your-degree .progrms-4box:hover { height: auto; }
+    #find-your-degree .find-paragrph-hdd p { width: 100%; margin-bottom: 28px; }
+	#campus-adventures .adventure-hdd { width: 80%; position: static; float: none; font-size: 23px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(1) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li { padding: 0 22px; width: 49%; float: left; display: block;}
+    #campus-adventures { height: auto; }
+    #campus-adventures .ech-items-adventres h4 { font-size: 16px; margin: 14px auto 0; }
+    #events-campus-w .evnt-itm-mmg { top: auto; bottom: 0; display:none; }
+    #vignteeee { height: auto; }
+    #vignteeee .vignte-wrpr ul li { width: 50%; padding: 0 5px; }
+    #vignteeee .vignte-wrpr { width: 100%; }
+    .red-morr-vign svg { width: 31px; }
+    #vignteeee .red-morr-vign { bottom: 29px; right: 0px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(3) { top: 16px; } 
+    #vignteeee .vignte-wrpr ul li:nth-child(5) { top: 40px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(2) { top: 28px; }
+    #vignteeee .vigntee-mmgg-wrpr h4 { font-size: 15px; }
+    #achivements-on-home .achvmn-mmg { display: none; } 
+    #achivements-on-home .achiv-wdth-box-tab { width: 99%; position: relative; }
+    #tab-select { word-wrap: normal; width: 100%; padding:6px 10px; }
+    #achivements-on-home .comn-hd-home { text-align: center; padding-left: 0; padding-bottom: 31px; }
+    .comn-hd-home h1 { font-size: 32px; }
+    #cam-resource-news .cmp-resourc-wdth { padding: 67px 24px; }
+    #cam-resource-news .cmp-resourc-wdth_2 { padding: 28px 24px 20px 33px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { float: left; position: static; padding: 24px 26px; width: 100%; height: auto; background: #0c4d8b; }
+    .bg-intern-stdent { display: none; }
+    #intrnational-studnts figure.effect-lily p { width: 100%; }
+    #emint-vistor .comn-hd-home { padding: 0 0px; }
+    #lab-christ .labs-texts { width: 100%; position: static; }
+    #prod-alumni #owl-demo-5 .item { margin: 10px 4px; }
+    #panoramic-aleery .contner-fld-new { padding: 0 17px; } 
+    #panoramic-aleery .col-lg-3 { width: 100%; }
+    #panoramic-aleery .glry-1st-immg { margin: 0px auto 18px; height: auto; }
+    #panoramic-aleery .glry-2st-immg { margin: 0px auto 22px; height: auto; }
+    #panoramic-aleery .glry-3st-immg { margin: 0px auto 20px; height: auto; }
+    .item_1 { margin-top: 0 !important; }
+    .item_2 { margin-top: 0 !important; }
+    .item_3 { margin-top: 0px !important; }
+    .item_4 { margin-top: 0 !important; }
+    .item_5 { margin-top: 0 !important; }
+    #video-pp-bg h4 { width: 85%; line-height: 28px; font-size: 16px; position: static; padding: 21px 0; }
+    #video-pp-bg .rgt-video-box { padding: 4px 0; }
+    #statistics-wdth .funfact h2 { font-size: 30px; margin:4px auto; }
+    #statistics-wdth .funfact { margin-bottom: 11px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #statistics-wdth .lefr-radius_2 { right: -10px; }
+    .fotr-itm123 { margin: 25px auto; float: left; width: 100%; }
+    .bottomMenu { display: none; }
+    #find-your-degree .progrms-4box { padding: 22px 5px !important; font-size: 17px !important; } 
+    #intrnational-studnts figure.effect-lily h2 { font-size: 25px; } 
+	.cax-texts2 { position: relative !important; width: 90% !important; padding: 0 0 21px 0 !important; background: #eaeaea !important; margin: 0 auto; left: 0 !important; right: 0 !important; top: -32px !important; }
+	#home-banner .carousel, #home-banner .carousel-inner, #home-banner .carousel-item { height: 100%; }
+    #video-pp-bg .exper-pp { position: static; }
+    #video-pp-bg .video-ovrly { display: none; }
+    #video-pp-bg { background: #0c4d8b; }
+    #recognitn-awards .accrd-item_wrpr { height: 217px !important; padding: 16px !important; width: 89% !important; margin: 0px auto !important; }
+    #video-pp-bg #videoModal { width: 97%; background: none; top: 80px; }
+    #video-pp-bg .close { color: #D98600; }
+	
+	.for-mob-camp-advntr { display: inherit !important; }
+	 .life-camp-adv { display:none; }
+	 #campus-adventures .advntr-icon { width: 78px; height: 78px; padding: 20px; }
+	 #campus-adventures .advntr-icon:hover { width: 78px; height: 78px; padding: 20px; }
+	 #campus-adventures .ech-items-adventres { padding: 25px 7px; rotate: 0deg; }
+	 #cam-resource-news .news-cam-wrpr { margin-top: 22px; }
+	 #cam-resource-news .inpt-search { margin-top: 23px !important; }
+	 #prod-alumni .produd-amni-wrpr { height: auto; }
+	 #emint-vistor .shde-emint { display: none; } 
+	 #recognitn-awards { padding: 41px 0; }
+	 #home-banner .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-prev span { position: relative; }
+	 #home-banner .owl-next span { position: relative; }
+	 
+	 #schollls-sectn .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; left: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; right: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-prev span { position: relative; top: -4px; }
+	 #schollls-sectn .owl-next span { position: relative; top: -4px; }
+	 
+	 #campus-adventures .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-prev span { position: relative; color:#fff; }
+	 #campus-adventures .owl-next span { position: relative; color:#fff;}
+	 
+	 #events-campus-w .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #events-campus-w .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #emint-vistor .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; }
+	 #emint-vistor .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; top: 175px !important; }
+	 #emint-vistor .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #emint-vistor .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 #emint-vistor .owl-prev { position: static; position: absolute; left: 0;} 
+	 #emint-vistor .owl-next { position: static; position: absolute; right: 0;} 
+	 
+	 #prod-alumni .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; left: -10px; top: 36%; }
+	 #prod-alumni .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; right: -10px; top: 36%; }
+	 #prod-alumni .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #prod-alumni .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #recognitn-awards .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #recognitn-awards .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #socialmedia-wdgt .item_1 { margin-top: 0px !important; } #socialmedia-wdgt .item_2 { margin-top: 0px !important; } #socialmedia-wdgt .item_3 { margin-top: 0px !important; } #socialmedia-wdgt .item_4 { margin-top: 0px !important; } #socialmedia-wdgt .item_5 { margin-top: 0px !important; }
+	 
+	
+	 #socialmedia-wdgt .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #socialmedia-wdgt .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 #christ_itemfor-mob .owl-prev { display:none !important; }
+	 #christ_itemfor-mob .owl-next { display:none !important; }
+	 #panoramic-aleery .col-6 { width: 33% !important; padding: 5px; }
+	 .col-6-hgt { display:none !important; } 
+	 .vp-center { display: block !important; }
+	 #video-pp-bg .close { top: 31% !important; }
+	 #video-pp-bg .modal-content { background:none !important; border: none !important; }
+	 #home-banner .vimeo-wrapper { height: 100%; }
+	 .owl-dots { display:none !important; }
+	 #intrnational-studnts figure.effect-lily p { opacity: 9; }
+	 #intrnational-studnts figure.effect-lily h2, #intrnational-studnts figure.effect-lily p { transform: translate3d(0, 3px, 0); }
+	 .social-media-icons-flt ul li { padding: 13px 5px; } 
+	 #smicons { width: 380px; }
+	 #smicons { margin-right: -335px; }
+	 #prod-alumni { padding: 0px 0 60px; }
+	 .schol-hdd-1233 h1 { font-size: 27px !important; }
+	 #find-your-degree .find-paragrph-hdd h1 { font-size: 33px; }
+	 #campus-adventures .comn-hd-home h1{ font-size: 33px; }
+	 #vignteeee .vigntee-mmgg-ii { width: 170px; height: 179px; overflow: hidden; } 
+	 #emint-vistor .emint-vistr-box3 { height: auto; }
+	 .vigntee-mmgg-wrpr { width: 171px; position: relative; }
+}
+@media screen and (min-width:477px) and (max-width:575px) {
+    #our-campuses-sectn { display: none; }
+    #home-banner .carousel { height: auto; }
+    #home-banner .banner-announcemnt { border-radius: 0; background:#27327a; position: static; width: 100%; padding: 19px 61px 19px 19px; }
+    #home-banner .banner-announcemnt h2 { font-size: 18px; line-height: 31px;}
+    #home-banner .banner-announcemnt h4 { font-size: 17px; margin: 0px auto 9px; }
+    #smicons { top: auto; bottom: 31%; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #find-your-degree .progrms-4box { height: auto; }
+    #find-your-degree .progrms-4box:hover { height: auto; }
+    #find-your-degree .find-paragrph-hdd p { width: 100%; margin-bottom: 28px; }
+    #campus-adventures .adventure-hdd { width: 100%; position: static; float: left; }
+    #campus-adventures .life-camp-adv ul li:nth-child(1) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li { padding: 0 6px; width: 33%; float: left; display: block;}
+    #campus-adventures { height: auto; }
+    #campus-adventures .ech-items-adventres h4 { font-size: 16px; margin: 14px auto 0; }
+    #events-campus-w .evnt-itm-mmg { top: auto; bottom: 0; }
+    #vignteeee { height: auto; }
+    #vignteeee .vignte-wrpr ul li { width: 43%; padding: 0 5px; }
+    #vignteeee .vignte-wrpr { width: 100%; }
+    .red-morr-vign svg { width: 33px; }
+    #vignteeee .red-morr-vign { bottom: 32px; right: -19px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(3) { top: 16px; } 
+    #vignteeee .vignte-wrpr ul li:nth-child(5) { top: 40px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(2) { top: 28px; }
+    #vignteeee .vigntee-mmgg-wrpr h4 { font-size: 15px; }
+    #achivements-on-home .achvmn-mmg { display: none; } 
+    #achivements-on-home .achiv-wdth-box-tab { width: 99%; position: relative; }
+    #tab-select { word-wrap: normal; width: 100%; padding:6px 10px; }
+    #achivements-on-home .comn-hd-home { text-align: center; padding-left: 0; padding-bottom: 31px; }
+    .comn-hd-home h1 { font-size: 40px; }
+    #cam-resource-news .cmp-resourc-wdth { padding: 67px 24px; }
+    #cam-resource-news .cmp-resourc-wdth_2 { padding: 28px 24px 20px 33px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { float: left; position: static; padding: 14px 26px 58px; width: 100%; height: auto; background: #0c4d8b; }
+    .bg-intern-stdent { display: none; }
+    #intrnational-studnts figure.effect-lily p { width: 100%; opacity: 9; }
+    #emint-vistor .comn-hd-home { padding: 0 0px; }
+    #lab-christ .labs-texts { width: 100%; position: static; }
+    #prod-alumni #owl-demo-5 .item { margin: 10px 4px; }
+    #panoramic-aleery .contner-fld-new { padding: 0 17px; } 
+    #panoramic-aleery .col-lg-3 { width: 100%; }
+    #panoramic-aleery .glry-1st-immg { margin: 0px auto 18px; height: auto; }
+    #panoramic-aleery .glry-2st-immg { margin: 0px auto 22px; height: auto; }
+    #panoramic-aleery .glry-3st-immg { margin: 0px auto 20px; height: auto; }
+    .item_1 { margin-top: 0 !important; }
+    .item_2 { margin-top: 0 !important; }
+    .item_3 { margin-top: 0px !important; }
+    .item_4 { margin-top: 0 !important; }
+    .item_5 { margin-top: 0 !important; }
+    #video-pp-bg h4 { width: 85%; line-height: 28px; font-size: 16px; position: static; padding: 21px 0; }
+    #video-pp-bg .rgt-video-box { padding: 4px 0; }
+    #statistics-wdth .funfact h2 { font-size: 30px; margin:4px auto; }
+    #statistics-wdth .funfact { margin-bottom: 11px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #statistics-wdth .lefr-radius_2 { right: -10px; }
+    .fotr-itm123 { margin: 25px auto; float: left; width: 100%; }
+    .bottomMenu { display: none; }
+    #find-your-degree .progrms-4box { padding:36px 5px; }   
+    #intrnational-studnts figure.effect-lily h2 { font-size: 25px; } 
+.cax-texts2 { position: relative !important; width: 92% !important; padding: 0 0 21px 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important; top: -44px !important; margin: 0px auto; background: #e6e6e6 !important; }  
+    #video-pp-bg .exper-pp { position: static; }
+    #video-pp-bg .video-ovrly { display: none; }
+    #video-pp-bg { background: #0c4d8b; }
+    #home-banner .carousel, #home-banner .carousel-inner, #home-banner .carousel-item { height: 43vh; }
+    .top-hegt-space { margin-top: 0; }
+    #video-pp-bg #videoModal { width: 97%; background: none; top: 80px; }
+    #video-pp-bg .close { color: #D98600; }
+	
+	.for-mob-camp-advntr { display: inherit !important; }
+	 .life-camp-adv { display:none; }
+	 #campus-adventures .advntr-icon { width: 78px; height: 78px; padding: 20px; }
+	 #campus-adventures .advntr-icon:hover { width: 78px; height: 78px; padding: 20px; }
+	 #campus-adventures .ech-items-adventres { padding: 25px 7px; rotate: 0deg; }
+	 #cam-resource-news .news-cam-wrpr { margin-top: 22px; }
+	 #cam-resource-news .inpt-search { margin-top: 23px !important; }
+	 #prod-alumni .produd-amni-wrpr { height: auto; }
+	 #emint-vistor .shde-emint { display: none; } 
+	 #recognitn-awards { padding: 41px 0; }
+	 #home-banner .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-prev span { position: relative; top: -7px; }
+	 #home-banner .owl-next span { position: relative; top: -7px; }
+	 
+	 #schollls-sectn .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; left: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; right: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-prev span { position: relative; top: -4px; }
+	 #schollls-sectn .owl-next span { position: relative; top: -4px; }
+	 
+	 #campus-adventures .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #campus-adventures .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #events-campus-w .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #events-campus-w .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #emint-vistor .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; }
+	 #emint-vistor .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; top: 175px !important; }
+	 #emint-vistor .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #emint-vistor .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #emint-vistor .owl-prev { position: static; position: absolute; left: 0;} 
+	 #emint-vistor .owl-next { position: static; position: absolute; right: 0;} 
+	 
+	 #prod-alumni .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; left: -10px; top: 36%; }
+	 #prod-alumni .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; right: -10px; top: 36%; }
+	 #prod-alumni .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #prod-alumni .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #recognitn-awards .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #recognitn-awards .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #socialmedia-wdgt .item_1 { margin-top: 0px !important; } #socialmedia-wdgt .item_2 { margin-top: 0px !important; } #socialmedia-wdgt .item_3 { margin-top: 0px !important; } #socialmedia-wdgt .item_4 { margin-top: 0px !important; } #socialmedia-wdgt .item_5 { margin-top: 0px !important; }
+	 
+	 
+	 #socialmedia-wdgt .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #socialmedia-wdgt .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #christ_itemfor-mob .owl-prev { display:none !important; }
+	 #christ_itemfor-mob .owl-next { display:none !important; }
+	 #panoramic-aleery .col-6 { width: 33% !important; padding: 5px; }
+	 .col-6-hgt { display:none !important; } 
+	 .vp-center { display: block !important; }
+	 #video-pp-bg .close { top: 31% !important; }
+	 #video-pp-bg .modal-content { background:none !important; border: none !important; }
+	 #home-banner .vimeo-wrapper { height: 100%; }
+	 .owl-dots { display:none !important; }
+	 .home-icn_heder { left: 48%; }
+	 #events-campus-w .evnt-itm-mmg { display:none; }
+	 #emint-vistor .emint-vstr-box { height: auto; }
+	 .schol-hdd-1233 h1 { font-size: 27px; }
+	 #emint-vistor .emint-vistr-box3 { height: auto; }
+	 .vigntee-mmgg-wrpr { width: 171px; position: relative; }
+	 #emint-vistor #owl-demo-4 .item { margin: 10px 6px; }
+	 #emint-vistor { padding: 60px 0 0; }
+}
+@media screen and (min-width:576px) and (max-width:767px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { max-width: 100%; padding: 0 12px; }
+    #header-top .lang-btn { padding: 5px 14px; }
+	.hero .menu-btn { position: relative; top: 5px; right: 0; height: 41px; padding: 3px 5px 6px 15px; }
+    #header-top .header-right-items { padding: 0px 0; }
+    #header-top { overflow: inherit; }
+    #our-campuses-sectn { display: none; }
+    #home-banner .carousel { height: auto; }
+    #home-banner .banner-announcemnt { border-radius: 0; background:#27327a; position: static; width: 100%; padding: 19px 61px 19px 19px; }
+    #home-banner .banner-announcemnt h2 { font-size: 22px; }
+    #home-banner .banner-announcemnt h4 { font-size: 17px; margin: 0px auto 9px; }
+    #smicons { top: 114px; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #find-your-degree .progrms-4box { height: auto; }
+    #find-your-degree .progrms-4box:hover { height: auto; }
+    #find-your-degree .find-paragrph-hdd p { width: 100%; margin-bottom: 28px; }
+    #campus-adventures .adventure-hdd { width: 100%; position: static; float: left; }
+    #campus-adventures .life-camp-adv ul li:nth-child(1) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li { padding: 0 6px; width: 25%; float: left; display: block;}
+    #campus-adventures { height: auto; }
+    #campus-adventures .ech-items-adventres h4 { font-size: 16px; margin: 14px auto 0; }
+    #vignteeee { height: auto; }
+    #vignteeee .vignte-wrpr ul li { width: 50%; padding: 0 5px; }
+    #vignteeee .vignte-wrpr { width: 100%; }
+    .red-morr-vign svg { width: 32px; }
+    #vignteeee .red-morr-vign { bottom: 28px; right: 32px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(3) { top: 16px; } 
+    #vignteeee .vignte-wrpr ul li:nth-child(5) { top: 40px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(2) { top: 28px; }
+    #vignteeee .vigntee-mmgg-wrpr h4 { font-size: 15px; }
+    #achivements-on-home .achvmn-mmg { display: none; } 
+    #achivements-on-home .achiv-wdth-box-tab { width: 99%; position: relative; }
+    #tab-select { word-wrap: normal; width: 100%; padding:6px 10px; }
+    #achivements-on-home .comn-hd-home { text-align: center; padding-left: 0; padding-bottom: 31px; }
+    .comn-hd-home h1 { font-size: 40px; }
+    #cam-resource-news .cmp-resourc-wdth { padding: 67px 24px; }
+    #cam-resource-news .cmp-resourc-wdth_2 { padding: 28px 24px 20px 33px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { float: left; position: static; padding: 24px 26px; width: 100%; height: auto; background: #0c4d8b; }
+    .bg-intern-stdent { display: none; }
+    #intrnational-studnts figure.effect-lily p { width: 100%; }
+    #emint-vistor .comn-hd-home { padding: 0 0px; }
+    #lab-christ .labs-texts { width: 100%; position: static; }
+    #prod-alumni #owl-demo-5 .item { margin: 10px 4px; }
+    #panoramic-aleery .contner-fld-new { padding: 0 17px; } 
+    #panoramic-aleery .col-lg-3 { width: 100%; }
+    #panoramic-aleery .glry-1st-immg { margin: 0px auto 18px; height: auto; }
+    #panoramic-aleery .glry-2st-immg { margin: 0px auto 22px; height: auto; }
+    #panoramic-aleery .glry-3st-immg { margin: 0px auto 20px; height: auto; }
+    .item_1 { margin-top: 0 !important; }
+    .item_2 { margin-top: 0 !important; }
+    .item_3 { margin-top: 0px !important; }
+    .item_4 { margin-top: 0 !important; }
+    .item_5 { margin-top: 0 !important; }
+    #video-pp-bg h4 { width: 85%; line-height: 28px; font-size: 16px; position: static; padding: 21px 0; }
+    #video-pp-bg .rgt-video-box { padding: 4px 0; }
+    #statistics-wdth .funfact h2 { font-size: 30px; margin:4px auto; }
+    #statistics-wdth .funfact { margin-bottom: 11px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #statistics-wdth .lefr-radius_2 { right: -10px; }
+    .fotr-itm123 { margin: 25px auto; float: left; width: 100%; }
+    .bottomMenu { display: none; }
+    #find-your-degree .progrms-4box { padding:36px 5px; } 
+    #events-campus-w .evnts-wdth-home { width: 100%; }
+    #intrnational-studnts figure.effect-lily h2 { font-size: 25px; }
+	.cax-texts2 {position: relative !important; width: 92% !important; padding: 0 0 21px 0 !important; left: 0 !important; top: -44px !important; right: 0 !important; bottom: 0 !important; margin: 0px auto; }
+    #video-pp-bg .exper-pp { position: static; }
+    #video-pp-bg .video-ovrly { display: none; }
+    #video-pp-bg { background: #0c4d8b; }  
+    #video-pp-bg #videoModal { width: 97%; background: none; top: 80px; }
+    #video-pp-bg .close { color: #D98600; top: 92px !important; }  
+	
+	.for-mob-camp-advntr { display: inherit !important; }
+	.life-camp-adv { display:none; }
+	#campus-adventures .advntr-icon { width: 78px; height: 78px; padding: 20px; }
+	#campus-adventures .advntr-icon:hover { width: 78px; height: 78px; padding: 20px; }
+	#campus-adventures .ech-items-adventres { padding: 25px 7px; rotate: 0deg; }
+	#cam-resource-news .news-cam-wrpr { margin-top: 22px; }
+	#cam-resource-news .inpt-search { margin-top: 23px !important; }
+	#prod-alumni .produd-amni-wrpr { height: auto; width: 80%; margin: 0px auto; }
+	#emint-vistor .shde-emint { display: none; } 
+	#recognitn-awards { padding: 74px 0 0; }
+	#home-banner .vimeo-wrapper { height: 100%; }	
+	#header-top { border-top: 5px solid #27327a; }
+	 
+	#find-your-degree .find-paragrph-hdd h1 { font-size: 37px; }
+	#find-your-degree { padding: 40px 0; }
+	.schol-hdd-1233 h1 { font-size: 27px !important; } 
+	#campus-adventures .comn-hd-home h1 { font-size: 37px; }
+	#vignteeee .vigntee-mmgg-ii { width: 177px; height: 183px; margin: 0px auto; }
+	#cam-resource-news { padding: 39px 0 60px; }
+	#statistics-wdth .lefr-radius { display:none; }
+	#statistics-wdth .lefr-radius_2 { display:none; }
+	#emint-vistor .emint-visitor-slidr { width: 72%; }
+	#achivements-on-home { padding: 38px 0 119px; }
+	#schollls-sectn .owl-theme .owl-nav.disabled + .owl-dots { bottom: 0; }
+	#emint-vistor #owl-demo-4 .item { margin: 10px 9px; } 
+	.modal-content { background-color: transparent; border:none; }
+	#home-banner .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #home-banner .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #schollls-sectn .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; left: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; right: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #schollls-sectn .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #campus-adventures .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #campus-adventures .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #events-campus-w .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #events-campus-w .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+
+	 
+	 #prod-alumni .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; left: -10px; top: 36%; }
+	 #prod-alumni .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; right: -10px; top: 36%; }
+	 #prod-alumni .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #prod-alumni .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #recognitn-awards .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #recognitn-awards .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #socialmedia-wdgt .item_1 { margin-top: 0px !important; } #socialmedia-wdgt .item_2 { margin-top: 0px !important; } #socialmedia-wdgt .item_3 { margin-top: 0px !important; } #socialmedia-wdgt .item_4 { margin-top: 0px !important; } #socialmedia-wdgt .item_5 { margin-top: 0px !important; }
+	 
+	 
+	 #socialmedia-wdgt .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-prev span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 #socialmedia-wdgt .owl-next span { position: relative; top: -3px; color: #fff; float: left; width: 100%;}
+	 
+	 #christ_itemfor-mob .owl-prev { display:none !important; }
+	 #christ_itemfor-mob .owl-next { display:none !important; }
+	 #panoramic-aleery .col-6 { width: 33% !important; padding: 5px; }
+	 .col-6-hgt { display:none !important; } 
+	 .vp-center { display: block !important; }
+	 #video-pp-bg .close { top: 19% !important; }
+	 #video-pp-bg .modal-content { background:none !important; border: none !important; }
+	 #home-banner .vimeo-wrapper { height: 100%; }
+	 .owl-dots { display:none !important; }
+	 .home-icn_heder { left: 48%; }
+	 #events-campus-w .evnt-itm-mmg { display:none; }
+	 #emint-vistor .emint-vistr-box3 { height: auto; } 
+	 #events-campus-w .event-wdth-item-wrpr h2 { font-size: 16px !important; margin: 0px auto 16px; }
+	 #emint-vistor .emint-vstr-box { height: auto; }
+}
+@media screen and (min-width:768px) and (max-width:991px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top 		.container-xxl { max-width: 100%; padding: 0 12px; }
+    #header-top .lang-btn { padding: 5px 14px; }
+    #header-top .header-right-items { padding: 0px 0; padding-right: 61px;}
+    #header-top { overflow: inherit; }
+    #our-campuses-sectn { display: none; }
+    #home-banner .carousel { height: auto; }
+    #home-banner .banner-announcemnt h2 { font-size: 22px; }
+    #home-banner .banner-announcemnt h4 { font-size: 17px; margin: 0px auto 9px; }
+    #smicons { top: 114px; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #find-your-degree .progrms-4box { height: auto; }
+    #find-your-degree .progrms-4box:hover { height: auto; }
+    #find-your-degree .find-paragrph-hdd p { width: 100%; margin-bottom: 28px; }
+    #campus-adventures .adventure-hdd { width: 80%; }
+    #campus-adventures .life-camp-adv ul li:nth-child(1) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { position: static; height: 180px; }
+    #campus-adventures .life-camp-adv ul li { padding: 0 6px; width: 25%; float: left; display: block;}
+    #campus-adventures { height: auto; }
+    #campus-adventures .ech-items-adventres h4 { font-size: 16px; margin: 14px auto 0; }
+    #vignteeee { height: auto; }
+    #vignteeee .vignte-wrpr ul li { width: 20%; padding: 0 5px; }
+    #vignteeee .vignte-wrpr { width: 100%; }
+    .red-morr-vign svg { width: 21px; }
+    #vignteeee .red-morr-vign { bottom: -2px; right: 0; }
+    #vignteeee .vignte-wrpr ul li:nth-child(3) { top: 16px; } 
+    #vignteeee .vignte-wrpr ul li:nth-child(5) { top: 40px; }
+    #vignteeee .vignte-wrpr ul li:nth-child(2) { top: 28px; }
+    #vignteeee .vigntee-mmgg-wrpr h4 { font-size: 15px; }
+    #achivements-on-home .achvmn-mmg { display: none; } 
+    #achivements-on-home .achiv-wdth-box-tab { width: 99%; position: relative; }
+    #tab-select { word-wrap: normal; width: 100%; padding:6px 10px; }
+    #achivements-on-home .comn-hd-home { text-align: center; padding-left: 0; padding-bottom: 31px; }
+    .comn-hd-home h1 { font-size: 40px; }
+    #cam-resource-news .cmp-resourc-wdth { padding: 67px 24px; }
+    #cam-resource-news .cmp-resourc-wdth_2 { padding: 28px 24px 20px 33px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { float: left; position: static; padding: 24px 26px; width: 100%; height: auto; background: #0c4d8b; }
+    .bg-intern-stdent { display: none; }
+    #intrnational-studnts figure.effect-lily p { width: 100%; }
+    #emint-vistor .comn-hd-home { padding: 0 0px; }
+    #lab-christ .labs-texts { width: 100%; position: static; }
+    #prod-alumni #owl-demo-5 .item { margin: 10px 4px; }
+    #panoramic-aleery .contner-fld-new { padding: 0 17px; } 
+    #panoramic-aleery .col-lg-3 { width: 100%; }
+    #panoramic-aleery .glry-1st-immg { margin: 0px auto 18px; height: auto; }
+    #panoramic-aleery .glry-2st-immg { margin: 0px auto 22px; height: auto; }
+    #panoramic-aleery .glry-3st-immg { margin: 0px auto 20px; height: auto; }
+    .item_1 { margin-top: 0 !important; }
+    .item_2 { margin-top: 0 !important; }
+    .item_3 { margin-top: 0px !important; }
+    .item_4 { margin-top: 0 !important; }
+    .item_5 { margin-top: 0 !important; }
+    #video-pp-bg h4 { width: 85%; line-height: 28px; font-size: 16px; position: static; padding: 21px 0; }
+    #video-pp-bg .rgt-video-box { padding: 4px 0; }
+    #statistics-wdth .funfact h2 { font-size: 30px; margin:4px auto; }
+    #statistics-wdth .funfact { margin-bottom: 11px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #statistics-wdth .lefr-radius_2 { right: -10px; }
+    .fotr-itm123 { margin: 25px auto; float: left; width: 100%; }
+    .bottomMenu { display: none; }
+    #find-your-degree .progrms-4box { padding:36px 5px; } 
+    #events-campus-w .evnts-wdth-home { width: 100%; }
+    #home-banner .banner-announcemnt { bottom: 0; right: 184px; right: 55px; } 
+    #intrnational-studnts figure.effect-lily h2 { font-size: 25px; }
+	.cax-texts2 {position: relative !important; width: 92% !important; padding: 0 0 21px 0 !important; left: 0 !important; top: -44px !important; right: 0 !important; bottom: 0 !important; margin: 0px auto; }
+	.hero .menu-btn { top: 21px; }
+    #recognitn-awards .accrd-item_wrpr { width: 95%; margin: 0px auto; }
+    #video-pp-bg #videoModal { width: 97%; background: none; top: 80px; }
+    #video-pp-bg .close { color: #D98600; }
+	
+	.for-mob-camp-advntr { display: inherit !important; }
+	.life-camp-adv { display:none; }
+	#campus-adventures .advntr-icon { width: 78px; height: 78px; padding: 20px; }
+	#campus-adventures .advntr-icon:hover { width: 78px; height: 78px; padding: 20px; }
+	#campus-adventures .ech-items-adventres { padding: 25px 7px; rotate: 0deg;}
+	#cam-resource-news .news-cam-wrpr { margin-top: 22px; }
+	#cam-resource-news .inpt-search { margin-top: 23px !important; }
+	#prod-alumni .produd-amni-wrpr { height: auto; width: 80%; margin: 0px auto; }
+	#emint-vistor .shde-emint { display: none; } 
+	#recognitn-awards { padding: 74px 0 0; }
+	#home-banner .vimeo-wrapper { height: 100%; }	
+	#header-top { border-top: 5px solid #27327a; }
+	 
+	#find-your-degree .find-paragrph-hdd h1 { font-size: 37px; }
+	#find-your-degree { padding: 40px 0; }
+	.schol-hdd-1233 h1 { font-size: 27px !important; } 
+	#campus-adventures .comn-hd-home h1 { font-size: 37px; }
+	#vignteeee .vigntee-mmgg-ii { width: 139px; height: 145px; margin: 0px auto; position: relative; }
+	#cam-resource-news { padding: 39px 0 60px; }
+	#statistics-wdth .lefr-radius { display:none; }
+	#statistics-wdth .lefr-radius_2 { display:none; }
+	#emint-vistor .emint-visitor-slidr { width: 72%; }
+	#achivements-on-home { padding: 38px 0 119px; }
+	#schollls-sectn .owl-theme .owl-nav.disabled + .owl-dots { bottom: 0; }
+	#emint-vistor #owl-demo-4 .item { margin: 10px 24px; } 
+	
+	#home-banner .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #home-banner .owl-prev span { position: relative; top: -7px; }
+	 #home-banner .owl-next span { position: relative; top: -7px; }
+	 
+	 #schollls-sectn .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; left: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; right: 0px; bottom: 41%; }
+	 #schollls-sectn .owl-prev span { position: relative; top: -4px; }
+	 #schollls-sectn .owl-next span { position: relative; top: -4px; }
+	 
+	 #campus-adventures .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #campus-adventures .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #campus-adventures .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #events-campus-w .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #events-campus-w .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #events-campus-w .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+
+	 
+	 #prod-alumni .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; left: -10px; top: 36%; }
+	 #prod-alumni .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; right: -10px; top: 36%; }
+	 #prod-alumni .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #prod-alumni .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #recognitn-awards .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #recognitn-awards .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #socialmedia-wdgt .item_1 { margin-top: 0px !important; } #socialmedia-wdgt .item_2 { margin-top: 0px !important; } #socialmedia-wdgt .item_3 { margin-top: 0px !important; } #socialmedia-wdgt .item_4 { margin-top: 0px !important; } #socialmedia-wdgt .item_5 { margin-top: 0px !important; }
+	 
+	 
+	 #socialmedia-wdgt .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #socialmedia-wdgt .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #christ_itemfor-mob .owl-prev { display:none !important; }
+	 #christ_itemfor-mob .owl-next { display:none !important; }
+	 #panoramic-aleery .col-6 { width: 33% !important; padding: 5px; }
+	 .col-6-hgt { display:none !important; } 
+	 .vp-center { display: block !important; }
+	 #video-pp-bg .close { top: 19% !important; }
+	 #video-pp-bg .modal-content { background:none !important; border: none !important; }
+	 #home-banner .vimeo-wrapper { height: 100%; }
+	 .owl-dots { display:none !important; }
+	 .home-icn_heder { left: 48%; }
+	 #events-campus-w .evnt-itm-mmg { display:none; }
+	 #emint-vistor .emint-vistr-box3 { height: auto; } 
+	 #emint-vistor .emint-vstr-box { height: 251px; }
+	 
+	#vignteeee .container, .container-md, .container-sm { max-width: 96%; } 
+	#campus-adventures { padding: 50px 0 113px; }
+	#campus-adventures .adventure-hdd { bottom: 28px; }
+}
+@media screen and (min-width:992px) and (max-width:1150px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { padding: 0 50px; }        
+    #our-campuses-sectn ul li h2 { font-size: 16px; }
+    #our-campuses-sectn ul li h4 { font-size: 16px; }
+    #our-campuses-sectn .our-campus-hdd h3 { font-size: 14px; }
+    #our-campuses-sectn .our-campus-hdd { padding: 27px 14px; }
+    #our-campuses-sectn ul li { padding: 24px 18px; white-space: nowrap; }
+	#our-campuses-sectn .drg-grdnt { top: 7px; }
+    #home-banner .carousel { height: auto; }
+    #home-banner .banner-announcemnt { bottom: 1px; }
+    .our-campus-hdd_22 h3 { margin: -6px auto; font-size: 13px; }
+    #our-campuses-sectn_2 ul li h2 { font-size: 16px; }
+    #our-campuses-sectn_2 ul li h4 { font-size: 16px; }
+    #our-campuses-sectn_2 ul li { padding:7px 13px; }
+    #find-your-degree .progrms-4box h4 { font-size: 17px; }
+    #smicons { top: 125px; }
+    #campus-adventures .advntr-icon { width: 68px; height: 68px; padding: 15px; }
+    #campus-adventures .advntr-icon:hover { width: 68px; height: 68px; padding: 15px; }
+    #campus-adventures .ech-items-adventres h4 { font-size: 14px; }
+    #campus-adventures .life-camp-adv ul li { padding: 0 13px; width: 19%; position: static; } 
+    #campus-adventures .adventure-hdd { font-size: 26px; width: 33%; line-height: 36px; bottom: 39px; }
+    #vignteeee .vignte-wrpr { width: 100%; } 
+    #vignteeee .vignte-wrpr ul li { width: 20%; padding: 0 6px; }
+    #vignteeee .vigntee-mmgg-wrpr h4 { font-size: 17px; }
+    #vignteeee .red-morr-vign { bottom: 30px; right: 6px; }
+    #achivements-on-home .achiv-wdth-box-tab { width: 73%; }
+    #achivements-on-home .achvmn-mmg { width: 23%; top: 268px; }
+    #intrnational-studnts .bg-intern-stdent { height: 337px; bottom: -11px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { height: 90%; }
+    #intrnational-studnts figure.effect-lily h2 { font-size: 28px; } 
+    #intrnational-studnts figure.effect-lily p { width: 37%; }
+    #intrnational-studnts .vew-mor-evn { left: 135px; top: -34px; }
+    #intrnational-studnts .vew-mor-evn:hover { left: 135px; top: -34px; }
+    #panoramic-aleery .glry-2st-immg { height: 108px; margin: 12px auto; }
+    #panoramic-aleery .glry-3st-immg { height: 254px; }
+    #panoramic-aleery .glry-1st-immg { height: 109px; margin: 72px auto; }
+	.schol-hdd-1233 h1 { font-size: 29px !important; }
+	.schol-hdd-1233 { padding: 18px 26px; }
+	.cax-texts2 { background: #ffffffcf; position: absolute !important; top: 25px !important; left: 25px !important; right: 0 !important; width: 47% !important; padding: 0 0 34px 0 !important; }
+    #video-pp-bg #videoModal { width: 97%; background: none; top: 80px; }
+    #video-pp-bg .close { color: #D98600; }
+	#vignteeee .vigntee-mmgg-ii { width: 168px; height: 176px; }
+	#prod-alumni #owl-demo-5 .item { margin: 10px 8px ; } 
+	.home-icn_heder { left: 20%; }
+	#video-pp-bg .rgt-video-box { padding: 65px 0; }
+	#prod-alumni .alumni-para-text h3 { font-size: 18px; }
+	#video-pp-bg h4 { top: 24px; }
+	
+	#home-banner .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	#home-banner .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	#home-banner .owl-prev span { position: relative; top: -7px; }
+	#home-banner .owl-next span { position: relative; top: -7px; }
+	 
+	#schollls-sectn .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; left: 0px; bottom: 41%; }
+	#schollls-sectn .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 27px; height: 46px; color: #fff; position: absolute; right: 0px; bottom: 41%; }
+	#schollls-sectn .owl-prev span { position: relative; top: -4px; }
+	#schollls-sectn .owl-next span { position: relative; top: -4px; }
+	 
+	#campus-adventures .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	#campus-adventures .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	#campus-adventures .owl-prev span { position: relative; top: -7px; color:#fff; }
+	#campus-adventures .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	#events-campus-w .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	#events-campus-w .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	#events-campus-w .owl-prev span { position: relative; top: -7px; color:#fff; }
+	#events-campus-w .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #emint-vistor .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; }
+	 #emint-vistor .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 45px; top: 175px !important; }
+	 #emint-vistor .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #emint-vistor .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 #emint-vistor .owl-prev { position: static; position: absolute; left: 0;} 
+	 #emint-vistor .owl-next { position: static; position: absolute; right: 0;} 
+	 
+	 #prod-alumni .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; left: -10px; top: 36%; }
+	 #prod-alumni .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; position: absolute; right: -10px; top: 36%; }
+	 #prod-alumni .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #prod-alumni .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #recognitn-awards .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #recognitn-awards .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #recognitn-awards .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #socialmedia-wdgt .item_1 { margin-top: 0px !important; } #socialmedia-wdgt .item_2 { margin-top: 0px !important; } #socialmedia-wdgt .item_3 { margin-top: 0px !important; } #socialmedia-wdgt .item_4 { margin-top: 0px !important; } #socialmedia-wdgt .item_5 { margin-top: 0px !important; }
+	 
+	 
+	 #socialmedia-wdgt .owl-prev { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-next { background: #d98600; padding: 1px 8px !important; font-size: 33px; width: 36px; height: 38px; }
+	 #socialmedia-wdgt .owl-prev span { position: relative; top: -7px; color:#fff; }
+	 #socialmedia-wdgt .owl-next span { position: relative; top: -7px;  color:#fff;}
+	 
+	 #christ_itemfor-mob .owl-prev { display:none !important; }
+	 #christ_itemfor-mob .owl-next { display:none !important; }
+	 #events-campus-w .evnt-bg-lefft { left: -29%; width: 100%; }
+	 #emint-vistor .emint-vistr-box3 { height: auto; }
+	 #events-campus-w .event-wdth-item-wrpr h2 { height: 100px; }
+	 .wdth-2 { width: 15.667%; }
+	 .wdth-10 { width: 84.333%; }
+     .our-campus-hdd_22 { padding: 30px 0 27px 18px; }
+	 #campus-adventures .dimnd-shpe-bg { height: 153px; width: 153px; position: static; }
+	 #campus-adventures .dimnd-shpe-bg:hover { height: 153px; width: 153px; position: static; }
+	 #campus-adventures .ech-items-adventres { height: 137px; padding: 0 0px; position: relative; left: 7px; top: -22px; }
+	 #campus-adventures { height: 555px; }
+}
+@media screen and (min-width:1150px) and (max-width:1240px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { padding: 0 11px; } 
+    #header-top .logo_1 { padding-right: 0; }
+    #our-campuses-sectn { text-align: left; }
+    #our-campuses-sectn ul li { padding: 26px 21px; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #campus-adventures .life-camp-adv ul li { display: inline-block; padding: 0 0; width: 20%; left: 0; }
+    #campus-adventures .adventure-hdd { width: 40%; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { right: -52px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { right: -65px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { right: -63px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { right: -45px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { right: -26px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { right: -17px; }
+    #vignteeee .vignte-wrpr { width: 100%; margin: 18px auto 0; }
+    #vignteeee .vignte-wrpr ul li { width: 17%; margin: auto 11px; }
+    #cam-resource-news .camp-news-rgt h3 { font-size: 18px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { height: 96%; }
+    #intrnational-studnts figure.effect-lily p { width: 40%; }
+    #prod-alumni #owl-demo-5 .item { margin:10px 15px; }
+    #prod-alumni .alumni-para-text { padding: 12px 10px 12px 0; }
+    #prod-alumni .alumni-para-text h5 { font-size: 14px; margin: 5px auto; }
+    #video-pp-bg h4 { top: 81px; left: 72px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #smicons { top: 122px; }
+    #our-campuses-sectn .our-campus-hdd { padding: 27px 11px; }
+    #our-campuses-sectn ul li h2 { font-size: 16px; }
+    #our-campuses-sectn ul li h4 { font-size: 16px; }
+    #our-campuses-sectn .our-campus-hdd h3 { font-size: 14px; }
+    .our-campus-hdd_22 h3 { margin:-9px auto; font-size: 15px; }
+    #our-campuses-sectn_2 ul li h2 { font-size: 16px; }
+    #our-campuses-sectn_2 ul li h4 { font-size: 16px; }
+    #our-campuses-sectn_2 ul li { padding: 7px 15px; }
+    #home-banner .carousel { height: 85vh; }
+    #vignteeee .red-morr-vign { bottom: 53px; right: 23px; }
+    #events-campus-w .evnt-bg-lefft { width: 23%; }
+    #achivements-on-home .achiv-wdth-box-tab { width: 79%; }
+    #achivements-on-home .achvmn-mmg { width: 24%; top: 240px; }
+    #intrnational-studnts .bg-intern-stdent { height: 355px; width: 33%; bottom: -6px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { height: 90%; }
+    #intrnational-studnts figure.effect-lily h2 { font-size: 28px; } 
+    #intrnational-studnts figure.effect-lily p { width: 37%; }
+    #panoramic-aleery .glry-2st-immg { height: 108px; margin: 12px auto; }
+    #panoramic-aleery .glry-3st-immg { height: 254px; }
+    #panoramic-aleery .glry-1st-immg { height: 109px; margin: 72px auto; }
+	.schol-hdd-1233 h1 { font-size: 29px !important; }
+    #video-pp-bg #videoModal { width: 75%; }
+	#vignteeee .vigntee-mmgg-ii { width: 166px; height: 194px; }
+	#prod-alumni .alumni-para-text h3 { font-size: 20px; }
+	#prod-alumni .produd-amni-wrpr { height: 161px; }
+	#events-campus-w .evnt-bg-lefft { top: 111px ; left: -21%; width: 100%; }
+	#emint-vistor .emint-vistr-box3 { height: auto; }
+	.our-campus-hdd_22 { padding: 32px 0 27px 18px; }
+	.wdth-2 { width: 16.667%; }
+	.wdth-10 { width: 83.333%; }
+	#achivements-on-home .achvmn-mmg { top: 151px; width: 39%;}
+	#campus-adventures .dimnd-shpe-bg { position: static; }
+	#campus-adventures .dimnd-shpe-bg:hover { position: static; }
+	#campus-adventures { height: 630px; }
+} 
+@media screen and (min-width:1241px) and (max-width:1340px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { padding: 0 11px; } 
+    #header-top .logo_1 { padding-right: 0; }
+    #our-campuses-sectn ul li { padding: 26px 7px; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #campus-adventures .life-camp-adv ul li { display: inline-block; padding: 0 0; width: 19%; left: 0; }
+    #campus-adventures .adventure-hdd { width: 40%; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { right: -52px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { right: -65px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { right: -63px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { right: -45px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { right: -26px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { right: -17px; }
+    #vignteeee .vignte-wrpr { width: 100%; margin: 18px auto 0; }
+    #vignteeee .vignte-wrpr ul li { width: 18%; margin: auto 11px; }
+    #cam-resource-news .camp-news-rgt h3 { font-size: 18px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { height: 73%; }
+    #intrnational-studnts figure.effect-lily p { width: 40%; }
+    #prod-alumni #owl-demo-5 .item { margin:10px 15px; }
+    #prod-alumni .alumni-para-text { padding: 27px 10px 27px 0; }
+    #prod-alumni .alumni-para-text h5 { font-size: 14px; margin: 5px auto; }
+    #video-pp-bg h4 { top: 81px; left: 72px; }
+    #statistics-wdth .statics-wdt { width: 100%; }  
+    #vignteeee .red-morr-vign { bottom: 35px; right: 8px; }
+    #intrnational-studnts .bg-intern-stdent { width: 37%; height: 367px; bottom: 1px; }
+    #intrnational-studnts figure.effect-lily h2 { font-size: 35px; }
+    #panoramic-aleery .glry-2st-immg { height: 141px; margin: 12px auto; }
+    #panoramic-aleery .glry-3st-immg { height: 307px; margin: 11px auto; }
+    #panoramic-aleery .glry-1st-immg { height: 142px; margin: 85px auto; }
+    #achivements-on-home .achvmn-mmg { top: 215px; }
+	.cax-texts2 { position: absolute; top: 62px; left: 67px; right: 0; width: 49%; padding: 0 0 34px 0; }
+    #video-pp-bg #videoModal { width: 75%; }
+	#our-campuses-sectn ul li:hover { padding: 0px 22px; }
+	#events-campus-w .evnt-bg-lefft { top: 111px ; left: -21%; width: 100%; }
+	#emint-vistor .emint-vistr-box3 { height: auto; }
+	#our-campuses-sectn .our-campus-hdd { padding: 27px 16px; }
+	#achivements-on-home .achvmn-mmg { top: 151px; width: 39%;}
+	#campus-adventures .dimnd-shpe-bg { position: static; }
+	#campus-adventures .dimnd-shpe-bg:hover { position: static; }
+}
+@media screen and (min-width:1341px) and (max-width:1399px) {
+    #header-top .container, #header-top .container-lg, #header-top .container-md, #header-top .container-sm, #header-top .container-xl, #header-top .container-xxl { padding: 0 11px; } 
+    #header-top .logo_1 { padding-right: 0; }
+    #find-your-degree .find-dgree-wdth { width: 100%; }
+    #campus-adventures .life-camp-adv ul li { display: inline-block; padding: 0 0; width: 13%; left:0; }
+    #campus-adventures .adventure-hdd { width: 40%; }
+    #campus-adventures .life-camp-adv ul li:nth-child(7) { right: -52px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(6) { right: -65px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(5) { right: -63px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(4) { right: -45px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(3) { right: -26px; }
+    #campus-adventures .life-camp-adv ul li:nth-child(2) { right: -17px; }
+    #vignteeee .vignte-wrpr { width: 100%; margin: 18px auto 0; }
+    #vignteeee .vignte-wrpr ul li { width: 18%; margin: auto 11px; }
+    #cam-resource-news .camp-news-rgt h3 { font-size: 18px; }
+    #intrnational-studnts figure.effect-lily figcaption > div { height: 70%; }
+    #intrnational-studnts figure.effect-lily p { width: 29%; }
+    #prod-alumni #owl-demo-5 .item { margin:10px 15px; }
+    #prod-alumni .alumni-para-text { padding: 27px 10px 27px 0; }
+    #prod-alumni .alumni-para-text h5 { font-size: 14px; margin: 5px auto; }
+    #video-pp-bg h4 { top: 81px; left: 72px; }
+    #statistics-wdth .statics-wdt { width: 100%; }
+    #vignteeee .red-morr-vign { right: 8px; } 
+    #intrnational-studnts .bg-intern-stdent { width: 33%; height: 377px; bottom: 8px; }  
+    .comn-hd-home h1 { font-size: 40px; }
+    #panoramic-aleery .glry-2st-immg { height: 141px; margin: 16px auto; }
+    #panoramic-aleery .glry-3st-immg { height: 307px; margin: 11px auto; }
+    #panoramic-aleery .glry-1st-immg { height: 142px; margin: 85px auto; }
+	.cax-texts2 { position: absolute; top: 38px; left: 33px; right: 0px; width: 49%; padding: 0 0 34px 0; }
+	.schol-hdd-1233 h1 { font-size: 39px; }
+	.sid-barr_menu-right { height: 100%; }
+	.tab-button-outer_main_menu { top: 44px; }
+	.menu .btn-close { right: 12px; top: 12px;}
+	.adm-bttns_2 { font-size: 14px; }
+	.adm-bttns { font-size: 14px; }
+	#our-campuses-sectn_2 ul li { padding: 6px 35px; }
+	#events-campus-w .evnt-bg-lefft { top: 111px ; left: -21%; width: 100%; }
+	.menu-right-wrpr_1 { padding-top: 24px; height: 107vh; }
+	#emint-vistor .emint-vistr-box3 { height: auto; }
+	#achivements-on-home .achvmn-mmg { top: 148px; width: 36%; }
+	#campus-adventures .dimnd-shpe-bg { height: 159px; width: 159px; }
+	#campus-adventures .dimnd-shpe-bg:hover { height: 159px; width: 159px; }
+	#campus-adventures .ech-items-adventres h4 { font-size: 16px; }
+	#campus-adventures .ech-items-adventres { left: 4px; top: -23px; } 
+}
+@media screen and (min-width:1400px) and (max-width:1499px) {
+    #our-campuses-sectn .fst-hdd-campus { left: -4px; position: relative !important; top: 0; }
+    #header-top .logo_1 { padding-right: 0;}
+    #intrnational-studnts .bg-intern-stdent { width: 33%; height: 414px; bottom: 8px; }  
+    #intrnational-studnts figure.effect-lily p { width: 27%; }
+    #panoramic-aleery .glry-2st-immg { height: 165px; margin: 29px auto; }
+    #panoramic-aleery .glry-3st-immg { height: 396px; margin: 11px auto; }
+    #panoramic-aleery .glry-1st-immg { height: 165px; margin: 121px auto; }
+    #achivements-on-home .achiv-wdth-box-tab { width: 63%; }
+    #achivements-on-home .achvmn-mmg { top: 146px; width: 36%;}
+	.cax-texts2 { position: absolute; top: 62px; left: 67px; right: 0; width: 49%; padding: 0 0 34px 0; }
+	.sid-barr_menu-right { height: 100%; }
+	.tab-button-outer_main_menu { top: 0px; }
+	.menu .btn-close { right: 12px; }
+	#smicons { top: 109px; }
+	#home-banner .carousel, #home-banner .carousel-inner, #home-banner .carousel-item { height: 97vh !important; } 
+	#events-campus-w .evnt-bg-lefft { top: 111px ; left: -20%; width: 100%; }
+	#campus-adventures .ech-items-adventres h4 { font-size: 17px; }
+	#campus-adventures .life-camp-adv ul li { width: 13%; }
+}
+@media screen and (min-width:1500px) and (max-width:1599px) {
+    #intrnational-studnts .bg-intern-stdent { width: 33%; height: 510px; bottom: 10px; }
+    #panoramic-aleery .glry-2st-immg { height: 165px; margin: 29px auto; }
+    #panoramic-aleery .glry-3st-immg { height: 396px; margin: 11px auto; }
+    #panoramic-aleery .glry-1st-immg { height: 165px; margin: 121px auto; }
+	.cax-texts2 { width: 45%; top: 60px; }
+	.schol-hdd-1233 { padding: 24px; }
+	#smicons { top: 141px; }
+	#events-campus-w .evnt-bg-lefft { top: 111px ; left: -15%; width: 100%; }
+}
+@media screen and (min-width:1600px) and (max-width:1699px) {
+    #events-campus-w .evnt-bg-lefft { left: -14%; width:100%; }
+    #intrnational-studnts .bg-intern-stdent { width: 33%; height: 476px; bottom: 10px; }
+	#smicons { top: 141px; }
+	#achivements-on-home .achvmn-mmg { top: 151px; width: 32%; }
+}
+@media screen and (min-width:1700px) and (max-width:1799px) {
+    #events-campus-w .evnt-bg-lefft { width: 100%; left: -99px; }
+    #intrnational-studnts .bg-intern-stdent { height: 473px; }
+    #intrnational-studnts figure.effect-lily p { width: 21%; }
+	#smicons { top: 141px; }
+    #home-banner #vimeo-player { height: 117vh !important; }
+	#campus-adventures .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl { width: 1647px !important; }
+}
+@media screen and (min-width:1800px) and (max-width:1899px) {
+    #events-campus-w .evnt-bg-lefft { width: 100%; left: -99px; }
+    #achivements-on-home .achvmn-mmg { width: 31%; top: 137px;}
+    #intrnational-studnts .bg-intern-stdent { height: 501px; }
+    #intrnational-studnts figure.effect-lily p { width: 21%; }
+    #panoramic-aleery .glry-3st-immg { height: 521px; }
+    #panoramic-aleery .glry-2st-immg { height: 219px; }
+    #panoramic-aleery .glry-1st-immg { margin: 157px auto; height: 216px; }
+	.cax-texts2 { width: 38%; top: 130px; }
+	#smicons { top: 109px; } 
+    #home-banner #vimeo-player { height: 123vh !important; }
+	#campus-adventures .dimnd-shpe-bg { height: 185px; width: 185px; }
+	#campus-adventures .dimnd-shpe-bg:hover { height: 185px; width: 185px; }
+	#campus-adventures .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl { width: 1785px !important; }
+	#campus-adventures .ech-items-adventres { left: -1px; top: -13px; }
+}
+@media screen and (min-width:1900px) and (max-width:1999px) {
+    #intrnational-studnts .bg-intern-stdent { width: 33%; height: 513px; }
+    #intrnational-studnts figure.effect-lily p { width: 20%; }
+    #events-campus-w .evnt-bg-lefft { width: 100%; left: -65px; }
+    #achivements-on-home .achvmn-mmg { width: 31%; top: 135px; }
+    #intrnational-studnts .bg-intern-stdent { height: 530px; }
+    #intrnational-studnts figure.effect-lily p { width: 20%; }
+    #panoramic-aleery .glry-3st-immg { height: 547px; }
+    #panoramic-aleery .glry-2st-immg { margin: 28px auto; height: 215px; }
+    #panoramic-aleery .glry-1st-immg { margin:163px auto; height: 227px; }
+	.cax-texts2 { width: 38%; top: 130px; }
+	#smicons { top: 109px; }
+    #emint-vistor .emint-vstr-box { height: 217px; }
+    #home-banner #vimeo-player { height: 127vh !important; }
+	#home-banner .vimeo-wrapper { height: 100vh; }
+	#campus-adventures .dimnd-shpe-bg { height: 185px; width: 185px; }
+	#campus-adventures .dimnd-shpe-bg:hover { height: 185px; width: 185px; }
+	#campus-adventures .ech-items-adventres { padding: 8px 0; left: -5px; top: -19px; }
+	#campus-adventures .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl { width: 1697px !important; }
+	
+}
+@media screen and (min-width:2000px) and (max-width:2999px) {
+    #events-campus-w .evnt-bg-lefft { width: 100%; }
+    #achivements-on-home .achvmn-mmg { width: 29%; }
+    #achivements-on-home .achiv-wdth-box-tab { width: 83%; }
+    #intrnational-studnts .bg-intern-stdent { height: 563px; }
+    #intrnational-studnts figure.effect-lily p { width: 19%; }
+    #panoramic-aleery .glry-3st-immg { height: 547px; }
+    #panoramic-aleery .glry-2st-immg { margin: 28px auto; height: 227px; }
+    #panoramic-aleery .glry-1st-immg { margin:163px auto; height: 227px; }
+	#campus-adventures .life-camp-adv ul li { width: 10%; }
+	#campus-adventures .dimnd-shpe-bg { height: 182px; width: 182px; }
+	#campus-adventures .dimnd-shpe-bg:hover { height: 182px; width: 182px; }
+	#campus-adventures .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl { width: 1975px !important; }
+	#campus-adventures .ech-items-adventres { left: -4px; top: -19px; }
+}
+@media screen and (min-width:3000px) and (max-width:3999px) {
+	#campus-adventures .container-fluid, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl { width: 1597px !important; }
+}
+@media screen and (min-width:4000px) and (max-width:4999px) {
+
+}
+@media screen and (min-width:5000px) and (max-width:5999px) {
+
+}
+
+.side-panel-wrap { background: none; height: 100vh !important; }

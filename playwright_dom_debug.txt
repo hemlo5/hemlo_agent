@@ -1,0 +1,8384 @@
+
+============================================================
+Total elements extracted: 8
+Inputs/Buttons: 5
+Links: 2
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 5
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 5
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 196
+Inputs/Buttons: 3
+Links: 193
+Full elements list:
+[
+  {
+    "tag": "a",
+    "text": " Free Porn Pics",
+    "selector": "a:has-text(' Free Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": " Free Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "input",
+    "text": "Search here",
+    "selector": "input[aria-label*='Search here']",
+    "attributes": {
+      "role": "textbox",
+      "aria_label": "Search here",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Login",
+    "selector": "button:has-text('Login')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Login",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign Up",
+    "selector": "a:has-text('Sign Up')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign Up",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tags",
+    "selector": "a:has-text('Tags')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tags",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pornstars",
+    "selector": "a:has-text('Pornstars')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pornstars",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Channels",
+    "selector": "a:has-text('Channels')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Channels",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Videos",
+    "selector": "a:has-text('Videos')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Videos",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Live Sex J",
+    "selector": "a:has-text('Live Sex J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Live Sex J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Meet&Fuck J",
+    "selector": "a:has-text('Meet&Fuck J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Meet&Fuck J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI Girls J",
+    "selector": "a:has-text('AI Girls J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI Girls J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI Jerk Off J",
+    "selector": "a:has-text('AI Jerk Off J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI Jerk Off J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Random Gallery",
+    "selector": "a:has-text('Random Gallery')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Random Gallery",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pornstar Pornstar Porn Pics",
+    "selector": "a:has-text('Pornstar Pornstar Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pornstar Pornstar Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Indian Indian Porn Pics",
+    "selector": "a:has-text('Indian Indian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Indian Indian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sexy Sexy Porn Pics",
+    "selector": "a:has-text('Sexy Sexy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sexy Sexy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Mom Mom Porn Pics",
+    "selector": "a:has-text('Mom Mom Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Mom Mom Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pussy Pussy Porn Pics",
+    "selector": "a:has-text('Pussy Pussy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pussy Pussy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thick Thick Porn Pics",
+    "selector": "a:has-text('Thick Thick Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thick Thick Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Schoolgirl Schoolgirl Porn Pics",
+    "selector": "a:has-text('Schoolgirl Schoolgirl Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Schoolgirl Schoolgirl Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pussy Licking Pussy Licking Porn Pics",
+    "selector": "a:has-text('Pussy Licking Pussy Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pussy Licking Pussy Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Ass Porn Pics",
+    "selector": "a:has-text('Ass Ass Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Ass Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI AI Porn Pics",
+    "selector": "a:has-text('AI AI Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI AI Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Missionary Missionary Porn Pics",
+    "selector": "a:has-text('Missionary Missionary Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Missionary Missionary Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum In Pussy Cum In Pussy Porn Pics",
+    "selector": "a:has-text('Cum In Pussy Cum In Pussy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum In Pussy Cum In Pussy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Perfect Perfect Porn Pics",
+    "selector": "a:has-text('Perfect Perfect Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Perfect Perfect Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Kissing Kissing Porn Pics",
+    "selector": "a:has-text('Kissing Kissing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Kissing Kissing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Naked Women Naked Women Porn Pics",
+    "selector": "a:has-text('Naked Women Naked Women Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Naked Women Naked Women Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hardcore Hardcore Porn Pics",
+    "selector": "a:has-text('Hardcore Hardcore Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hardcore Hardcore Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Caught Caught Porn Pics",
+    "selector": "a:has-text('Caught Caught Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Caught Caught Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Chubby Chubby Porn Pics",
+    "selector": "a:has-text('Chubby Chubby Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Chubby Chubby Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Big Tits Big Tits Porn Pics",
+    "selector": "a:has-text('Big Tits Big Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Big Tits Big Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Titjob Titjob Porn Pics",
+    "selector": "a:has-text('Titjob Titjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Titjob Titjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Non Nude Non Nude Porn Pics",
+    "selector": "a:has-text('Non Nude Non Nude Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Non Nude Non Nude Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Close Up Close Up Porn Pics",
+    "selector": "a:has-text('Close Up Close Up Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Close Up Close Up Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Doggy Style Doggy Style Porn Pics",
+    "selector": "a:has-text('Doggy Style Doggy Style Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Doggy Style Doggy Style Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Big Cock Big Cock Porn Pics",
+    "selector": "a:has-text('Big Cock Big Cock Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Big Cock Big Cock Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Curvy Curvy Porn Pics",
+    "selector": "a:has-text('Curvy Curvy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Curvy Curvy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Teacher Teacher Porn Pics",
+    "selector": "a:has-text('Teacher Teacher Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Teacher Teacher Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Beautiful Beautiful Porn Pics",
+    "selector": "a:has-text('Beautiful Beautiful Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Beautiful Beautiful Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cowgirl Cowgirl Porn Pics",
+    "selector": "a:has-text('Cowgirl Cowgirl Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cowgirl Cowgirl Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Latina Latina Porn Pics",
+    "selector": "a:has-text('Latina Latina Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Latina Latina Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Naked Girls Naked Girls Porn Pics",
+    "selector": "a:has-text('Naked Girls Naked Girls Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Naked Girls Naked Girls Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Masturbation Masturbation Porn Pics",
+    "selector": "a:has-text('Masturbation Masturbation Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Masturbation Masturbation Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Creampie Creampie Porn Pics",
+    "selector": "a:has-text('Creampie Creampie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Creampie Creampie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Undressing Undressing Porn Pics",
+    "selector": "a:has-text('Undressing Undressing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Undressing Undressing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Japanese Japanese Porn Pics",
+    "selector": "a:has-text('Japanese Japanese Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Japanese Japanese Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Family Family Porn Pics",
+    "selector": "a:has-text('Family Family Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Family Family Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wet Wet Porn Pics",
+    "selector": "a:has-text('Wet Wet Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wet Wet Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "PAWG PAWG Porn Pics",
+    "selector": "a:has-text('PAWG PAWG Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "PAWG PAWG Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Double Penetration Double Penetration Porn Pics",
+    "selector": "a:has-text('Double Penetration Double Penetration Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Double Penetration Double Penetration Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blowjob Blowjob Porn Pics",
+    "selector": "a:has-text('Blowjob Blowjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blowjob Blowjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Socks Socks Porn Pics",
+    "selector": "a:has-text('Socks Socks Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Socks Socks Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "MILF MILF Porn Pics",
+    "selector": "a:has-text('MILF MILF Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "MILF MILF Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Public Public Porn Pics",
+    "selector": "a:has-text('Public Public Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Public Public Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Squirting Squirting Porn Pics",
+    "selector": "a:has-text('Squirting Squirting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Squirting Squirting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hentai Hentai Porn Pics",
+    "selector": "a:has-text('Hentai Hentai Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hentai Hentai Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cute Cute Porn Pics",
+    "selector": "a:has-text('Cute Cute Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cute Cute Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Facesitting Facesitting Porn Pics",
+    "selector": "a:has-text('Facesitting Facesitting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Facesitting Facesitting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Asian Asian Porn Pics",
+    "selector": "a:has-text('Asian Asian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Asian Asian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Reality Reality Porn Pics",
+    "selector": "a:has-text('Reality Reality Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Reality Reality Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gangbang Gangbang Porn Pics",
+    "selector": "a:has-text('Gangbang Gangbang Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gangbang Gangbang Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Interracial Interracial Porn Pics",
+    "selector": "a:has-text('Interracial Interracial Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Interracial Interracial Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shaved Shaved Porn Pics",
+    "selector": "a:has-text('Shaved Shaved Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shaved Shaved Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Black Black Porn Pics",
+    "selector": "a:has-text('Black Black Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Black Black Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Orgasm Orgasm Porn Pics",
+    "selector": "a:has-text('Orgasm Orgasm Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Orgasm Orgasm Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Seduction Seduction Porn Pics",
+    "selector": "a:has-text('Seduction Seduction Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Seduction Seduction Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Natural Tits Natural Tits Porn Pics",
+    "selector": "a:has-text('Natural Tits Natural Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Natural Tits Natural Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum In Mouth Cum In Mouth Porn Pics",
+    "selector": "a:has-text('Cum In Mouth Cum In Mouth Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum In Mouth Cum In Mouth Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Housewife Housewife Porn Pics",
+    "selector": "a:has-text('Housewife Housewife Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Housewife Housewife Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hairy Hairy Porn Pics",
+    "selector": "a:has-text('Hairy Hairy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hairy Hairy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sports Sports Porn Pics",
+    "selector": "a:has-text('Sports Sports Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sports Sports Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Model Model Porn Pics",
+    "selector": "a:has-text('Model Model Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Model Model Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nurse Nurse Porn Pics",
+    "selector": "a:has-text('Nurse Nurse Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nurse Nurse Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Old Man Old Man Porn Pics",
+    "selector": "a:has-text('Old Man Old Man Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Old Man Old Man Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fingering Fingering Porn Pics",
+    "selector": "a:has-text('Fingering Fingering Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fingering Fingering Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "European European Porn Pics",
+    "selector": "a:has-text('European European Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "European European Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "SSBBW SSBBW Porn Pics",
+    "selector": "a:has-text('SSBBW SSBBW Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "SSBBW SSBBW Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bath Bath Porn Pics",
+    "selector": "a:has-text('Bath Bath Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bath Bath Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Teen Teen Porn Pics",
+    "selector": "a:has-text('Teen Teen Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Teen Teen Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nipples Nipples Porn Pics",
+    "selector": "a:has-text('Nipples Nipples Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nipples Nipples Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "White White Porn Pics",
+    "selector": "a:has-text('White White Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "White White Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wedding Wedding Porn Pics",
+    "selector": "a:has-text('Wedding Wedding Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wedding Wedding Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Threesome Threesome Porn Pics",
+    "selector": "a:has-text('Threesome Threesome Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Threesome Threesome Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Anal Gape Anal Gape Porn Pics",
+    "selector": "a:has-text('Anal Gape Anal Gape Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Anal Gape Anal Gape Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "BDSM BDSM Porn Pics",
+    "selector": "a:has-text('BDSM BDSM Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "BDSM BDSM Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Office Office Porn Pics",
+    "selector": "a:has-text('Office Office Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Office Office Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Fucking Ass Fucking Porn Pics",
+    "selector": "a:has-text('Ass Fucking Ass Fucking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Fucking Ass Fucking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Stripper Stripper Porn Pics",
+    "selector": "a:has-text('Stripper Stripper Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Stripper Stripper Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Solo Solo Porn Pics",
+    "selector": "a:has-text('Solo Solo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Solo Solo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pregnant Pregnant Porn Pics",
+    "selector": "a:has-text('Pregnant Pregnant Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pregnant Pregnant Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tall Tall Porn Pics",
+    "selector": "a:has-text('Tall Tall Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tall Tall Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Glamour Glamour Porn Pics",
+    "selector": "a:has-text('Glamour Glamour Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Glamour Glamour Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Old Young Old Young Porn Pics",
+    "selector": "a:has-text('Old Young Old Young Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Old Young Old Young Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Femdom Femdom Porn Pics",
+    "selector": "a:has-text('Femdom Femdom Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Femdom Femdom Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Deepthroat Deepthroat Porn Pics",
+    "selector": "a:has-text('Deepthroat Deepthroat Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Deepthroat Deepthroat Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Lesbian Lesbian Porn Pics",
+    "selector": "a:has-text('Lesbian Lesbian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Lesbian Lesbian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Upskirt Upskirt Porn Pics",
+    "selector": "a:has-text('Upskirt Upskirt Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Upskirt Upskirt Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ebony Ebony Porn Pics",
+    "selector": "a:has-text('Ebony Ebony Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ebony Ebony Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shower Shower Porn Pics",
+    "selector": "a:has-text('Shower Shower Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shower Shower Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Handjob Handjob Porn Pics",
+    "selector": "a:has-text('Handjob Handjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Handjob Handjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wife Wife Porn Pics",
+    "selector": "a:has-text('Wife Wife Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wife Wife Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Skirt Skirt Porn Pics",
+    "selector": "a:has-text('Skirt Skirt Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Skirt Skirt Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Clothed Clothed Porn Pics",
+    "selector": "a:has-text('Clothed Clothed Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Clothed Clothed Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Girlfriend Girlfriend Porn Pics",
+    "selector": "a:has-text('Girlfriend Girlfriend Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Girlfriend Girlfriend Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Brazilian Brazilian Porn Pics",
+    "selector": "a:has-text('Brazilian Brazilian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Brazilian Brazilian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cumshot Cumshot Porn Pics",
+    "selector": "a:has-text('Cumshot Cumshot Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cumshot Cumshot Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cosplay Cosplay Porn Pics",
+    "selector": "a:has-text('Cosplay Cosplay Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cosplay Cosplay Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Spreading Spreading Porn Pics",
+    "selector": "a:has-text('Spreading Spreading Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Spreading Spreading Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Massage Massage Porn Pics",
+    "selector": "a:has-text('Massage Massage Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Massage Massage Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Anal Anal Porn Pics",
+    "selector": "a:has-text('Anal Anal Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Anal Anal Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Petite Petite Porn Pics",
+    "selector": "a:has-text('Petite Petite Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Petite Petite Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Oiled Oiled Porn Pics",
+    "selector": "a:has-text('Oiled Oiled Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Oiled Oiled Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tattoo Tattoo Porn Pics",
+    "selector": "a:has-text('Tattoo Tattoo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tattoo Tattoo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Maid Maid Porn Pics",
+    "selector": "a:has-text('Maid Maid Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Maid Maid Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ball Licking Ball Licking Porn Pics",
+    "selector": "a:has-text('Ball Licking Ball Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ball Licking Ball Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tribbing Tribbing Porn Pics",
+    "selector": "a:has-text('Tribbing Tribbing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tribbing Tribbing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Panties Panties Porn Pics",
+    "selector": "a:has-text('Panties Panties Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Panties Panties Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Groupsex Groupsex Porn Pics",
+    "selector": "a:has-text('Groupsex Groupsex Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Groupsex Groupsex Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thai Thai Porn Pics",
+    "selector": "a:has-text('Thai Thai Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thai Thai Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Couple Couple Porn Pics",
+    "selector": "a:has-text('Couple Couple Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Couple Couple Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Humping Humping Porn Pics",
+    "selector": "a:has-text('Humping Humping Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Humping Humping Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum Swapping Cum Swapping Porn Pics",
+    "selector": "a:has-text('Cum Swapping Cum Swapping Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum Swapping Cum Swapping Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Legs Legs Porn Pics",
+    "selector": "a:has-text('Legs Legs Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Legs Legs Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Babe Babe Porn Pics",
+    "selector": "a:has-text('Babe Babe Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Babe Babe Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "POV POV Porn Pics",
+    "selector": "a:has-text('POV POV Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "POV POV Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Lingerie Lingerie Porn Pics",
+    "selector": "a:has-text('Lingerie Lingerie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Lingerie Lingerie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Brunette Brunette Porn Pics",
+    "selector": "a:has-text('Brunette Brunette Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Brunette Brunette Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Party Party Porn Pics",
+    "selector": "a:has-text('Party Party Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Party Party Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Glasses Glasses Porn Pics",
+    "selector": "a:has-text('Glasses Glasses Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Glasses Glasses Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Saggy Tits Saggy Tits Porn Pics",
+    "selector": "a:has-text('Saggy Tits Saggy Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Saggy Tits Saggy Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Selfie Selfie Porn Pics",
+    "selector": "a:has-text('Selfie Selfie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Selfie Selfie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pissing Pissing Porn Pics",
+    "selector": "a:has-text('Pissing Pissing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pissing Pissing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Voyeur Voyeur Porn Pics",
+    "selector": "a:has-text('Voyeur Voyeur Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Voyeur Voyeur Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "BBW BBW Porn Pics",
+    "selector": "a:has-text('BBW BBW Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "BBW BBW Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "CFNM CFNM Porn Pics",
+    "selector": "a:has-text('CFNM CFNM Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "CFNM CFNM Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Homemade Homemade Porn Pics",
+    "selector": "a:has-text('Homemade Homemade Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Homemade Homemade Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Amateur Amateur Porn Pics",
+    "selector": "a:has-text('Amateur Amateur Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Amateur Amateur Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Jeans Jeans Porn Pics",
+    "selector": "a:has-text('Jeans Jeans Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Jeans Jeans Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts Shorts Porn Pics",
+    "selector": "a:has-text('Shorts Shorts Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts Shorts Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Police Police Porn Pics",
+    "selector": "a:has-text('Police Police Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Police Police Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bukkake Bukkake Porn Pics",
+    "selector": "a:has-text('Bukkake Bukkake Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bukkake Bukkake Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Uniform Uniform Porn Pics",
+    "selector": "a:has-text('Uniform Uniform Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Uniform Uniform Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Licking Ass Licking Porn Pics",
+    "selector": "a:has-text('Ass Licking Ass Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Licking Ass Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fake Tits Fake Tits Porn Pics",
+    "selector": "a:has-text('Fake Tits Fake Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fake Tits Fake Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gloryhole Gloryhole Porn Pics",
+    "selector": "a:has-text('Gloryhole Gloryhole Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gloryhole Gloryhole Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pegging Pegging Porn Pics",
+    "selector": "a:has-text('Pegging Pegging Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pegging Pegging Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bikini Bikini Porn Pics",
+    "selector": "a:has-text('Bikini Bikini Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bikini Bikini Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thong Thong Porn Pics",
+    "selector": "a:has-text('Thong Thong Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thong Thong Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Outdoor Outdoor Porn Pics",
+    "selector": "a:has-text('Outdoor Outdoor Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Outdoor Outdoor Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Spanking Spanking Porn Pics",
+    "selector": "a:has-text('Spanking Spanking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Spanking Spanking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blindfold Blindfold Porn Pics",
+    "selector": "a:has-text('Blindfold Blindfold Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blindfold Blindfold Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Strapon Strapon Porn Pics",
+    "selector": "a:has-text('Strapon Strapon Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Strapon Strapon Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cougar Cougar Porn Pics",
+    "selector": "a:has-text('Cougar Cougar Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cougar Cougar Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tiny Tits Tiny Tits Porn Pics",
+    "selector": "a:has-text('Tiny Tits Tiny Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tiny Tits Tiny Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Yoga Pants Yoga Pants Porn Pics",
+    "selector": "a:has-text('Yoga Pants Yoga Pants Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Yoga Pants Yoga Pants Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Piercing Piercing Porn Pics",
+    "selector": "a:has-text('Piercing Piercing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Piercing Piercing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "College College Porn Pics",
+    "selector": "a:has-text('College College Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "College College Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Christmas Christmas Porn Pics",
+    "selector": "a:has-text('Christmas Christmas Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Christmas Christmas Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Granny Granny Porn Pics",
+    "selector": "a:has-text('Granny Granny Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Granny Granny Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Flexible Flexible Porn Pics",
+    "selector": "a:has-text('Flexible Flexible Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Flexible Flexible Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bondage Bondage Porn Pics",
+    "selector": "a:has-text('Bondage Bondage Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bondage Bondage Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nude Nude Porn Pics",
+    "selector": "a:has-text('Nude Nude Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nude Nude Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "High Heels High Heels Porn Pics",
+    "selector": "a:has-text('High Heels High Heels Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "High Heels High Heels Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Orgy Orgy Porn Pics",
+    "selector": "a:has-text('Orgy Orgy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Orgy Orgy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pool Pool Porn Pics",
+    "selector": "a:has-text('Pool Pool Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pool Pool Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fisting Fisting Porn Pics",
+    "selector": "a:has-text('Fisting Fisting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fisting Fisting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Latex Latex Porn Pics",
+    "selector": "a:has-text('Latex Latex Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Latex Latex Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fetish Fetish Porn Pics",
+    "selector": "a:has-text('Fetish Fetish Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fetish Fetish Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blowbang Blowbang Porn Pics",
+    "selector": "a:has-text('Blowbang Blowbang Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blowbang Blowbang Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Stockings Stockings Porn Pics",
+    "selector": "a:has-text('Stockings Stockings Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Stockings Stockings Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Dildo Dildo Porn Pics",
+    "selector": "a:has-text('Dildo Dildo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Dildo Dildo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Facial Facial Porn Pics",
+    "selector": "a:has-text('Facial Facial Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Facial Facial Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Centerfold Centerfold Porn Pics",
+    "selector": "a:has-text('Centerfold Centerfold Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Centerfold Centerfold Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Face Face Porn Pics",
+    "selector": "a:has-text('Face Face Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Face Face Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Skinny Skinny Porn Pics",
+    "selector": "a:has-text('Skinny Skinny Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Skinny Skinny Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pantyhose Pantyhose Porn Pics",
+    "selector": "a:has-text('Pantyhose Pantyhose Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pantyhose Pantyhose Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Boots Boots Porn Pics",
+    "selector": "a:has-text('Boots Boots Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Boots Boots Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Feet Feet Porn Pics",
+    "selector": "a:has-text('Feet Feet Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Feet Feet Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cheerleader Cheerleader Porn Pics",
+    "selector": "a:has-text('Cheerleader Cheerleader Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cheerleader Cheerleader Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Smoking Smoking Porn Pics",
+    "selector": "a:has-text('Smoking Smoking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Smoking Smoking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Redhead Redhead Porn Pics",
+    "selector": "a:has-text('Redhead Redhead Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Redhead Redhead Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Secretary Secretary Porn Pics",
+    "selector": "a:has-text('Secretary Secretary Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Secretary Secretary Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Beach Beach Porn Pics",
+    "selector": "a:has-text('Beach Beach Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Beach Beach Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Mature Mature Porn Pics",
+    "selector": "a:has-text('Mature Mature Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Mature Mature Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blonde Blonde Porn Pics",
+    "selector": "a:has-text('Blonde Blonde Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blonde Blonde Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gyno Gyno Porn Pics",
+    "selector": "a:has-text('Gyno Gyno Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gyno Gyno Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Short Hair Short Hair Porn Pics",
+    "selector": "a:has-text('Short Hair Short Hair Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Short Hair Short Hair Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Footjob Footjob Porn Pics",
+    "selector": "a:has-text('Footjob Footjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Footjob Footjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "CYBERsitter\u2122",
+    "selector": "a:has-text('CYBERsitter\u2122')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "CYBERsitter\u2122",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Net Nanny\u00ae",
+    "selector": "a:has-text('Net Nanny\u00ae')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Net Nanny\u00ae",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "SafeToNet",
+    "selector": "a:has-text('SafeToNet')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "SafeToNet",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "ASACP",
+    "selector": "a:has-text('ASACP')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "ASACP",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Terms of Use",
+    "selector": "a:has-text('Terms of Use')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Terms of Use",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Terms of Use",
+    "selector": "a:has-text('Terms of Use')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Terms of Use",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 196
+Inputs/Buttons: 3
+Links: 193
+Full elements list:
+[
+  {
+    "tag": "a",
+    "text": " Free Porn Pics",
+    "selector": "a:has-text(' Free Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": " Free Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "input",
+    "text": "Search here",
+    "selector": "input[aria-label*='Search here']",
+    "attributes": {
+      "role": "textbox",
+      "aria_label": "Search here",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Login",
+    "selector": "button:has-text('Login')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Login",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign Up",
+    "selector": "a:has-text('Sign Up')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign Up",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tags",
+    "selector": "a:has-text('Tags')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tags",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pornstars",
+    "selector": "a:has-text('Pornstars')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pornstars",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Channels",
+    "selector": "a:has-text('Channels')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Channels",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Videos",
+    "selector": "a:has-text('Videos')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Videos",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Live Sex J",
+    "selector": "a:has-text('Live Sex J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Live Sex J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Meet&Fuck J",
+    "selector": "a:has-text('Meet&Fuck J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Meet&Fuck J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI Girls J",
+    "selector": "a:has-text('AI Girls J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI Girls J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI Jerk Off J",
+    "selector": "a:has-text('AI Jerk Off J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI Jerk Off J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Random Gallery",
+    "selector": "a:has-text('Random Gallery')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Random Gallery",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pornstar Pornstar Porn Pics",
+    "selector": "a:has-text('Pornstar Pornstar Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pornstar Pornstar Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Indian Indian Porn Pics",
+    "selector": "a:has-text('Indian Indian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Indian Indian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sexy Sexy Porn Pics",
+    "selector": "a:has-text('Sexy Sexy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sexy Sexy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Mom Mom Porn Pics",
+    "selector": "a:has-text('Mom Mom Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Mom Mom Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pussy Pussy Porn Pics",
+    "selector": "a:has-text('Pussy Pussy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pussy Pussy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thick Thick Porn Pics",
+    "selector": "a:has-text('Thick Thick Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thick Thick Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Schoolgirl Schoolgirl Porn Pics",
+    "selector": "a:has-text('Schoolgirl Schoolgirl Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Schoolgirl Schoolgirl Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pussy Licking Pussy Licking Porn Pics",
+    "selector": "a:has-text('Pussy Licking Pussy Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pussy Licking Pussy Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Ass Porn Pics",
+    "selector": "a:has-text('Ass Ass Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Ass Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI AI Porn Pics",
+    "selector": "a:has-text('AI AI Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI AI Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Missionary Missionary Porn Pics",
+    "selector": "a:has-text('Missionary Missionary Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Missionary Missionary Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum In Pussy Cum In Pussy Porn Pics",
+    "selector": "a:has-text('Cum In Pussy Cum In Pussy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum In Pussy Cum In Pussy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Perfect Perfect Porn Pics",
+    "selector": "a:has-text('Perfect Perfect Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Perfect Perfect Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Kissing Kissing Porn Pics",
+    "selector": "a:has-text('Kissing Kissing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Kissing Kissing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Naked Women Naked Women Porn Pics",
+    "selector": "a:has-text('Naked Women Naked Women Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Naked Women Naked Women Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hardcore Hardcore Porn Pics",
+    "selector": "a:has-text('Hardcore Hardcore Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hardcore Hardcore Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Caught Caught Porn Pics",
+    "selector": "a:has-text('Caught Caught Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Caught Caught Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Chubby Chubby Porn Pics",
+    "selector": "a:has-text('Chubby Chubby Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Chubby Chubby Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Big Tits Big Tits Porn Pics",
+    "selector": "a:has-text('Big Tits Big Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Big Tits Big Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Titjob Titjob Porn Pics",
+    "selector": "a:has-text('Titjob Titjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Titjob Titjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Non Nude Non Nude Porn Pics",
+    "selector": "a:has-text('Non Nude Non Nude Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Non Nude Non Nude Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Close Up Close Up Porn Pics",
+    "selector": "a:has-text('Close Up Close Up Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Close Up Close Up Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Doggy Style Doggy Style Porn Pics",
+    "selector": "a:has-text('Doggy Style Doggy Style Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Doggy Style Doggy Style Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Big Cock Big Cock Porn Pics",
+    "selector": "a:has-text('Big Cock Big Cock Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Big Cock Big Cock Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Curvy Curvy Porn Pics",
+    "selector": "a:has-text('Curvy Curvy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Curvy Curvy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Teacher Teacher Porn Pics",
+    "selector": "a:has-text('Teacher Teacher Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Teacher Teacher Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Beautiful Beautiful Porn Pics",
+    "selector": "a:has-text('Beautiful Beautiful Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Beautiful Beautiful Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cowgirl Cowgirl Porn Pics",
+    "selector": "a:has-text('Cowgirl Cowgirl Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cowgirl Cowgirl Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Latina Latina Porn Pics",
+    "selector": "a:has-text('Latina Latina Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Latina Latina Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Naked Girls Naked Girls Porn Pics",
+    "selector": "a:has-text('Naked Girls Naked Girls Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Naked Girls Naked Girls Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Masturbation Masturbation Porn Pics",
+    "selector": "a:has-text('Masturbation Masturbation Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Masturbation Masturbation Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Creampie Creampie Porn Pics",
+    "selector": "a:has-text('Creampie Creampie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Creampie Creampie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Undressing Undressing Porn Pics",
+    "selector": "a:has-text('Undressing Undressing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Undressing Undressing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Japanese Japanese Porn Pics",
+    "selector": "a:has-text('Japanese Japanese Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Japanese Japanese Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Family Family Porn Pics",
+    "selector": "a:has-text('Family Family Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Family Family Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wet Wet Porn Pics",
+    "selector": "a:has-text('Wet Wet Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wet Wet Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "PAWG PAWG Porn Pics",
+    "selector": "a:has-text('PAWG PAWG Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "PAWG PAWG Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Double Penetration Double Penetration Porn Pics",
+    "selector": "a:has-text('Double Penetration Double Penetration Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Double Penetration Double Penetration Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blowjob Blowjob Porn Pics",
+    "selector": "a:has-text('Blowjob Blowjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blowjob Blowjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Socks Socks Porn Pics",
+    "selector": "a:has-text('Socks Socks Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Socks Socks Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "MILF MILF Porn Pics",
+    "selector": "a:has-text('MILF MILF Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "MILF MILF Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Public Public Porn Pics",
+    "selector": "a:has-text('Public Public Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Public Public Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Squirting Squirting Porn Pics",
+    "selector": "a:has-text('Squirting Squirting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Squirting Squirting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hentai Hentai Porn Pics",
+    "selector": "a:has-text('Hentai Hentai Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hentai Hentai Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cute Cute Porn Pics",
+    "selector": "a:has-text('Cute Cute Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cute Cute Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Facesitting Facesitting Porn Pics",
+    "selector": "a:has-text('Facesitting Facesitting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Facesitting Facesitting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Asian Asian Porn Pics",
+    "selector": "a:has-text('Asian Asian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Asian Asian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Reality Reality Porn Pics",
+    "selector": "a:has-text('Reality Reality Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Reality Reality Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gangbang Gangbang Porn Pics",
+    "selector": "a:has-text('Gangbang Gangbang Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gangbang Gangbang Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Interracial Interracial Porn Pics",
+    "selector": "a:has-text('Interracial Interracial Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Interracial Interracial Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shaved Shaved Porn Pics",
+    "selector": "a:has-text('Shaved Shaved Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shaved Shaved Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Black Black Porn Pics",
+    "selector": "a:has-text('Black Black Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Black Black Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Orgasm Orgasm Porn Pics",
+    "selector": "a:has-text('Orgasm Orgasm Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Orgasm Orgasm Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Seduction Seduction Porn Pics",
+    "selector": "a:has-text('Seduction Seduction Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Seduction Seduction Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Natural Tits Natural Tits Porn Pics",
+    "selector": "a:has-text('Natural Tits Natural Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Natural Tits Natural Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum In Mouth Cum In Mouth Porn Pics",
+    "selector": "a:has-text('Cum In Mouth Cum In Mouth Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum In Mouth Cum In Mouth Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Housewife Housewife Porn Pics",
+    "selector": "a:has-text('Housewife Housewife Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Housewife Housewife Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hairy Hairy Porn Pics",
+    "selector": "a:has-text('Hairy Hairy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hairy Hairy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sports Sports Porn Pics",
+    "selector": "a:has-text('Sports Sports Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sports Sports Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Model Model Porn Pics",
+    "selector": "a:has-text('Model Model Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Model Model Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nurse Nurse Porn Pics",
+    "selector": "a:has-text('Nurse Nurse Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nurse Nurse Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Old Man Old Man Porn Pics",
+    "selector": "a:has-text('Old Man Old Man Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Old Man Old Man Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fingering Fingering Porn Pics",
+    "selector": "a:has-text('Fingering Fingering Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fingering Fingering Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "European European Porn Pics",
+    "selector": "a:has-text('European European Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "European European Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "SSBBW SSBBW Porn Pics",
+    "selector": "a:has-text('SSBBW SSBBW Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "SSBBW SSBBW Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bath Bath Porn Pics",
+    "selector": "a:has-text('Bath Bath Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bath Bath Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Teen Teen Porn Pics",
+    "selector": "a:has-text('Teen Teen Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Teen Teen Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nipples Nipples Porn Pics",
+    "selector": "a:has-text('Nipples Nipples Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nipples Nipples Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "White White Porn Pics",
+    "selector": "a:has-text('White White Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "White White Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wedding Wedding Porn Pics",
+    "selector": "a:has-text('Wedding Wedding Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wedding Wedding Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Threesome Threesome Porn Pics",
+    "selector": "a:has-text('Threesome Threesome Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Threesome Threesome Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Anal Gape Anal Gape Porn Pics",
+    "selector": "a:has-text('Anal Gape Anal Gape Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Anal Gape Anal Gape Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "BDSM BDSM Porn Pics",
+    "selector": "a:has-text('BDSM BDSM Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "BDSM BDSM Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Office Office Porn Pics",
+    "selector": "a:has-text('Office Office Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Office Office Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Fucking Ass Fucking Porn Pics",
+    "selector": "a:has-text('Ass Fucking Ass Fucking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Fucking Ass Fucking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Stripper Stripper Porn Pics",
+    "selector": "a:has-text('Stripper Stripper Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Stripper Stripper Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Solo Solo Porn Pics",
+    "selector": "a:has-text('Solo Solo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Solo Solo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pregnant Pregnant Porn Pics",
+    "selector": "a:has-text('Pregnant Pregnant Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pregnant Pregnant Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tall Tall Porn Pics",
+    "selector": "a:has-text('Tall Tall Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tall Tall Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Glamour Glamour Porn Pics",
+    "selector": "a:has-text('Glamour Glamour Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Glamour Glamour Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Old Young Old Young Porn Pics",
+    "selector": "a:has-text('Old Young Old Young Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Old Young Old Young Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Femdom Femdom Porn Pics",
+    "selector": "a:has-text('Femdom Femdom Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Femdom Femdom Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Deepthroat Deepthroat Porn Pics",
+    "selector": "a:has-text('Deepthroat Deepthroat Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Deepthroat Deepthroat Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Lesbian Lesbian Porn Pics",
+    "selector": "a:has-text('Lesbian Lesbian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Lesbian Lesbian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Upskirt Upskirt Porn Pics",
+    "selector": "a:has-text('Upskirt Upskirt Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Upskirt Upskirt Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ebony Ebony Porn Pics",
+    "selector": "a:has-text('Ebony Ebony Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ebony Ebony Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shower Shower Porn Pics",
+    "selector": "a:has-text('Shower Shower Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shower Shower Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Handjob Handjob Porn Pics",
+    "selector": "a:has-text('Handjob Handjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Handjob Handjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wife Wife Porn Pics",
+    "selector": "a:has-text('Wife Wife Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wife Wife Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Skirt Skirt Porn Pics",
+    "selector": "a:has-text('Skirt Skirt Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Skirt Skirt Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Clothed Clothed Porn Pics",
+    "selector": "a:has-text('Clothed Clothed Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Clothed Clothed Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Girlfriend Girlfriend Porn Pics",
+    "selector": "a:has-text('Girlfriend Girlfriend Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Girlfriend Girlfriend Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Brazilian Brazilian Porn Pics",
+    "selector": "a:has-text('Brazilian Brazilian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Brazilian Brazilian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cumshot Cumshot Porn Pics",
+    "selector": "a:has-text('Cumshot Cumshot Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cumshot Cumshot Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cosplay Cosplay Porn Pics",
+    "selector": "a:has-text('Cosplay Cosplay Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cosplay Cosplay Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Spreading Spreading Porn Pics",
+    "selector": "a:has-text('Spreading Spreading Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Spreading Spreading Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Massage Massage Porn Pics",
+    "selector": "a:has-text('Massage Massage Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Massage Massage Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Anal Anal Porn Pics",
+    "selector": "a:has-text('Anal Anal Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Anal Anal Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Petite Petite Porn Pics",
+    "selector": "a:has-text('Petite Petite Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Petite Petite Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Oiled Oiled Porn Pics",
+    "selector": "a:has-text('Oiled Oiled Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Oiled Oiled Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tattoo Tattoo Porn Pics",
+    "selector": "a:has-text('Tattoo Tattoo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tattoo Tattoo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Maid Maid Porn Pics",
+    "selector": "a:has-text('Maid Maid Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Maid Maid Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ball Licking Ball Licking Porn Pics",
+    "selector": "a:has-text('Ball Licking Ball Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ball Licking Ball Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tribbing Tribbing Porn Pics",
+    "selector": "a:has-text('Tribbing Tribbing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tribbing Tribbing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Panties Panties Porn Pics",
+    "selector": "a:has-text('Panties Panties Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Panties Panties Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Groupsex Groupsex Porn Pics",
+    "selector": "a:has-text('Groupsex Groupsex Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Groupsex Groupsex Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thai Thai Porn Pics",
+    "selector": "a:has-text('Thai Thai Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thai Thai Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Couple Couple Porn Pics",
+    "selector": "a:has-text('Couple Couple Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Couple Couple Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Humping Humping Porn Pics",
+    "selector": "a:has-text('Humping Humping Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Humping Humping Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum Swapping Cum Swapping Porn Pics",
+    "selector": "a:has-text('Cum Swapping Cum Swapping Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum Swapping Cum Swapping Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Legs Legs Porn Pics",
+    "selector": "a:has-text('Legs Legs Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Legs Legs Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Babe Babe Porn Pics",
+    "selector": "a:has-text('Babe Babe Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Babe Babe Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "POV POV Porn Pics",
+    "selector": "a:has-text('POV POV Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "POV POV Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Lingerie Lingerie Porn Pics",
+    "selector": "a:has-text('Lingerie Lingerie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Lingerie Lingerie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Brunette Brunette Porn Pics",
+    "selector": "a:has-text('Brunette Brunette Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Brunette Brunette Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Party Party Porn Pics",
+    "selector": "a:has-text('Party Party Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Party Party Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Glasses Glasses Porn Pics",
+    "selector": "a:has-text('Glasses Glasses Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Glasses Glasses Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Saggy Tits Saggy Tits Porn Pics",
+    "selector": "a:has-text('Saggy Tits Saggy Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Saggy Tits Saggy Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Selfie Selfie Porn Pics",
+    "selector": "a:has-text('Selfie Selfie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Selfie Selfie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pissing Pissing Porn Pics",
+    "selector": "a:has-text('Pissing Pissing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pissing Pissing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Voyeur Voyeur Porn Pics",
+    "selector": "a:has-text('Voyeur Voyeur Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Voyeur Voyeur Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "BBW BBW Porn Pics",
+    "selector": "a:has-text('BBW BBW Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "BBW BBW Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "CFNM CFNM Porn Pics",
+    "selector": "a:has-text('CFNM CFNM Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "CFNM CFNM Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Homemade Homemade Porn Pics",
+    "selector": "a:has-text('Homemade Homemade Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Homemade Homemade Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Amateur Amateur Porn Pics",
+    "selector": "a:has-text('Amateur Amateur Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Amateur Amateur Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Jeans Jeans Porn Pics",
+    "selector": "a:has-text('Jeans Jeans Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Jeans Jeans Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts Shorts Porn Pics",
+    "selector": "a:has-text('Shorts Shorts Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts Shorts Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Police Police Porn Pics",
+    "selector": "a:has-text('Police Police Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Police Police Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bukkake Bukkake Porn Pics",
+    "selector": "a:has-text('Bukkake Bukkake Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bukkake Bukkake Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Uniform Uniform Porn Pics",
+    "selector": "a:has-text('Uniform Uniform Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Uniform Uniform Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Licking Ass Licking Porn Pics",
+    "selector": "a:has-text('Ass Licking Ass Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Licking Ass Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fake Tits Fake Tits Porn Pics",
+    "selector": "a:has-text('Fake Tits Fake Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fake Tits Fake Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gloryhole Gloryhole Porn Pics",
+    "selector": "a:has-text('Gloryhole Gloryhole Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gloryhole Gloryhole Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pegging Pegging Porn Pics",
+    "selector": "a:has-text('Pegging Pegging Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pegging Pegging Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bikini Bikini Porn Pics",
+    "selector": "a:has-text('Bikini Bikini Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bikini Bikini Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thong Thong Porn Pics",
+    "selector": "a:has-text('Thong Thong Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thong Thong Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Outdoor Outdoor Porn Pics",
+    "selector": "a:has-text('Outdoor Outdoor Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Outdoor Outdoor Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Spanking Spanking Porn Pics",
+    "selector": "a:has-text('Spanking Spanking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Spanking Spanking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blindfold Blindfold Porn Pics",
+    "selector": "a:has-text('Blindfold Blindfold Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blindfold Blindfold Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Strapon Strapon Porn Pics",
+    "selector": "a:has-text('Strapon Strapon Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Strapon Strapon Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cougar Cougar Porn Pics",
+    "selector": "a:has-text('Cougar Cougar Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cougar Cougar Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tiny Tits Tiny Tits Porn Pics",
+    "selector": "a:has-text('Tiny Tits Tiny Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tiny Tits Tiny Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Yoga Pants Yoga Pants Porn Pics",
+    "selector": "a:has-text('Yoga Pants Yoga Pants Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Yoga Pants Yoga Pants Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Piercing Piercing Porn Pics",
+    "selector": "a:has-text('Piercing Piercing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Piercing Piercing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "College College Porn Pics",
+    "selector": "a:has-text('College College Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "College College Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Christmas Christmas Porn Pics",
+    "selector": "a:has-text('Christmas Christmas Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Christmas Christmas Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Granny Granny Porn Pics",
+    "selector": "a:has-text('Granny Granny Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Granny Granny Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Flexible Flexible Porn Pics",
+    "selector": "a:has-text('Flexible Flexible Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Flexible Flexible Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bondage Bondage Porn Pics",
+    "selector": "a:has-text('Bondage Bondage Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bondage Bondage Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nude Nude Porn Pics",
+    "selector": "a:has-text('Nude Nude Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nude Nude Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "High Heels High Heels Porn Pics",
+    "selector": "a:has-text('High Heels High Heels Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "High Heels High Heels Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Orgy Orgy Porn Pics",
+    "selector": "a:has-text('Orgy Orgy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Orgy Orgy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pool Pool Porn Pics",
+    "selector": "a:has-text('Pool Pool Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pool Pool Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fisting Fisting Porn Pics",
+    "selector": "a:has-text('Fisting Fisting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fisting Fisting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Latex Latex Porn Pics",
+    "selector": "a:has-text('Latex Latex Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Latex Latex Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fetish Fetish Porn Pics",
+    "selector": "a:has-text('Fetish Fetish Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fetish Fetish Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blowbang Blowbang Porn Pics",
+    "selector": "a:has-text('Blowbang Blowbang Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blowbang Blowbang Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Stockings Stockings Porn Pics",
+    "selector": "a:has-text('Stockings Stockings Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Stockings Stockings Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Dildo Dildo Porn Pics",
+    "selector": "a:has-text('Dildo Dildo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Dildo Dildo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Facial Facial Porn Pics",
+    "selector": "a:has-text('Facial Facial Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Facial Facial Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Centerfold Centerfold Porn Pics",
+    "selector": "a:has-text('Centerfold Centerfold Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Centerfold Centerfold Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Face Face Porn Pics",
+    "selector": "a:has-text('Face Face Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Face Face Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Skinny Skinny Porn Pics",
+    "selector": "a:has-text('Skinny Skinny Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Skinny Skinny Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pantyhose Pantyhose Porn Pics",
+    "selector": "a:has-text('Pantyhose Pantyhose Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pantyhose Pantyhose Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Boots Boots Porn Pics",
+    "selector": "a:has-text('Boots Boots Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Boots Boots Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Feet Feet Porn Pics",
+    "selector": "a:has-text('Feet Feet Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Feet Feet Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cheerleader Cheerleader Porn Pics",
+    "selector": "a:has-text('Cheerleader Cheerleader Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cheerleader Cheerleader Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Smoking Smoking Porn Pics",
+    "selector": "a:has-text('Smoking Smoking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Smoking Smoking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Redhead Redhead Porn Pics",
+    "selector": "a:has-text('Redhead Redhead Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Redhead Redhead Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Secretary Secretary Porn Pics",
+    "selector": "a:has-text('Secretary Secretary Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Secretary Secretary Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Beach Beach Porn Pics",
+    "selector": "a:has-text('Beach Beach Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Beach Beach Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Mature Mature Porn Pics",
+    "selector": "a:has-text('Mature Mature Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Mature Mature Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blonde Blonde Porn Pics",
+    "selector": "a:has-text('Blonde Blonde Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blonde Blonde Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gyno Gyno Porn Pics",
+    "selector": "a:has-text('Gyno Gyno Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gyno Gyno Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Short Hair Short Hair Porn Pics",
+    "selector": "a:has-text('Short Hair Short Hair Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Short Hair Short Hair Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Footjob Footjob Porn Pics",
+    "selector": "a:has-text('Footjob Footjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Footjob Footjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "CYBERsitter\u2122",
+    "selector": "a:has-text('CYBERsitter\u2122')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "CYBERsitter\u2122",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Net Nanny\u00ae",
+    "selector": "a:has-text('Net Nanny\u00ae')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Net Nanny\u00ae",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "SafeToNet",
+    "selector": "a:has-text('SafeToNet')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "SafeToNet",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "ASACP",
+    "selector": "a:has-text('ASACP')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "ASACP",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Terms of Use",
+    "selector": "a:has-text('Terms of Use')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Terms of Use",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Terms of Use",
+    "selector": "a:has-text('Terms of Use')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Terms of Use",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 196
+Inputs/Buttons: 3
+Links: 193
+Full elements list:
+[
+  {
+    "tag": "a",
+    "text": " Free Porn Pics",
+    "selector": "a:has-text(' Free Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": " Free Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "input",
+    "text": "Search here",
+    "selector": "input[aria-label*='Search here']",
+    "attributes": {
+      "role": "textbox",
+      "aria_label": "Search here",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Login",
+    "selector": "button:has-text('Login')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Login",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign Up",
+    "selector": "a:has-text('Sign Up')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign Up",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tags",
+    "selector": "a:has-text('Tags')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tags",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pornstars",
+    "selector": "a:has-text('Pornstars')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pornstars",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Channels",
+    "selector": "a:has-text('Channels')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Channels",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Videos",
+    "selector": "a:has-text('Videos')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Videos",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Live Sex J",
+    "selector": "a:has-text('Live Sex J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Live Sex J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Meet&Fuck J",
+    "selector": "a:has-text('Meet&Fuck J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Meet&Fuck J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI Girls J",
+    "selector": "a:has-text('AI Girls J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI Girls J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI Jerk Off J",
+    "selector": "a:has-text('AI Jerk Off J')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI Jerk Off J",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Random Gallery",
+    "selector": "a:has-text('Random Gallery')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Random Gallery",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pornstar Pornstar Porn Pics",
+    "selector": "a:has-text('Pornstar Pornstar Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pornstar Pornstar Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Indian Indian Porn Pics",
+    "selector": "a:has-text('Indian Indian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Indian Indian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sexy Sexy Porn Pics",
+    "selector": "a:has-text('Sexy Sexy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sexy Sexy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Mom Mom Porn Pics",
+    "selector": "a:has-text('Mom Mom Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Mom Mom Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pussy Pussy Porn Pics",
+    "selector": "a:has-text('Pussy Pussy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pussy Pussy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thick Thick Porn Pics",
+    "selector": "a:has-text('Thick Thick Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thick Thick Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Schoolgirl Schoolgirl Porn Pics",
+    "selector": "a:has-text('Schoolgirl Schoolgirl Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Schoolgirl Schoolgirl Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pussy Licking Pussy Licking Porn Pics",
+    "selector": "a:has-text('Pussy Licking Pussy Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pussy Licking Pussy Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Ass Porn Pics",
+    "selector": "a:has-text('Ass Ass Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Ass Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "AI AI Porn Pics",
+    "selector": "a:has-text('AI AI Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "AI AI Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Missionary Missionary Porn Pics",
+    "selector": "a:has-text('Missionary Missionary Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Missionary Missionary Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum In Pussy Cum In Pussy Porn Pics",
+    "selector": "a:has-text('Cum In Pussy Cum In Pussy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum In Pussy Cum In Pussy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Perfect Perfect Porn Pics",
+    "selector": "a:has-text('Perfect Perfect Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Perfect Perfect Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Kissing Kissing Porn Pics",
+    "selector": "a:has-text('Kissing Kissing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Kissing Kissing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Naked Women Naked Women Porn Pics",
+    "selector": "a:has-text('Naked Women Naked Women Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Naked Women Naked Women Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hardcore Hardcore Porn Pics",
+    "selector": "a:has-text('Hardcore Hardcore Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hardcore Hardcore Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Caught Caught Porn Pics",
+    "selector": "a:has-text('Caught Caught Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Caught Caught Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Chubby Chubby Porn Pics",
+    "selector": "a:has-text('Chubby Chubby Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Chubby Chubby Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Big Tits Big Tits Porn Pics",
+    "selector": "a:has-text('Big Tits Big Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Big Tits Big Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Titjob Titjob Porn Pics",
+    "selector": "a:has-text('Titjob Titjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Titjob Titjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Non Nude Non Nude Porn Pics",
+    "selector": "a:has-text('Non Nude Non Nude Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Non Nude Non Nude Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Close Up Close Up Porn Pics",
+    "selector": "a:has-text('Close Up Close Up Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Close Up Close Up Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Doggy Style Doggy Style Porn Pics",
+    "selector": "a:has-text('Doggy Style Doggy Style Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Doggy Style Doggy Style Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Big Cock Big Cock Porn Pics",
+    "selector": "a:has-text('Big Cock Big Cock Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Big Cock Big Cock Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Curvy Curvy Porn Pics",
+    "selector": "a:has-text('Curvy Curvy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Curvy Curvy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Teacher Teacher Porn Pics",
+    "selector": "a:has-text('Teacher Teacher Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Teacher Teacher Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Beautiful Beautiful Porn Pics",
+    "selector": "a:has-text('Beautiful Beautiful Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Beautiful Beautiful Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cowgirl Cowgirl Porn Pics",
+    "selector": "a:has-text('Cowgirl Cowgirl Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cowgirl Cowgirl Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Latina Latina Porn Pics",
+    "selector": "a:has-text('Latina Latina Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Latina Latina Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Naked Girls Naked Girls Porn Pics",
+    "selector": "a:has-text('Naked Girls Naked Girls Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Naked Girls Naked Girls Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Masturbation Masturbation Porn Pics",
+    "selector": "a:has-text('Masturbation Masturbation Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Masturbation Masturbation Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Creampie Creampie Porn Pics",
+    "selector": "a:has-text('Creampie Creampie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Creampie Creampie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Undressing Undressing Porn Pics",
+    "selector": "a:has-text('Undressing Undressing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Undressing Undressing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Japanese Japanese Porn Pics",
+    "selector": "a:has-text('Japanese Japanese Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Japanese Japanese Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Family Family Porn Pics",
+    "selector": "a:has-text('Family Family Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Family Family Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wet Wet Porn Pics",
+    "selector": "a:has-text('Wet Wet Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wet Wet Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "PAWG PAWG Porn Pics",
+    "selector": "a:has-text('PAWG PAWG Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "PAWG PAWG Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Double Penetration Double Penetration Porn Pics",
+    "selector": "a:has-text('Double Penetration Double Penetration Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Double Penetration Double Penetration Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blowjob Blowjob Porn Pics",
+    "selector": "a:has-text('Blowjob Blowjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blowjob Blowjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Socks Socks Porn Pics",
+    "selector": "a:has-text('Socks Socks Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Socks Socks Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "MILF MILF Porn Pics",
+    "selector": "a:has-text('MILF MILF Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "MILF MILF Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Public Public Porn Pics",
+    "selector": "a:has-text('Public Public Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Public Public Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Squirting Squirting Porn Pics",
+    "selector": "a:has-text('Squirting Squirting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Squirting Squirting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hentai Hentai Porn Pics",
+    "selector": "a:has-text('Hentai Hentai Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hentai Hentai Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cute Cute Porn Pics",
+    "selector": "a:has-text('Cute Cute Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cute Cute Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Facesitting Facesitting Porn Pics",
+    "selector": "a:has-text('Facesitting Facesitting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Facesitting Facesitting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Asian Asian Porn Pics",
+    "selector": "a:has-text('Asian Asian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Asian Asian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Reality Reality Porn Pics",
+    "selector": "a:has-text('Reality Reality Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Reality Reality Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gangbang Gangbang Porn Pics",
+    "selector": "a:has-text('Gangbang Gangbang Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gangbang Gangbang Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Interracial Interracial Porn Pics",
+    "selector": "a:has-text('Interracial Interracial Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Interracial Interracial Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shaved Shaved Porn Pics",
+    "selector": "a:has-text('Shaved Shaved Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shaved Shaved Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Black Black Porn Pics",
+    "selector": "a:has-text('Black Black Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Black Black Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Orgasm Orgasm Porn Pics",
+    "selector": "a:has-text('Orgasm Orgasm Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Orgasm Orgasm Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Seduction Seduction Porn Pics",
+    "selector": "a:has-text('Seduction Seduction Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Seduction Seduction Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Natural Tits Natural Tits Porn Pics",
+    "selector": "a:has-text('Natural Tits Natural Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Natural Tits Natural Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum In Mouth Cum In Mouth Porn Pics",
+    "selector": "a:has-text('Cum In Mouth Cum In Mouth Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum In Mouth Cum In Mouth Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Housewife Housewife Porn Pics",
+    "selector": "a:has-text('Housewife Housewife Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Housewife Housewife Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Hairy Hairy Porn Pics",
+    "selector": "a:has-text('Hairy Hairy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Hairy Hairy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sports Sports Porn Pics",
+    "selector": "a:has-text('Sports Sports Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sports Sports Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Model Model Porn Pics",
+    "selector": "a:has-text('Model Model Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Model Model Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nurse Nurse Porn Pics",
+    "selector": "a:has-text('Nurse Nurse Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nurse Nurse Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Old Man Old Man Porn Pics",
+    "selector": "a:has-text('Old Man Old Man Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Old Man Old Man Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fingering Fingering Porn Pics",
+    "selector": "a:has-text('Fingering Fingering Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fingering Fingering Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "European European Porn Pics",
+    "selector": "a:has-text('European European Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "European European Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "SSBBW SSBBW Porn Pics",
+    "selector": "a:has-text('SSBBW SSBBW Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "SSBBW SSBBW Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bath Bath Porn Pics",
+    "selector": "a:has-text('Bath Bath Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bath Bath Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Teen Teen Porn Pics",
+    "selector": "a:has-text('Teen Teen Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Teen Teen Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nipples Nipples Porn Pics",
+    "selector": "a:has-text('Nipples Nipples Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nipples Nipples Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "White White Porn Pics",
+    "selector": "a:has-text('White White Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "White White Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wedding Wedding Porn Pics",
+    "selector": "a:has-text('Wedding Wedding Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wedding Wedding Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Threesome Threesome Porn Pics",
+    "selector": "a:has-text('Threesome Threesome Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Threesome Threesome Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Anal Gape Anal Gape Porn Pics",
+    "selector": "a:has-text('Anal Gape Anal Gape Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Anal Gape Anal Gape Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "BDSM BDSM Porn Pics",
+    "selector": "a:has-text('BDSM BDSM Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "BDSM BDSM Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Office Office Porn Pics",
+    "selector": "a:has-text('Office Office Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Office Office Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Fucking Ass Fucking Porn Pics",
+    "selector": "a:has-text('Ass Fucking Ass Fucking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Fucking Ass Fucking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Stripper Stripper Porn Pics",
+    "selector": "a:has-text('Stripper Stripper Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Stripper Stripper Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Solo Solo Porn Pics",
+    "selector": "a:has-text('Solo Solo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Solo Solo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pregnant Pregnant Porn Pics",
+    "selector": "a:has-text('Pregnant Pregnant Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pregnant Pregnant Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tall Tall Porn Pics",
+    "selector": "a:has-text('Tall Tall Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tall Tall Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Glamour Glamour Porn Pics",
+    "selector": "a:has-text('Glamour Glamour Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Glamour Glamour Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Old Young Old Young Porn Pics",
+    "selector": "a:has-text('Old Young Old Young Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Old Young Old Young Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Femdom Femdom Porn Pics",
+    "selector": "a:has-text('Femdom Femdom Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Femdom Femdom Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Deepthroat Deepthroat Porn Pics",
+    "selector": "a:has-text('Deepthroat Deepthroat Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Deepthroat Deepthroat Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Lesbian Lesbian Porn Pics",
+    "selector": "a:has-text('Lesbian Lesbian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Lesbian Lesbian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Upskirt Upskirt Porn Pics",
+    "selector": "a:has-text('Upskirt Upskirt Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Upskirt Upskirt Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ebony Ebony Porn Pics",
+    "selector": "a:has-text('Ebony Ebony Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ebony Ebony Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shower Shower Porn Pics",
+    "selector": "a:has-text('Shower Shower Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shower Shower Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Handjob Handjob Porn Pics",
+    "selector": "a:has-text('Handjob Handjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Handjob Handjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Wife Wife Porn Pics",
+    "selector": "a:has-text('Wife Wife Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Wife Wife Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Skirt Skirt Porn Pics",
+    "selector": "a:has-text('Skirt Skirt Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Skirt Skirt Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Clothed Clothed Porn Pics",
+    "selector": "a:has-text('Clothed Clothed Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Clothed Clothed Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Girlfriend Girlfriend Porn Pics",
+    "selector": "a:has-text('Girlfriend Girlfriend Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Girlfriend Girlfriend Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Brazilian Brazilian Porn Pics",
+    "selector": "a:has-text('Brazilian Brazilian Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Brazilian Brazilian Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cumshot Cumshot Porn Pics",
+    "selector": "a:has-text('Cumshot Cumshot Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cumshot Cumshot Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cosplay Cosplay Porn Pics",
+    "selector": "a:has-text('Cosplay Cosplay Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cosplay Cosplay Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Spreading Spreading Porn Pics",
+    "selector": "a:has-text('Spreading Spreading Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Spreading Spreading Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Massage Massage Porn Pics",
+    "selector": "a:has-text('Massage Massage Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Massage Massage Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Anal Anal Porn Pics",
+    "selector": "a:has-text('Anal Anal Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Anal Anal Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Petite Petite Porn Pics",
+    "selector": "a:has-text('Petite Petite Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Petite Petite Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Oiled Oiled Porn Pics",
+    "selector": "a:has-text('Oiled Oiled Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Oiled Oiled Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tattoo Tattoo Porn Pics",
+    "selector": "a:has-text('Tattoo Tattoo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tattoo Tattoo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Maid Maid Porn Pics",
+    "selector": "a:has-text('Maid Maid Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Maid Maid Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ball Licking Ball Licking Porn Pics",
+    "selector": "a:has-text('Ball Licking Ball Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ball Licking Ball Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tribbing Tribbing Porn Pics",
+    "selector": "a:has-text('Tribbing Tribbing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tribbing Tribbing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Panties Panties Porn Pics",
+    "selector": "a:has-text('Panties Panties Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Panties Panties Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Groupsex Groupsex Porn Pics",
+    "selector": "a:has-text('Groupsex Groupsex Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Groupsex Groupsex Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thai Thai Porn Pics",
+    "selector": "a:has-text('Thai Thai Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thai Thai Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Couple Couple Porn Pics",
+    "selector": "a:has-text('Couple Couple Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Couple Couple Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Humping Humping Porn Pics",
+    "selector": "a:has-text('Humping Humping Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Humping Humping Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cum Swapping Cum Swapping Porn Pics",
+    "selector": "a:has-text('Cum Swapping Cum Swapping Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cum Swapping Cum Swapping Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Legs Legs Porn Pics",
+    "selector": "a:has-text('Legs Legs Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Legs Legs Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Babe Babe Porn Pics",
+    "selector": "a:has-text('Babe Babe Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Babe Babe Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "POV POV Porn Pics",
+    "selector": "a:has-text('POV POV Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "POV POV Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Lingerie Lingerie Porn Pics",
+    "selector": "a:has-text('Lingerie Lingerie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Lingerie Lingerie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Brunette Brunette Porn Pics",
+    "selector": "a:has-text('Brunette Brunette Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Brunette Brunette Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Party Party Porn Pics",
+    "selector": "a:has-text('Party Party Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Party Party Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Glasses Glasses Porn Pics",
+    "selector": "a:has-text('Glasses Glasses Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Glasses Glasses Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Saggy Tits Saggy Tits Porn Pics",
+    "selector": "a:has-text('Saggy Tits Saggy Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Saggy Tits Saggy Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Selfie Selfie Porn Pics",
+    "selector": "a:has-text('Selfie Selfie Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Selfie Selfie Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pissing Pissing Porn Pics",
+    "selector": "a:has-text('Pissing Pissing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pissing Pissing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Voyeur Voyeur Porn Pics",
+    "selector": "a:has-text('Voyeur Voyeur Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Voyeur Voyeur Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "BBW BBW Porn Pics",
+    "selector": "a:has-text('BBW BBW Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "BBW BBW Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "CFNM CFNM Porn Pics",
+    "selector": "a:has-text('CFNM CFNM Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "CFNM CFNM Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Homemade Homemade Porn Pics",
+    "selector": "a:has-text('Homemade Homemade Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Homemade Homemade Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Amateur Amateur Porn Pics",
+    "selector": "a:has-text('Amateur Amateur Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Amateur Amateur Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Jeans Jeans Porn Pics",
+    "selector": "a:has-text('Jeans Jeans Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Jeans Jeans Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts Shorts Porn Pics",
+    "selector": "a:has-text('Shorts Shorts Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts Shorts Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Police Police Porn Pics",
+    "selector": "a:has-text('Police Police Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Police Police Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bukkake Bukkake Porn Pics",
+    "selector": "a:has-text('Bukkake Bukkake Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bukkake Bukkake Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Uniform Uniform Porn Pics",
+    "selector": "a:has-text('Uniform Uniform Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Uniform Uniform Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Ass Licking Ass Licking Porn Pics",
+    "selector": "a:has-text('Ass Licking Ass Licking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Ass Licking Ass Licking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fake Tits Fake Tits Porn Pics",
+    "selector": "a:has-text('Fake Tits Fake Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fake Tits Fake Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gloryhole Gloryhole Porn Pics",
+    "selector": "a:has-text('Gloryhole Gloryhole Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gloryhole Gloryhole Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pegging Pegging Porn Pics",
+    "selector": "a:has-text('Pegging Pegging Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pegging Pegging Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bikini Bikini Porn Pics",
+    "selector": "a:has-text('Bikini Bikini Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bikini Bikini Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Thong Thong Porn Pics",
+    "selector": "a:has-text('Thong Thong Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Thong Thong Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Outdoor Outdoor Porn Pics",
+    "selector": "a:has-text('Outdoor Outdoor Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Outdoor Outdoor Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Spanking Spanking Porn Pics",
+    "selector": "a:has-text('Spanking Spanking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Spanking Spanking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blindfold Blindfold Porn Pics",
+    "selector": "a:has-text('Blindfold Blindfold Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blindfold Blindfold Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Strapon Strapon Porn Pics",
+    "selector": "a:has-text('Strapon Strapon Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Strapon Strapon Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cougar Cougar Porn Pics",
+    "selector": "a:has-text('Cougar Cougar Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cougar Cougar Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Tiny Tits Tiny Tits Porn Pics",
+    "selector": "a:has-text('Tiny Tits Tiny Tits Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Tiny Tits Tiny Tits Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Yoga Pants Yoga Pants Porn Pics",
+    "selector": "a:has-text('Yoga Pants Yoga Pants Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Yoga Pants Yoga Pants Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Piercing Piercing Porn Pics",
+    "selector": "a:has-text('Piercing Piercing Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Piercing Piercing Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "College College Porn Pics",
+    "selector": "a:has-text('College College Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "College College Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Christmas Christmas Porn Pics",
+    "selector": "a:has-text('Christmas Christmas Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Christmas Christmas Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Granny Granny Porn Pics",
+    "selector": "a:has-text('Granny Granny Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Granny Granny Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Flexible Flexible Porn Pics",
+    "selector": "a:has-text('Flexible Flexible Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Flexible Flexible Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Bondage Bondage Porn Pics",
+    "selector": "a:has-text('Bondage Bondage Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Bondage Bondage Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Nude Nude Porn Pics",
+    "selector": "a:has-text('Nude Nude Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Nude Nude Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "High Heels High Heels Porn Pics",
+    "selector": "a:has-text('High Heels High Heels Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "High Heels High Heels Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Orgy Orgy Porn Pics",
+    "selector": "a:has-text('Orgy Orgy Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Orgy Orgy Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pool Pool Porn Pics",
+    "selector": "a:has-text('Pool Pool Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pool Pool Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fisting Fisting Porn Pics",
+    "selector": "a:has-text('Fisting Fisting Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fisting Fisting Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Latex Latex Porn Pics",
+    "selector": "a:has-text('Latex Latex Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Latex Latex Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Fetish Fetish Porn Pics",
+    "selector": "a:has-text('Fetish Fetish Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Fetish Fetish Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blowbang Blowbang Porn Pics",
+    "selector": "a:has-text('Blowbang Blowbang Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blowbang Blowbang Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Stockings Stockings Porn Pics",
+    "selector": "a:has-text('Stockings Stockings Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Stockings Stockings Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Dildo Dildo Porn Pics",
+    "selector": "a:has-text('Dildo Dildo Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Dildo Dildo Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Facial Facial Porn Pics",
+    "selector": "a:has-text('Facial Facial Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Facial Facial Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Centerfold Centerfold Porn Pics",
+    "selector": "a:has-text('Centerfold Centerfold Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Centerfold Centerfold Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Face Face Porn Pics",
+    "selector": "a:has-text('Face Face Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Face Face Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Skinny Skinny Porn Pics",
+    "selector": "a:has-text('Skinny Skinny Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Skinny Skinny Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Pantyhose Pantyhose Porn Pics",
+    "selector": "a:has-text('Pantyhose Pantyhose Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Pantyhose Pantyhose Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Boots Boots Porn Pics",
+    "selector": "a:has-text('Boots Boots Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Boots Boots Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Feet Feet Porn Pics",
+    "selector": "a:has-text('Feet Feet Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Feet Feet Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Cheerleader Cheerleader Porn Pics",
+    "selector": "a:has-text('Cheerleader Cheerleader Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Cheerleader Cheerleader Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Smoking Smoking Porn Pics",
+    "selector": "a:has-text('Smoking Smoking Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Smoking Smoking Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Redhead Redhead Porn Pics",
+    "selector": "a:has-text('Redhead Redhead Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Redhead Redhead Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Secretary Secretary Porn Pics",
+    "selector": "a:has-text('Secretary Secretary Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Secretary Secretary Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Beach Beach Porn Pics",
+    "selector": "a:has-text('Beach Beach Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Beach Beach Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Mature Mature Porn Pics",
+    "selector": "a:has-text('Mature Mature Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Mature Mature Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Blonde Blonde Porn Pics",
+    "selector": "a:has-text('Blonde Blonde Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Blonde Blonde Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Gyno Gyno Porn Pics",
+    "selector": "a:has-text('Gyno Gyno Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Gyno Gyno Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Short Hair Short Hair Porn Pics",
+    "selector": "a:has-text('Short Hair Short Hair Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Short Hair Short Hair Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Footjob Footjob Porn Pics",
+    "selector": "a:has-text('Footjob Footjob Porn Pics')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Footjob Footjob Porn Pics",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "CYBERsitter\u2122",
+    "selector": "a:has-text('CYBERsitter\u2122')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "CYBERsitter\u2122",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Net Nanny\u00ae",
+    "selector": "a:has-text('Net Nanny\u00ae')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Net Nanny\u00ae",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "SafeToNet",
+    "selector": "a:has-text('SafeToNet')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "SafeToNet",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "ASACP",
+    "selector": "a:has-text('ASACP')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "ASACP",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Terms of Use",
+    "selector": "a:has-text('Terms of Use')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Terms of Use",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Terms of Use",
+    "selector": "a:has-text('Terms of Use')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Terms of Use",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 8
+Inputs/Buttons: 6
+Links: 2
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]
+
+============================================================
+Total elements extracted: 12
+Inputs/Buttons: 6
+Links: 6
+Full elements list:
+[
+  {
+    "tag": "button",
+    "text": "Guide",
+    "selector": "button:has-text('Guide')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Guide",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "YouTube Home",
+    "selector": "a:has-text('YouTube Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "YouTube Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Skip navigation",
+    "selector": "button:has-text('Skip navigation')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Skip navigation",
+      "value": ""
+    }
+  },
+  {
+    "tag": "select",
+    "text": "Search",
+    "selector": "[role='combobox']",
+    "attributes": {
+      "role": "combobox",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search",
+    "selector": "button:has-text('Search')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Search with your voice",
+    "selector": "button:has-text('Search with your voice')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Search with your voice",
+      "value": ""
+    }
+  },
+  {
+    "tag": "button",
+    "text": "Settings",
+    "selector": "button:has-text('Settings')",
+    "attributes": {
+      "role": "button",
+      "aria_label": "Settings",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Sign in",
+    "selector": "a:has-text('Sign in')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Sign in",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Home",
+    "selector": "a:has-text('Home')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Home",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "Shorts",
+    "selector": "a:has-text('Shorts')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "Shorts",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "You",
+    "selector": "a:has-text('You')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "You",
+      "value": ""
+    }
+  },
+  {
+    "tag": "a",
+    "text": "History",
+    "selector": "a:has-text('History')",
+    "attributes": {
+      "role": "link",
+      "aria_label": "History",
+      "value": ""
+    }
+  }
+]

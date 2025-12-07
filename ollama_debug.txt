@@ -1,0 +1,60 @@
+
+============================================================
+Goal: go to amazon and order iphone 17 pro
+Ollama Output:
+[{"tag":"a","text":"Go to iPhone page","selector":"a[href*=\"iphone\"]","attributes":{"type":null,"placeholder":null,"aria_label":null,"name":null,"role":null,"href":"/gp/buy/phones/ref=nav_em_2nd_nav_pg1?ie=UTF8&node=13894040011"}}]
+
+============================================================
+Goal: go to amazon and order iphone 17 pro
+Ollama Output:
+[{"tag":"a","text":"Go to Amazon","selector":"a[href*=\"https://www.amazon.c\"]","attributes":{"type":null,"placeholder":null,"aria_label":null,"name":null,"role":null,"href":"https://www.amazon.com/","value":""}},{"tag":"input","text":"","selector":"input[name=\"search\"]","attributes":{"type":"text","placeholder":"Search for products and more","aria_label":"Search within results","name":"search","role":"searchbox","href":null,"value":""}},{"tag":"button","text":"Search","selector":"button:has-text(\"Search\")","attributes":{"type":"submit","placeholder":null,"aria_label":null,"name":null,"role":null,"href":null,"value":""}},{"tag":"a","text":"iPhone 17 Pro","selector":"a[href*=\"https://www.amazon.c\"]","attributes":{"type":null,"placeholder":null,"aria_label":null,"name":null,"role":null,"href":"https://www.amazon.com/s?k=iphone+17+pro&ref=nb_sb_noss","value":""}},{"tag":"button","text":"Buy Now with 1-Click","selector":"button:has-text(\"Buy Now with 1-Click\")","attributes":{"type":"submit","placeholder":null,"aria_label":null,"name":null,"role":null,"href":null,"value":""}}]
+
+============================================================
+Goal: go to amazon and order iphone 17 pro
+Ollama Output:
+This appears to be a JSON array of objects, each representing an element on a webpage. The elements are likely links or buttons with associated text and attributes.
+
+Here's a breakdown of the structure:
+
+* Each object has a `tag` property that specifies the type of element (e.g., "a" for anchor tag, "img" for image).
+* The `text` property contains the visible text associated with the element.
+* The `selector` property is a string that describes how to select this element using CSS or XPath selectors.
+* The `attributes` object contains additional properties specific to each element type.
+
+Here's an example of what one of these objects might look like:
+```json
+{
+  "tag": "a",
+  "text": "Shop all gifts",
+  "selector": "a[aria-label=\"Shop gifts by recipient - Shop all gifts\"]",
+  "attributes": {
+    "href": "/s/?_encoding=UTF8&k=gifts&pd_rd_w=gg4aG&content-id=amzn1.sym.bdd1a54e-7a63-44ed-b494-73d2d91a0ceb&pf_rd_p=bdd1a54e-7a63-44ed-b494-73d2d91a0ceb&pf_rd_r=AD734PC5XSDSFWTMB7MT&pd_rd_wg=gIZzh&pd_rd_r=04998853-a7f7-4400-bc2b-d09685ed82db&ref_=pd_hp_d_atf_unk"
+  }
+}
+```
+This object represents an anchor tag with the text "Shop all gifts". The `selector` property describes how to select this element using a CSS selector, and the `attributes` object contains the `href` attribute of the link.
+
+If you'd like me to help with something specific related to this data, please let me know!
+
+============================================================
+Goal: go to amazon and order iphone 17 pro
+Ollama Output:
+This appears to be a JSON object containing an array of objects, each representing a link or button on a webpage. The objects have various properties such as `tag`, `text`, and `selector` that describe the link or button.
+
+Here's a breakdown of the structure:
+
+* Each object has a `tag` property that specifies the type of element (e.g., "a" for an anchor tag).
+* The `text` property contains the text displayed on the link or button.
+* The `selector` property is a CSS selector that identifies the link or button on the webpage.
+
+Here's a sample object:
+```json
+{
+  "tag": "a",
+  "text": "Shop all gifts",
+  "selector": "a[aria-label=\"Shop gifts by recipient - Shop all gifts\"]"
+}
+```
+This object represents an anchor tag with the text "Shop all gifts" and a CSS selector that matches the link.
+
+If you'd like to extract specific information from this JSON object, please let me know what you're trying to achieve!

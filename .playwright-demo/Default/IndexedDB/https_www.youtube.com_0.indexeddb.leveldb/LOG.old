@@ -1,0 +1,9 @@
+2025/11/28-19:00:37.797 2bdc Reusing MANIFEST C:\Users\amrut\OneDrive\Desktop\hemlo ai\.playwright-demo\Default\IndexedDB\https_www.youtube.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/11/28-19:00:37.798 2bdc Recovering log #7
+2025/11/28-19:00:37.801 2bdc Reusing old log C:\Users\amrut\OneDrive\Desktop\hemlo ai\.playwright-demo\Default\IndexedDB\https_www.youtube.com_0.indexeddb.leveldb/000007.log 
+2025/11/28-19:00:38.768 30bc Compacting 1@1 + 1@2 files
+2025/11/28-19:00:38.783 30bc Generated table #10@1: 416 keys, 32049 bytes
+2025/11/28-19:00:38.783 30bc Compacted 1@1 + 1@2 files => 32049 bytes
+2025/11/28-19:00:38.784 30bc compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/11/28-19:00:38.785 30bc Delete type=2 #5
+2025/11/28-19:00:38.786 30bc Delete type=2 #8

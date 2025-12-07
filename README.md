@@ -542,3 +542,115 @@ On success you get:
 - You can:
   - Open `http://localhost:8000/proofs/<filename>.png` directly in a browser, or
   - Inspect the `./proofs` folder in your file explorer while recording the video.
+
+---
+
+## Super Agent (Groq + Playwright) — How it works
+
+This repo also includes a standalone, visible browser “super agent” for arbitrary web tasks, driven by Groq + Playwright.
+
+- Entry point: hemlo_super_agent.py
+- Browser automation: Playwright Chromium (headful)
+- Reasoning: Groq llama-3.3-70b-versatile via OpenAI-compatible client
+- Bot-friendly URL resolve: Serper.dev (Google Search API) to avoid CAPTCHAs
+
+### APIs, Libraries, and Env
+
+- Groq LLM (OpenAI Python client): GROQ_API_KEY required
+- Serper.dev Search API: SERPER_API_KEY optional but recommended (better URL planning, fewer CAPTCHAs)
+- Playwright (Chromium), python-dotenv
+- Optional downloads folder: HEMLO_DOWNLOAD_DIR (default: ~/Downloads/hemlo_agent)
+
+### What goes in its “brain” (decision loop)
+
+1) Deterministic DOM filter (no screenshot reasoning):
+   - Uses Playwright Accessibility snapshot to harvest interactive elements.
+   - Enriches each with href, href_kind (nav/anchor/js), 	arget (detect _blank), ria-expanded.
+   - Dedupes by (role, name) and ranks by goal tokens, control type, domain preference, and download intent boosts.
+
+2) Loop-avoidance and progress signals:
+   - Tracks recent actions and blocks repeated (role,name) when URL and DOM-hash don’t change.
+   - Fallback exploration picks a different, high-quality nav link.
+
+3) LLM decision (ReAct step):
+   - Sends a trimmed list (top-K) to Groq and asks for one next action:
+     click | type | hover | wait | done | fail.
+   - Retries with short backoff on 429 rate limits; heuristic fallback if LLM unavailable.
+
+4) Heuristics before/after LLM:
+   - YouTube search helper (don’t retype same query; click first result once).
+   - Download-first fast path: obvious “Download/Save” buttons, plus a largest-<img> URL save fallback.
+   - Token trims: compact console logs and capped list size to the LLM.
+
+5) Safety:
+   - Money actions (e.g., “Add to cart”, “Pay”) ask for explicit user approval in the console before proceeding.
+
+### Tabs, popups, and navigation
+
+- External or _blank links: when safe, open via page.goto(href) in the same tab to avoid losing focus.
+- Popup expected: wrap clicks in page.expect_popup() to capture new pages.
+- After each action: compare context.pages and pick the best page for the goal using URL/title/keyword scoring (e.g., boost pages with “download”).
+
+### Downloads: captured and persisted (stop-on-success)
+
+- Browser context created with ccept_downloads=True.
+- Suspected download actions are wrapped in page.context.expect_download(...) and saved to HEMLO_DOWNLOAD_DIR.
+- If a site streams images (no download event), the agent saves the largest on-screen <img> via direct HTTP.
+- After any successful save, the agent prints the file path and stops the run.
+
+### URL planning (no Google CAPTCHA)
+
+Planning prefers:
+1. Explicit URL in the prompt.
+2. Serper.dev result (knowledgeGraph website or first organic link).
+3. Groq LLM fallback as a last resort.
+
+### Logs and artifacts
+
+- iltered_dom_log.jsonl: JSONL of each step’s filtered DOM and timestamp.
+- last_filtered_dom.json: snapshot of the most recent filtered DOM (what the LLM saw).
+- gent_thoughts.txt: step-by-step thoughts (goal, filtered snippet path, decision JSON).
+- Downloads: HEMLO_DOWNLOAD_DIR (default ~/Downloads/hemlo_agent).
+
+### How to run the super agent locally
+
+1) Create a virtual env and install deps (Windows PowerShell example):
+
+`powershell
+python -m venv .venv
+.venv\Scripts\Activate
+pip install playwright python-dotenv openai
+python -m playwright install chromium
+`
+
+2) Set environment variables (PowerShell):
+
+`powershell
+ = "your_groq_key"
+# Optional but recommended
+ = "your_serper_key"
+# Optional download folder
+ = "C:\\Users\\<you>\\Downloads\\hemlo_agent"
+`
+
+3) Run the agent:
+
+`powershell
+python hemlo_super_agent.py --prompt "download a white dog picture"
+python hemlo_super_agent.py --prompt "order paneer malai from a local grocery site"
+`
+
+### Troubleshooting
+
+- Downloaded file not visible ? check HEMLO_DOWNLOAD_DIR (default ~/Downloads/hemlo_agent).
+- Stuck on login/paywall ? log in manually and resume; login-gate heuristics are on the roadmap.
+- Repeating clicks on tiles ? loop-avoidance helps; ecommerce heuristics to prefer Cart/Checkout are on the roadmap.
+- Slow or rate-limited ? the agent backs off on 429s and trims LLM inputs; prefer bot-friendly sites for images (e.g., Unsplash/Pexels).
+
+### Roadmap highlights
+
+- Ecommerce flow state (prefer Cart/Checkout after add-to-cart; approval memory for “Add to cart”).
+- Login/CAPTCHA gate detection with pause/resume.
+- Stronger page/link scoring (viewport visibility, penalties for anchors/js, product tiles).
+- Token/cost cuts: smaller model for step selection, caching by URL+DOM hash.
+

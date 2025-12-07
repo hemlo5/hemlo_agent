@@ -1,0 +1,1663 @@
+	
+ $(document).ready(function() {
+
+              var owl = $('#owl-demo-1');
+              owl.owlCarousel({
+                items: 1,
+                loop: true,
+                margin: 0,
+                autoplay: true,
+                autoplayTimeout: 8000,
+                //autoplayHoverPause: true,
+				autoWidth:false,
+                margin: 10,
+				
+				mouseDrag: true,
+                responsiveClass: true,
+                responsive: {
+                  0: {
+                    items: 1,
+                    nav: false
+                  },
+                  500: {
+                    items: 1,
+                    nav: false
+                  },
+				  700: {
+                    items: 1,
+                    nav: false
+                  },
+          1000: {
+                    items: 1,
+                    nav: false,
+                    margin: 20
+                  },
+				  1300: {
+                    items: 1,
+                    nav: false,
+                    margin: 20
+                  },
+				  1600: {
+                    items: 1,
+                    nav: false,
+                    margin: 20
+                  }
+                }
+              
+              });
+			  
+              $('.play').on('click', function() {
+                owl.trigger('play.owl.autoplay', [1000])
+              })
+              $('.stop').on('click', function() {
+                owl.trigger('stop.owl.autoplay')
+				})
+              })
+
+
+
+              $(document).ready(function() {
+
+                var owl = $('#owl-demo-2');
+                owl.owlCarousel({
+                  items: 1,
+                  loop: true,
+                  margin: 0,
+                  autoplay: true,
+                  autoplayTimeout: 8000,
+                  autoplayHoverPause: true,
+                  autoWidth:false,
+                  margin: 10,
+          
+                  mouseDrag: true,
+                  responsiveClass: true,
+                  responsive: {
+                    0: {
+                      items: 1,
+                      nav: false
+                    },
+                    500: {
+                      items: 1,
+                      nav: false
+                    },
+            700: {
+                      items: 1,
+                      nav: false
+                    },
+            1000: {
+                      items: 1,
+                      nav: false,
+                      margin: 20
+                    },
+            1300: {
+                      items: 1,
+                      nav: false,
+                      margin: 20
+                    },
+            1600: {
+                      items: 1,
+                      nav: false,
+                      margin: 20
+                    }
+                  }
+                
+                });
+          
+                $('.play').on('click', function() {
+                  owl.trigger('play.owl.autoplay', [1000])
+                })
+                $('.stop').on('click', function() {
+                  owl.trigger('stop.owl.autoplay')
+          })
+                })
+  
+
+$(document).ready(function() {
+
+                  var owl = $('#owl-demo-3');
+                  owl.owlCarousel({
+                    items: 4,
+                    loop: true,
+                    margin: 0,
+                    autoplay: true,
+                    autoplayTimeout: 4000,
+                    autoplayHoverPause: true,
+                    autoWidth:false,
+                    margin: 10,
+                    slideBy: 4, // Slide 2 items at once
+                    mouseDrag: true,
+                    responsiveClass: true,
+                    responsive: {
+                      0: {
+                        items: 1,
+                        nav: false
+                      },
+                      500: {
+                        items: 1,
+                        nav: false
+                      },
+              700: {
+                        items: 2,
+                        nav: false
+                      },
+              1000: {
+                        items: 3,
+                        nav: false,
+                        margin: 20
+                      },
+              1300: {
+                        items: 4,
+                        nav: false,
+                        margin: 20
+                      },
+              1600: {
+                        items: 4,
+                        nav: false,
+                        margin: 20
+                      }
+                    }
+                  
+                  });
+            
+                  $('.play').on('click', function() {
+                    owl.trigger('play.owl.autoplay', [1000])
+                  })
+                  $('.stop').on('click', function() {
+                    owl.trigger('stop.owl.autoplay')
+            })
+                  })
+    
+
+
+                  
+
+
+                  $(document).ready(function() {
+
+                    var owl = $('#owl-demo-4');
+                    owl.owlCarousel({
+                      items: 1,
+                      loop: true,
+                      margin: 0,
+                      autoplay: true,
+                      autoplayTimeout: 8000,
+                      autoplayHoverPause: true,
+              autoWidth:false,
+                      items: 2, // Show 2 items at a time
+                      slideBy: 2, // Slide 2 items at once
+ 
+
+
+
+              
+              mouseDrag: true,
+                      responsiveClass: true,
+                      responsive: {
+                        0: {
+                          items: 1,
+                          nav: false
+                        },
+                        500: {
+                          items: 2,
+                          nav: false
+                        },
+                700: {
+                          items: 2,
+                          nav: false
+                        },
+                1000: {
+                          items: 3,
+                          nav: false,
+                          margin: 20
+                        },
+                1300: {
+                          items: 4,
+                          nav: false,
+                          margin: 20
+                        },
+                1600: {
+                          items: 4,
+                          nav: false,
+                          margin: 20
+                        }
+                      }
+                    
+                    });
+              
+                    $('.play').on('click', function() {
+                      owl.trigger('play.owl.autoplay', [1000])
+                    })
+                    $('.stop').on('click', function() {
+                      owl.trigger('stop.owl.autoplay')
+              })
+                    })
+
+      
+
+                    $(document).ready(function() {
+
+                      var owl = $('#owl-demo-5');
+                      owl.owlCarousel({
+                        items: 2,
+                        loop: true,
+                        margin: 0,
+                        autoplay: true,
+                        autoplayTimeout: 8000,
+                        autoplayHoverPause: true,
+                autoWidth:false,
+                        margin: 10,
+                
+                mouseDrag: true,
+                        responsiveClass: true,
+                        responsive: {
+                          0: {
+                            items: 1,
+                            nav: false
+                          },
+                          500: {
+                            items: 1,
+                            nav: false
+                          },
+                  700: {
+                            items: 1,
+                            nav: false
+                          },
+                  1000: {
+                            items: 2,
+                            nav: false,
+                            margin: 20
+                          },
+                  1300: {
+                            items: 2,
+                            nav: false,
+                            margin: 20
+                          },
+                  1600: {
+                            items: 2,
+                            nav: false,
+                            margin: 20
+                          }
+                        }
+                      
+                      });
+                
+                      $('.play').on('click', function() {
+                        owl.trigger('play.owl.autoplay', [1000])
+                      })
+                      $('.stop').on('click', function() {
+                        owl.trigger('stop.owl.autoplay')
+                })
+                      })
+        
+
+
+
+
+                      $(document).ready(function() {
+
+                        var owl = $('#owl-demo-6');
+                        owl.owlCarousel({
+                          items: 7,
+                          loop: true,
+                          margin: 0,
+                          autoplay: true,
+                          autoplayTimeout: 8000,
+                          autoplayHoverPause: true,
+                  autoWidth:false,
+                          margin: 10,
+                  
+                  mouseDrag: true,
+                          responsiveClass: true,
+                          responsive: {
+                            0: {
+                              items: 2,
+                              nav: false
+                            },
+                            500: {
+                              items: 2,
+                              nav: false
+                            },
+                    700: {
+                              items: 4,
+                              nav: false
+                            },
+                    1000: {
+                              items: 5,
+                              nav: false,
+                              margin: 20
+                            },
+                    1300: {
+                              items: 6,
+                              nav: false,
+                              margin: 20
+                            },
+                    1600: {
+                              items: 7,
+                              nav: false,
+                              margin: 20
+                            }
+                          }
+                        
+                        });
+                  
+                        $('.play').on('click', function() {
+                          owl.trigger('play.owl.autoplay', [1000])
+                        })
+                        $('.stop').on('click', function() {
+                          owl.trigger('stop.owl.autoplay')
+                  })
+                        })
+
+                        
+
+
+
+                        $(document).ready(function() {
+
+                          var owl = $('#owl-demo-7-1');
+                          owl.owlCarousel({
+                            items: 1,
+                            loop: true,
+                            margin: 0,
+                            autoplay: true,
+                            autoplayTimeout: 8000,
+                            autoplayHoverPause: true,
+                    autoWidth:false,
+                            margin: 10,
+                    
+                    mouseDrag: true,
+                            responsiveClass: true,
+                            responsive: {
+                              0: {
+                                items: 1,
+                                nav: false
+                              },
+                              500: {
+                                items: 1,
+                                nav: false
+                              },
+                      700: {
+                                items: 1,
+                                nav: false
+                              },
+                      1000: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              },
+                      1300: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              },
+                      1600: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              }
+                            }
+                          
+                          });
+                    
+                          $('.play').on('click', function() {
+                            owl.trigger('play.owl.autoplay', [1000])
+                          })
+                          $('.stop').on('click', function() {
+                            owl.trigger('stop.owl.autoplay')
+                    })
+                          })
+
+
+
+
+
+
+$(document).ready(function() {
+
+                          var owl = $('#owl-demo-7-2');
+                          owl.owlCarousel({
+                            items: 1,
+                            loop: true,
+                            margin: 0,
+                            autoplay: true,
+                            autoplayTimeout: 8000,
+                            autoplayHoverPause: true,
+                    autoWidth:false,
+                            margin: 10,
+                    
+                    mouseDrag: true,
+                            responsiveClass: true,
+                            responsive: {
+                              0: {
+                                items: 1,
+                                nav: false
+                              },
+                              500: {
+                                items: 1,
+                                nav: false
+                              },
+                      700: {
+                                items: 1,
+                                nav: false
+                              },
+                      1000: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              },
+                      1300: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              },
+                      1600: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              }
+                            }
+                          
+                          });
+                    
+                          $('.play').on('click', function() {
+                            owl.trigger('play.owl.autoplay', [1000])
+                          })
+                          $('.stop').on('click', function() {
+                            owl.trigger('stop.owl.autoplay')
+                    })
+                          })
+						  
+						  
+						  
+						  
+						  $(document).ready(function() {
+
+                          var owl = $('#owl-demo-7-3');
+                          owl.owlCarousel({
+                            items: 1,
+                            loop: true,
+                            margin: 0,
+                            autoplay: true,
+                            autoplayTimeout: 8000,
+                            autoplayHoverPause: true,
+                    autoWidth:false,
+                            margin: 10,
+                    
+                    mouseDrag: true,
+                            responsiveClass: true,
+                            responsive: {
+                              0: {
+                                items: 1,
+                                nav: false
+                              },
+                              500: {
+                                items: 1,
+                                nav: false
+                              },
+                      700: {
+                                items: 1,
+                                nav: false
+                              },
+                      1000: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              },
+                      1300: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              },
+                      1600: {
+                                items: 1,
+                                nav: false,
+                                margin: 20
+                              }
+                            }
+                          
+                          });
+                    
+                          $('.play').on('click', function() {
+                            owl.trigger('play.owl.autoplay', [1000])
+                          })
+                          $('.stop').on('click', function() {
+                            owl.trigger('stop.owl.autoplay')
+                    })
+                          })
+						  
+						  
+
+
+
+                          $(document).ready(function() {
+
+                            var owl = $('#owl-demo-8');
+                            owl.owlCarousel({
+                              items: 5,
+                              loop: true,
+                              margin: 0,
+                              autoplay: true,
+                              autoplayTimeout: 8000,
+                              autoplayHoverPause: true,
+                      autoWidth:false,
+                              margin: 10,
+                      
+                      mouseDrag: true,
+                              responsiveClass: true,
+                              responsive: {
+                                0: {
+                                  items: 1,
+                                  nav: false
+                                },
+                                500: {
+                                  items: 2,
+                                  nav: false
+                                },
+                        700: {
+                                  items: 3,
+                                  nav: false
+                                },
+                        1000: {
+                                  items: 4,
+                                  nav: false,
+                                  margin: 20
+                                },
+                        1300: {
+                                  items: 5,
+                                  nav: false,
+                                  margin: 20
+                                },
+                        1600: {
+                                  items: 5,
+                                  nav: false,
+                                  margin: 20
+                                }
+                              }
+                            
+                            });
+                      
+                            $('.play').on('click', function() {
+                              owl.trigger('play.owl.autoplay', [1000])
+                            })
+                            $('.stop').on('click', function() {
+                              owl.trigger('stop.owl.autoplay')
+                      })
+                            })
+  
+
+
+
+
+
+                            $(document).ready(function() {
+
+                              var owl = $('#owl-demo-9');
+                              owl.owlCarousel({
+                                items: 4,
+                                loop: false,
+                                margin: 0,
+                                autoplay: true,
+                                autoplayTimeout: 8000,
+                                autoplayHoverPause: true,
+                        autoWidth:false,
+                                margin: 10,
+                        
+                        mouseDrag: true,
+                                responsiveClass: true,
+                                responsive: {
+                                  0: {
+                                    items: 1,
+                                    nav: false
+                                  },
+                                  500: {
+                                    items: 2,
+                                    nav: false
+                                  },
+                          700: {
+                                    items: 3,
+                                    nav: false
+                                  },
+                          1000: {
+                                    items: 3,
+                                    nav: false,
+                                    margin: 20
+                                  },
+                          1300: {
+                                    items: 4,
+                                    nav: false,
+                                    margin: 20
+                                  },
+                          1600: {
+                                    items: 4,
+                                    nav: false,
+                                    margin: 20
+                                  }
+                                }
+                              
+                              });
+                        
+                              $('.play').on('click', function() {
+                                owl.trigger('play.owl.autoplay', [1000])
+                              })
+                              $('.stop').on('click', function() {
+                                owl.trigger('stop.owl.autoplay')
+                        })
+                              })
+    
+  
+  
+
+                              $(document).ready(function() {
+
+                                var owl = $('#owl-demo-10');
+                                owl.owlCarousel({
+                                  items: 2,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 2,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 2,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 2,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+    
+    
+
+
+   $(document).ready(function() {
+
+                                var owl = $('#owl-demo-11');
+                                owl.owlCarousel({
+                                  items: 6,
+                                  loop: false,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 3,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 4,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 5,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 6,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 6,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+    
+
+
+
+  $(document).ready(function() {
+
+                                var owl = $('#owl-demo-12');
+                                owl.owlCarousel({
+                                  items: 4,
+                                  loop: false,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 3,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 3,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 5,
+                                      nav: false,
+                                      margin: 20
+                                    },
+							1900: {
+                                      items: 5,
+                                      nav: false,
+                                      margin: 20
+                                    },
+							2300: {
+                                      items: 7,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+
+ $(document).ready(function() {
+
+                                var owl = $('#owl-demo-13');
+                                owl.owlCarousel({
+                                  items: 6,
+                                  loop: false,
+                                  margin: 0,
+                                  autoplay: false,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 3,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 4,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 5,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 6,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 6,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+
+
+ $(document).ready(function() {
+
+                                var owl = $('#owl-demo-14');
+                                owl.owlCarousel({
+                                  items: 4,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: false,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 3,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+
+
+
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-15');
+                                owl.owlCarousel({
+                                  items: 1,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: false,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+	  
+	  
+	  
+
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-16');
+                                owl.owlCarousel({
+                                  items: 1,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 8000,
+                                  autoplayHoverPause: false,
+                          autoWidth:false,
+                                  margin: 10,
+                                 animateIn: 'fadeIn',
+              animateOut: 'fadeOut',
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+	  
+
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-17');
+                                owl.owlCarousel({
+                                  items: 4,
+                                  loop: false,
+                                  margin: 0,
+                                  autoplay: false,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 3,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-18');
+                                owl.owlCarousel({
+                                  items: 4,
+                                  loop: false,
+                                  margin: 0,
+                                  autoplay: false,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 3,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-19');
+                                owl.owlCarousel({
+                                  items: 1,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 7000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-20');
+                                owl.owlCarousel({
+                                  items: 1,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: false,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+	   
+	  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-21');
+                                owl.owlCarousel({
+                                  items: 3,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 2,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 3,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 3,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  
+	  
+	  
+  
+	  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-22');
+                                owl.owlCarousel({
+                                  items: 1,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	  
+	  	  
+	  
+	
+	  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-23');
+                                owl.owlCarousel({
+                                  items: 4,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:true,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 4,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 4,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 4,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      
+	    
+	  
+
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-24');
+                                owl.owlCarousel({
+                                  items: 2,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:true,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 3,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      	  
+		  
+		  
+		  
+		  
+		  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-25');
+                                owl.owlCarousel({
+                                  items: 1,
+                                  loop: true,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 1,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      	  
+		  
+		  
+		  
+		  
+		  
+$(document).ready(function() {
+
+                                var owl = $('#owl-demo-26');
+                                owl.owlCarousel({
+                                  items: 5,
+                                  loop: false,
+                                  margin: 0,
+                                  autoplay: true,
+                                  autoplayTimeout: 5000,
+                                  autoplayHoverPause: true,
+                          autoWidth:false,
+                                  margin: 10,
+                          
+                          mouseDrag: true,
+                                  responsiveClass: true,
+                                  responsive: {
+                                    0: {
+                                      items: 1,
+                                      nav: false
+                                    },
+                                    500: {
+                                      items: 2,
+                                      nav: false
+                                    },
+                            700: {
+                                      items: 3,
+                                      nav: false
+                                    },
+                            1000: {
+                                      items: 4,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1300: {
+                                      items: 5,
+                                      nav: false,
+                                      margin: 20
+                                    },
+                            1600: {
+                                      items: 5,
+                                      nav: false,
+                                      margin: 20
+                                    }
+                                  }
+                                
+                                });
+                          
+                                $('.play').on('click', function() {
+                                  owl.trigger('play.owl.autoplay', [1000])
+                                })
+                                $('.stop').on('click', function() {
+                                  owl.trigger('stop.owl.autoplay')
+                          })
+                                })
+      	  
