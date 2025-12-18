@@ -36,6 +36,12 @@ try:
 except Exception:
     pass
 
+USER_DATA_DIR = os.path.join(os.path.expanduser("~"), ".hemlo_browser_data")
+try:
+    os.makedirs(USER_DATA_DIR, exist_ok=True)
+except Exception:
+    pass
+
 # --- Helper Functions ---
 
 def log_thought(step_name: str, dom_snippet: str, decision: Any):
@@ -948,122 +954,18 @@ def main():
     target_url = plan_initial_url(args.prompt)
     
     with sync_playwright() as p:
-        headless_env = os.getenv("HEMLO_HEADLESS")
-        headless = False if headless_env is None else headless_env.strip().lower() in ("1", "true", "yes")
-        channel = os.getenv("HEMLO_BROWSER_CHANNEL")
-        executable = os.getenv("HEMLO_BROWSER_EXECUTABLE")
-        user_data_dir = os.getenv("HEMLO_USER_DATA_DIR")
-        profile_dir = os.getenv("HEMLO_PROFILE_DIR")  # e.g., "Default", "Profile 1"
-        launch_args = [f"--profile-directory={profile_dir}"] if profile_dir else None
-        # Optional CDP attach (connect to an already running Chrome)
-        cdp_url = os.getenv("HEMLO_CDP_URL")
-        cdp_port = os.getenv("HEMLO_CDP_PORT")
-        cdp_enabled = os.getenv("HEMLO_CDP")
-        if not cdp_url and cdp_port:
-            cdp_url = f"http://127.0.0.1:{cdp_port}"
-        if (cdp_enabled and str(cdp_enabled).strip().lower() in ("1", "true", "yes")) and not cdp_url:
-            cdp_url = "http://127.0.0.1:9222"
-        browser = None
-        context = None
-        if cdp_url:
-            try:
-                print(f"Connecting to Chrome over CDP: {cdp_url}")
-                browser = p.chromium.connect_over_cdp(cdp_url)
-                try:
-                    if browser.contexts:
-                        context = browser.contexts[0]
-                except Exception:
-                    context = None
-            except Exception as e:
-                print(f"CDP connect failed: {e}")
-        if context is None and user_data_dir:
-            try:
-                if executable:
-                    context = p.chromium.launch_persistent_context(
-                        user_data_dir,
-                        headless=headless,
-                        executable_path=executable,
-                        args=launch_args,
-                        viewport={'width': 1280, 'height': 720},
-                        user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        accept_downloads=True,
-                    )
-                elif channel:
-                    context = p.chromium.launch_persistent_context(
-                        user_data_dir,
-                        headless=headless,
-                        channel=channel,
-                        args=launch_args,
-                        viewport={'width': 1280, 'height': 720},
-                        user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                        accept_downloads=True,
-                    )
-                else:
-                    default_channel = "chrome" if sys.platform.startswith("win") else None
-                    if default_channel:
-                        try:
-                            context = p.chromium.launch_persistent_context(
-                                user_data_dir,
-                                headless=headless,
-                                channel=default_channel,
-                                args=launch_args,
-                                viewport={'width': 1280, 'height': 720},
-                                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                                accept_downloads=True,
-                            )
-                        except Exception:
-                            context = p.chromium.launch_persistent_context(
-                                user_data_dir,
-                                headless=headless,
-                                args=launch_args,
-                                viewport={'width': 1280, 'height': 720},
-                                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                                accept_downloads=True,
-                            )
-                    else:
-                        context = p.chromium.launch_persistent_context(
-                            user_data_dir,
-                            headless=headless,
-                            args=launch_args,
-                            viewport={'width': 1280, 'height': 720},
-                            user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                            accept_downloads=True,
-                        )
-            except Exception as e:
-                print(f"Persistent context launch failed, falling back to non-persistent: {e}")
-                context = None
-        if context is None:
-            try:
-                if executable:
-                    browser = p.chromium.launch(headless=headless, executable_path=executable)
-                elif channel:
-                    browser = p.chromium.launch(headless=headless, channel=channel)
-                else:
-                    default_channel = "chrome" if sys.platform.startswith("win") else None
-                    if default_channel:
-                        try:
-                            browser = p.chromium.launch(headless=headless, channel=default_channel)
-                        except Exception:
-                            browser = p.chromium.launch(headless=headless)
-                    else:
-                        browser = p.chromium.launch(headless=headless)
-            except Exception as e:
-                print(f"Launch with system browser failed, falling back to bundled Chromium: {e}")
-                browser = p.chromium.launch(headless=headless)
-            context = browser.new_context(
-                viewport={'width': 1280, 'height': 720},
-                user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                accept_downloads=True,
-            )
-        try:
-            page = context.new_page()
-        except Exception:
-            try:
-                page = browser.new_page()  # type: ignore
-                context = page.context
-            except Exception as e:
-                print(f"Failed to create page: {e}")
-                return
+        # Launch persistent context with args to bypass automation detection
+        context = p.chromium.launch_persistent_context(
+            USER_DATA_DIR,
+            headless=False,
+            viewport={'width': 1280, 'height': 720},
+            accept_downloads=True,
+            args=[
+                '--disable-blink-features=AutomationControlled',
+                '--disable-features=IsolateOrigins,site-per-process'
+            ]
+        )
+        page = context.new_page()
         
         print(f"Navigating to {target_url}...")
         try:
@@ -1310,7 +1212,7 @@ def main():
             print("Max steps reached. Stopping.")
 
         input("Press Enter to close browser...")
-        browser.close()
+        context.close()
 
 if __name__ == "__main__":
     main()

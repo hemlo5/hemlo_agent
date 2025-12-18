@@ -1,5 +1,72 @@
 {
-  "ts": "2025-12-05 21:45:52",
-  "goal": "download a ferrari novitec 812 n largo pic in white",
-  "elements": []
+  "ts": "2025-12-18 19:41:34",
+  "goal": "open gmail.com",
+  "elements": [
+    {
+      "role": "link",
+      "name": "Privacy",
+      "locator_type": "role",
+      "text": "Privacy",
+      "is_money_action": false,
+      "href": "https://accounts.google.com/TOS?loc=IN&hl=en-GB&privacy=true",
+      "href_kind": "nav",
+      "aria_expanded": null,
+      "target": "_blank"
+    },
+    {
+      "role": "link",
+      "name": "Terms",
+      "locator_type": "role",
+      "text": "Terms",
+      "is_money_action": false,
+      "href": "https://accounts.google.com/TOS?loc=IN&hl=en-GB",
+      "href_kind": "nav",
+      "aria_expanded": null,
+      "target": "_blank"
+    },
+    {
+      "role": "link",
+      "name": "ANIKET VAISHU.M vaishumaniket@gmail.com",
+      "locator_type": "role",
+      "text": "ANIKET VAISHU.M vaishumaniket@gmail.com",
+      "is_money_action": false,
+      "href": null,
+      "href_kind": null,
+      "aria_expanded": null,
+      "target": null
+    },
+    {
+      "role": "link",
+      "name": "Help",
+      "locator_type": "role",
+      "text": "Help",
+      "is_money_action": false,
+      "href": "https://support.google.com/accounts?hl=en-GB&p=account_iph",
+      "href_kind": "nav",
+      "aria_expanded": null,
+      "target": "_blank"
+    },
+    {
+      "role": "link",
+      "name": "Use another account",
+      "locator_type": "role",
+      "text": "Use another account",
+      "is_money_action": false,
+      "href": null,
+      "href_kind": null,
+      "aria_expanded": null,
+      "target": null
+    },
+    {
+      "role": "combobox",
+      "name": "Change language English (United Kingdom)",
+      "locator_type": "role",
+      "text": "Change language English (United Kingdom)",
+      "is_money_action": false,
+      "href": null,
+      "href_kind": null,
+      "aria_expanded": "false",
+      "target": null
+    }
+  ]
 }
