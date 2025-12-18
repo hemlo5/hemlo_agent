@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemlo Agent - Command Center</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .background-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .orb-1 {
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .orb-2 {
+            background: radial-gradient(circle, #fff 0%, transparent 70%);
+            bottom: -200px;
+            left: -200px;
+            animation: float 25s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, #999 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .tagline {
+            color: #888;
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .main-panel {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: fadeInUp 0.8s ease 0.2s both;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #666;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-indicator.connected {
+            background: #fff;
+            box-shadow: 0 0 10px #fff, 0 0 20px #fff;
+        }
+
+        .status-indicator.running {
+            background: #fff;
+            animation: blink 0.8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .status-text {
+            color: #888;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            gap: 15px;
+        }
+
+        .prompt-input {
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 18px 24px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .prompt-input:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .prompt-input::placeholder {
+            color: #666;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            position: relative;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-stop {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-stop:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .output-section {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .output-header {
+            color: #888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .output-container {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            max-height: 400px;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .output-line {
+            color: #aaa;
+            margin-bottom: 8px;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .output-empty {
+            color: #555;
+            text-align: center;
+            padding: 60px 20px;
+            font-style: italic;
+        }
+
+        .quick-prompts {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quick-prompts-header {
+            color: #888;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .quick-prompt-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .quick-prompt-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            padding: 15px 20px;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .quick-prompt-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: #fff;
+            transform: translateX(5px);
+        }
+
+        .scrollbar-custom::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2rem;
+            }
+            .main-panel {
+                padding: 25px;
+            }
+            .input-wrapper {
+                flex-direction: column;
+            }
+            .quick-prompt-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">HEMLO</div>
+            <div class="tagline">Command Center</div>
+        </div>
+
+        <div class="main-panel">
+            <div class="status-bar">
+                <div class="status-indicator" id="statusIndicator"></div>
+                <div class="status-text" id="statusText">Initializing...</div>
+            </div>
+
+            <div class="input-section">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        class="prompt-input" 
+                        id="promptInput" 
+                        placeholder="Enter your command... (e.g., open google meet and create a new meeting)"
+                        autocomplete="off"
+                    >
+                    <button class="btn btn-primary" id="runBtn" onclick="runPrompt()">
+                        <span>Execute</span>
+                    </button>
+                    <button class="btn btn-stop" id="stopBtn" onclick="stopAgent()" style="display: none;">
+                        <span>Stop</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">Agent Output</div>
+                <div class="output-container scrollbar-custom" id="outputContainer">
+                    <div class="output-empty">Waiting for command...</div>
+                </div>
+            </div>
+
+            <div class="quick-prompts">
+                <div class="quick-prompts-header">Quick Commands</div>
+                <div class="quick-prompt-grid">
+                    <button class="quick-prompt-btn" onclick="setPrompt('open google meet website and create a new meeting')">
+                        📹 Create Google Meet
+                    </button>
+                    <button class="quick-prompt-btn" onclick="setPrompt('search for latest AI news on google')">
+                        🔍 Search AI News
+                    </button>
+                    <button class="quick-prompt-btn" onclick="setPrompt('open youtube and search for coding tutorials')">
+                        🎥 YouTube Tutorials
+                    </button>
+                    <button class="quick-prompt-btn" onclick="setPrompt('go to github and check trending repositories')">
+                        💻 GitHub Trending
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let isRunning = false;
+
+        const statusIndicator = document.getElementById('statusIndicator');
+        const statusText = document.getElementById('statusText');
+        const promptInput = document.getElementById('promptInput');
+        const runBtn = document.getElementById('runBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const outputContainer = document.getElementById('outputContainer');
+
+        socket.on('connect', () => {
+            updateStatus('connected', 'Connected - Ready');
+        });
+
+        socket.on('disconnect', () => {
+            updateStatus('disconnected', 'Disconnected');
+        });
+
+        socket.on('status', (data) => {
+            const status = data.status;
+            if (status === 'running') {
+                isRunning = true;
+                updateStatus('running', 'Agent Running...');
+                runBtn.disabled = true;
+                stopBtn.style.display = 'block';
+                runBtn.style.display = 'none';
+            } else if (status === 'completed') {
+                isRunning = false;
+                updateStatus('connected', 'Completed - Ready');
+                runBtn.disabled = false;
+                stopBtn.style.display = 'none';
+                runBtn.style.display = 'block';
+                addOutput('✓ Task completed successfully', 'success');
+            } else if (status === 'stopped') {
+                isRunning = false;
+                updateStatus('connected', 'Stopped - Ready');
+                runBtn.disabled = false;
+                stopBtn.style.display = 'none';
+                runBtn.style.display = 'block';
+                addOutput('⚠ Agent stopped by user', 'warning');
+            } else if (status === 'error') {
+                isRunning = false;
+                updateStatus('connected', 'Error - Ready');
+                runBtn.disabled = false;
+                stopBtn.style.display = 'none';
+                runBtn.style.display = 'block';
+                addOutput('✗ Error: ' + (data.message || 'Unknown error'), 'error');
+            }
+        });
+
+        socket.on('output', (data) => {
+            addOutput(data.data);
+        });
+
+        function updateStatus(status, text) {
+            statusIndicator.className = 'status-indicator ' + status;
+            statusText.textContent = text;
+        }
+
+        function addOutput(text, type = 'normal') {
+            const isEmpty = outputContainer.querySelector('.output-empty');
+            if (isEmpty) {
+                outputContainer.innerHTML = '';
+            }
+
+            const line = document.createElement('div');
+            line.className = 'output-line';
+            line.textContent = text;
+            
+            if (type === 'success') {
+                line.style.color = '#fff';
+            } else if (type === 'error') {
+                line.style.color = '#999';
+            } else if (type === 'warning') {
+                line.style.color = '#aaa';
+            }
+
+            outputContainer.appendChild(line);
+            outputContainer.scrollTop = outputContainer.scrollHeight;
+        }
+
+        function runPrompt() {
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                alert('Please enter a command');
+                return;
+            }
+
+            outputContainer.innerHTML = '';
+            addOutput('→ Executing: ' + prompt);
+            addOutput('');
+
+            socket.emit('run_prompt', { prompt: prompt });
+        }
+
+        function stopAgent() {
+            socket.emit('stop_agent');
+        }
+
+        function setPrompt(prompt) {
+            promptInput.value = prompt;
+            promptInput.focus();
+        }
+
+        promptInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !isRunning) {
+                runPrompt();
+            }
+        });
+    </script>
+</body>
+</html>
