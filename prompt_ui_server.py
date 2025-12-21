@@ -5,14 +5,17 @@ import threading
 import queue
 import os
 import sys
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hemlo-secret-key-2024'
 socketio = SocketIO(app, cors_allowed_origins="*", async_mode='threading')
 
-# Path to the Python executable and script
 PYTHON_PATH = os.path.join(os.path.dirname(__file__), "apps", "backend", ".venv", "Scripts", "python")
 AGENT_SCRIPT = os.path.join(os.path.dirname(__file__), "hemlo_super_agent.py")
+REMEMBER_FLAG_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "remember_workflow.flag")
+APPROVAL_FLAG_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "money_approval.flag")
+LOGIN_CHOICE_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "login_choice.json")
 
 running_process = None
 
@@ -21,24 +24,56 @@ def run_agent(prompt, sid):
     global running_process
     
     try:
-        cmd = [PYTHON_PATH, AGENT_SCRIPT, "--prompt", prompt]
+        cmd = [PYTHON_PATH, "-u", AGENT_SCRIPT, "--prompt", prompt]  # -u for unbuffered
+        
+        # Set environment to disable Python buffering
+        env = os.environ.copy()
+        env['PYTHONUNBUFFERED'] = '1'
+        env['PYTHONIOENCODING'] = 'utf-8'
         
         running_process = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
+            stderr=subprocess.STDOUT,  # Merge stderr into stdout
             text=True,
-            bufsize=1,
-            universal_newlines=True
+            bufsize=1,  # Line buffered
+            universal_newlines=True,
+            env=env,
+            encoding="utf-8",      # Decode agent output as UTF-8
+            errors="replace",       # Replace any invalid bytes instead of crashing
         )
         
         socketio.emit('status', {'status': 'running'}, room=sid)
         
         # Stream output line by line
-        for line in running_process.stdout:
-            if line.strip():
-                socketio.emit('output', {'data': line.strip()}, room=sid)
+        try:
+            while True:
+                line = running_process.stdout.readline()
+                if not line:
+                    # Check if process has finished
+                    if running_process.poll() is not None:
+                        break
+                    continue
+                
+                line_out = line.rstrip()
+                # Special channel: login options emitted by agent
+                if line_out.startswith("__LOGIN_OPTIONS__"):
+                    try:
+                        payload = json.loads(line_out[len("__LOGIN_OPTIONS__"):])
+                        socketio.emit('login_options', payload, room=sid)
+                    except Exception:
+                        pass
+                    continue
+
+                # Send line to UI
+                socketio.emit('output', {'data': line_out}, room=sid)
+                socketio.sleep(0)  # Allow other greenlets to run
+                
+        except Exception as e:
+            print(f"Stream error: {e}")
+            socketio.emit('output', {'data': f'Stream error: {str(e)}'}, room=sid)
         
+        # Wait for process to complete
         running_process.wait()
         
         if running_process.returncode == 0:
@@ -92,6 +127,36 @@ def handle_stop():
             emit('status', {'status': 'error', 'message': f'Failed to stop: {str(e)}'})
     else:
         emit('status', {'status': 'idle'})
+
+@socketio.on('save_workflow')
+def handle_save_workflow():
+    """Handle 'Remember' requests from the UI by creating a flag file.
+
+    The running hemlo_super_agent process periodically checks for this flag
+    and will persist the current in-memory workflow steps when it sees it.
+    """
+    try:
+        with open(REMEMBER_FLAG_PATH, "w", encoding="utf-8") as f:
+            f.write("1")
+    except Exception as e:
+        emit('status', {'status': 'error', 'message': f'Failed to set remember flag: {str(e)}'})
+
+@socketio.on('approve_money_action')
+def handle_approve_money_action():
+    try:
+        with open(APPROVAL_FLAG_PATH, "w", encoding="utf-8") as f:
+            f.write("1")
+    except Exception as e:
+        emit('status', {'status': 'error', 'message': f'Failed to set approval flag: {str(e)}'})
+
+@socketio.on('submit_login_choice')
+def handle_submit_login_choice(data):
+    """Receive login choice (provider + optional credentials) from UI."""
+    try:
+        with open(LOGIN_CHOICE_PATH, "w", encoding="utf-8") as f:
+            f.write(json.dumps(data or {}, ensure_ascii=False))
+    except Exception as e:
+        emit('status', {'status': 'error', 'message': f'Failed to set login choice: {str(e)}'})
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, port=5000, host='0.0.0.0')

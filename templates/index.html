@@ -282,6 +282,47 @@
             flex-direction: column;
         }
 
+        .login-options {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .login-options h4 {
+            margin: 0;
+            color: #ccc;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        .login-options .options-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .login-options .email-row {
+            display: none;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .login-options input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 10px;
+            padding: 12px 14px;
+            color: #fff;
+            min-width: 200px;
+        }
+
         .output-header {
             color: #888;
             font-size: 0.85rem;
@@ -433,6 +474,12 @@
                     <button class="btn btn-stop" id="stopBtn" onclick="stopAgent()" style="display: none;">
                         <span>Stop</span>
                     </button>
+                    <button class="btn btn-stop" id="rememberBtn" onclick="rememberWorkflow()" style="display: none;">
+                        <span>Remember</span>
+                    </button>
+                    <button class="btn btn-stop" id="approveBtn" onclick="approveMoneyAction()" style="display: none;">
+                        <span>Approve</span>
+                    </button>
                 </div>
             </div>
 
@@ -440,6 +487,15 @@
                 <div class="output-header">Agent Output</div>
                 <div class="output-container scrollbar-custom" id="outputContainer">
                     <div class="output-empty">Waiting for command...</div>
+                </div>
+                <div class="login-options" id="loginOptionsContainer">
+                    <h4>Login Options</h4>
+                    <div class="options-row" id="loginOptionsList"></div>
+                    <div class="email-row" id="loginEmailRow" data-provider="">
+                        <input type="email" id="loginEmailInput" placeholder="Email" autocomplete="email">
+                        <input type="password" id="loginPasswordInput" placeholder="Password" autocomplete="current-password">
+                        <button class="btn btn-primary" type="button" id="loginSubmitBtn">Submit</button>
+                    </div>
                 </div>
             </div>
 
@@ -472,6 +528,14 @@
         const promptInput = document.getElementById('promptInput');
         const runBtn = document.getElementById('runBtn');
         const stopBtn = document.getElementById('stopBtn');
+        const rememberBtn = document.getElementById('rememberBtn');
+        const approveBtn = document.getElementById('approveBtn');
+        const loginOptionsContainer = document.getElementById('loginOptionsContainer');
+        const loginOptionsList = document.getElementById('loginOptionsList');
+        const loginEmailRow = document.getElementById('loginEmailRow');
+        const loginEmailInput = document.getElementById('loginEmailInput');
+        const loginPasswordInput = document.getElementById('loginPasswordInput');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
         const outputContainer = document.getElementById('outputContainer');
 
         socket.on('connect', () => {
@@ -490,12 +554,17 @@
                 runBtn.disabled = true;
                 stopBtn.style.display = 'block';
                 runBtn.style.display = 'none';
+                rememberBtn.style.display = 'block';
+                approveBtn.style.display = 'block';
             } else if (status === 'completed') {
                 isRunning = false;
                 updateStatus('connected', 'Completed - Ready');
                 runBtn.disabled = false;
                 stopBtn.style.display = 'none';
                 runBtn.style.display = 'block';
+                rememberBtn.style.display = 'none';
+                approveBtn.style.display = 'none';
+                hideLoginOptions();
                 addOutput('✓ Task completed successfully', 'success');
             } else if (status === 'stopped') {
                 isRunning = false;
@@ -503,6 +572,9 @@
                 runBtn.disabled = false;
                 stopBtn.style.display = 'none';
                 runBtn.style.display = 'block';
+                rememberBtn.style.display = 'none';
+                approveBtn.style.display = 'none';
+                hideLoginOptions();
                 addOutput('⚠ Agent stopped by user', 'warning');
             } else if (status === 'error') {
                 isRunning = false;
@@ -510,12 +582,22 @@
                 runBtn.disabled = false;
                 stopBtn.style.display = 'none';
                 runBtn.style.display = 'block';
+                rememberBtn.style.display = 'none';
+                approveBtn.style.display = 'none';
+                hideLoginOptions();
                 addOutput('✗ Error: ' + (data.message || 'Unknown error'), 'error');
             }
         });
 
         socket.on('output', (data) => {
             addOutput(data.data);
+        });
+
+        socket.on('login_options', (payload) => {
+            if (!payload || !Array.isArray(payload.options)) {
+                return;
+            }
+            renderLoginOptions(payload.options);
         });
 
         function updateStatus(status, text) {
@@ -562,6 +644,75 @@
         function stopAgent() {
             socket.emit('stop_agent');
         }
+
+        function rememberWorkflow() {
+            if (!isRunning) {
+                addOutput(' Remember is only available while the agent is running', 'warning');
+                return;
+            }
+            socket.emit('save_workflow');
+            addOutput(' Remember requested: current steps will be saved as a workflow (if possible).');
+        }
+
+        function approveMoneyAction() {
+            if (!isRunning) {
+                addOutput('Approval is only available while the agent is running', 'warning');
+                return;
+            }
+            socket.emit('approve_money_action');
+            addOutput('Approval sent for current money action (if any is waiting).');
+        }
+
+        function renderLoginOptions(options) {
+            loginOptionsList.innerHTML = '';
+            loginEmailRow.style.display = 'none';
+            if (!options.length) {
+                loginOptionsContainer.style.display = 'none';
+                return;
+            }
+            loginOptionsContainer.style.display = 'block';
+            options.forEach((opt) => {
+                const btn = document.createElement('button');
+                btn.className = 'btn btn-stop';
+                btn.style.display = 'inline-block';
+                btn.style.marginRight = '8px';
+                btn.textContent = opt.label || opt.provider || opt.type || 'Login';
+                btn.onclick = () => {
+                    if ((opt.type || '') === 'email') {
+                        loginEmailRow.style.display = 'flex';
+                        loginEmailRow.dataset.provider = opt.provider || 'email';
+                    } else {
+                        loginEmailRow.style.display = 'none';
+                        socket.emit('submit_login_choice', { provider: opt.provider || opt.type || 'unknown' });
+                        addOutput('Sent login choice: ' + (opt.label || opt.provider || opt.type));
+                    }
+                };
+                loginOptionsList.appendChild(btn);
+            });
+        }
+
+        function submitEmailLogin() {
+            const email = loginEmailInput.value.trim();
+            const password = loginPasswordInput.value;
+            const provider = loginEmailRow.dataset.provider || 'email';
+            if (!email || !password) {
+                addOutput('Please enter email and password to continue.', 'warning');
+                return;
+            }
+            socket.emit('submit_login_choice', { provider, email, password });
+            addOutput('Sent email login choice for provider: ' + provider);
+            hideLoginOptions();
+        }
+
+        function hideLoginOptions() {
+            loginOptionsContainer.style.display = 'none';
+            loginEmailRow.style.display = 'none';
+            loginEmailInput.value = '';
+            loginPasswordInput.value = '';
+            loginEmailRow.dataset.provider = '';
+        }
+
+        loginSubmitBtn.onclick = submitEmailLogin;
 
         function setPrompt(prompt) {
             promptInput.value = prompt;
