@@ -819,6 +819,349 @@ def save_filtered_dom(goal: str, filtered_json_array: str) -> None:
     except Exception as e:
         print(f"Failed saving filtered DOM: {e}")
 
+
+def save_perception(goal: str, perception: Dict[str, Any], dom_hash: str) -> None:
+    try:
+        record = {
+            "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "goal": goal,
+            "dom_hash": dom_hash,
+            "perception": perception,
+        }
+        with open("perception_log.jsonl", "a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        with open("last_perception.json", "w", encoding="utf-8") as f:
+            json.dump(record, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Failed saving perception: {e}")
+
+
+PAGE_MODE_NORMAL = "NORMAL"
+PAGE_MODE_LOGIN = "LOGIN"
+PAGE_MODE_AGE_GATE = "AGE_GATE"
+PAGE_MODE_COOKIE_GATE = "COOKIE_GATE"
+PAGE_MODE_BLOCKING_MODAL = "BLOCKING_MODAL"
+
+
+def _safe_page_title(page: Page) -> str:
+    try:
+        t = page.title()
+        return t if isinstance(t, str) else ""
+    except Exception:
+        return ""
+
+
+def _safe_body_text_snippet(page: Page, limit: int = 1200) -> str:
+    try:
+        txt = page.evaluate(
+            "(limit) => { const t = document.body ? (document.body.innerText || '') : ''; return t.slice(0, limit); }",
+            limit,
+        )
+        return txt if isinstance(txt, str) else ""
+    except Exception:
+        return ""
+
+
+def _has_visible_modal(page: Page) -> bool:
+    try:
+        val = page.evaluate(
+            """() => {
+              const el = document.querySelector('[role="dialog"], [role="alertdialog"], [aria-modal="true"]');
+              if (!el) return false;
+              const style = window.getComputedStyle(el);
+              if (!style) return true;
+              return style.display !== 'none' && style.visibility !== 'hidden' && style.opacity !== '0';
+            }"""
+        )
+        return bool(val)
+    except Exception:
+        return False
+
+
+def _gate_scores(items: List[Dict[str, Any]], body_text: str) -> Dict[str, Any]:
+    t = (body_text or "").lower()
+    names = " ".join([(it.get("name") or "") for it in (items or [])]).lower()
+
+    cookie_score = 0
+    cookie_word = bool(re.search(r"\bcookies?\b", t))
+    if cookie_word:
+        cookie_score += 2
+    if "consent" in t:
+        cookie_score += 1
+    if any(w in names for w in ["accept", "agree", "allow", "allow all", "got it", "i understand", "ok"]):
+        cookie_score += 1
+    if any(w in names for w in ["reject", "decline", "manage", "preferences", "settings", "cookie settings"]):
+        cookie_score += 1
+
+    age_score = 0
+    age_re = re.compile(
+        r"(age verification|verify your age|confirm your age|are you (over )?(18|21)|over (18|21)|\b(18\+|21\+)\b|date of birth|birth date|\bdob\b|year of birth|you must be (18|21))",
+        re.I,
+    )
+    if age_re.search(body_text or ""):
+        age_score += 3
+    if re.search(r"\b(18\+|21\+|over\s*(18|21)|i\s*(am|\"m)\s*(18|21))\b", names):
+        age_score += 2
+    if "age" in t and any(w in names for w in ["enter", "continue", "yes"]):
+        age_score += 1
+
+    return {
+        "cookie_score": cookie_score,
+        "cookie_word": cookie_word,
+        "age_score": age_score,
+    }
+
+
+def detect_page_mode(page: Page, items: List[Dict[str, Any]], body_text: str, scores: Optional[Dict[str, Any]] = None) -> str:
+    scores = scores or _gate_scores(items, body_text)
+    try:
+        cookie_score = int(scores.get("cookie_score", 0) or 0)
+    except Exception:
+        cookie_score = 0
+    try:
+        age_score = int(scores.get("age_score", 0) or 0)
+    except Exception:
+        age_score = 0
+
+    login_like = False
+    try:
+        login_like = bool(is_probable_login_or_signup_page(page))
+    except Exception:
+        login_like = False
+
+    modal_like = _has_visible_modal(page)
+
+    if cookie_score >= 3:
+        return PAGE_MODE_COOKIE_GATE
+    if age_score >= 3:
+        return PAGE_MODE_AGE_GATE
+    if login_like:
+        return PAGE_MODE_LOGIN
+    if modal_like:
+        return PAGE_MODE_BLOCKING_MODAL
+    return PAGE_MODE_NORMAL
+
+
+def build_perception(page: Page, items: List[Dict[str, Any]], goal: str) -> Dict[str, Any]:
+    url = ""
+    try:
+        url = page.url
+    except Exception:
+        url = ""
+
+    title = _safe_page_title(page)
+    body_text = _safe_body_text_snippet(page, limit=1200)
+    text_norm = ""
+    try:
+        text_norm = re.sub(r"\s+", " ", body_text).strip()
+    except Exception:
+        text_norm = ""
+
+    scores = _gate_scores(items, body_text)
+    mode = detect_page_mode(page, items, body_text, scores)
+    has_modal = False
+    try:
+        has_modal = _has_visible_modal(page)
+    except Exception:
+        has_modal = False
+    login_like = False
+    try:
+        login_like = bool(is_probable_login_or_signup_page(page))
+    except Exception:
+        login_like = False
+
+    role_counts: Dict[str, int] = {}
+    for it in items or []:
+        r = str(it.get("role") or "")
+        role_counts[r] = role_counts.get(r, 0) + 1
+
+    top_controls: List[Dict[str, Any]] = []
+    for it in (items or [])[:15]:
+        top_controls.append({k: it.get(k) for k in ("role", "name", "href_kind", "aria_expanded", "is_money_action")})
+
+    inputs: List[Dict[str, Any]] = []
+    for it in items or []:
+        if it.get("role") in ("textbox", "searchbox", "combobox"):
+            inputs.append({"role": it.get("role"), "name": it.get("name")})
+        if len(inputs) >= 8:
+            break
+
+    possible_gate_controls: List[Dict[str, Any]] = []
+    gate_words = [
+        "accept",
+        "reject",
+        "agree",
+        "consent",
+        "manage",
+        "preferences",
+        "settings",
+        "cookie",
+        "close",
+        "dismiss",
+        "not now",
+        "continue",
+        "enter",
+        "yes",
+        "i am",
+        "i'm",
+        "over 18",
+        "18+",
+        "over 21",
+        "21+",
+    ]
+    for it in items or []:
+        n = (it.get("name") or "").strip()
+        low = n.lower()
+        if n and any(w in low for w in gate_words):
+            possible_gate_controls.append({"role": it.get("role"), "name": n})
+        if len(possible_gate_controls) >= 12:
+            break
+
+    excerpt = ""
+    if mode != PAGE_MODE_NORMAL and text_norm:
+        excerpt = text_norm[:400]
+
+    return {
+        "mode": mode,
+        "url": url,
+        "title": title,
+        "role_counts": role_counts,
+        "gate_scores": scores,
+        "has_modal": has_modal,
+        "login_like": login_like,
+        "inputs": inputs,
+        "possible_gate_controls": possible_gate_controls,
+        "top_controls": top_controls,
+        "text_excerpt": excerpt,
+        "goal": goal,
+    }
+
+
+def _score_gate_candidate(mode: str, it: Dict[str, Any]) -> int:
+    try:
+        if it.get("is_money_action"):
+            return -10**6
+    except Exception:
+        pass
+    role = str(it.get("role") or "")
+    name = str(it.get("name") or "")
+    n = name.lower().strip()
+    s = 0
+    if role == "button":
+        s += 3
+    elif role == "link":
+        s += 1
+
+    if mode == PAGE_MODE_COOKIE_GATE:
+        if any(x in n for x in ["accept all", "allow all", "agree all"]):
+            s += 60
+        if any(x in n for x in ["accept", "agree", "allow", "got it", "ok", "okay", "i understand"]):
+            s += 45
+        if any(x in n for x in ["reject", "decline"]):
+            s += 35
+        if any(x in n for x in ["manage", "preferences", "settings", "options"]):
+            s += 20
+        if any(x in n for x in ["close", "dismiss", "not now"]):
+            s += 15
+
+    elif mode == PAGE_MODE_AGE_GATE:
+        if any(x in n for x in ["18+", "over 18", "i am 18", "i'm 18", "i am over 18", "i'm over 18"]):
+            s += 60
+        if any(x in n for x in ["21+", "over 21", "i am 21", "i'm 21", "i am over 21", "i'm over 21"]):
+            s += 55
+        if any(x in n for x in ["yes", "enter", "continue", "confirm", "submit"]):
+            s += 30
+        if any(x in n for x in ["no", "under 18", "i am under"]):
+            s -= 100
+
+    elif mode == PAGE_MODE_BLOCKING_MODAL:
+        if n in {"x", "close"}:
+            s += 60
+        if any(x in n for x in ["close", "dismiss"]):
+            s += 45
+        if any(x in n for x in ["not now", "no thanks"]):
+            s += 35
+
+    return s
+
+
+def try_handle_gate(page: Page, goal: str, downloaded_files: Optional[List[str]] = None) -> Optional[str]:
+    blocked: set[tuple] = set()
+    for _ in range(3):
+        try:
+            filtered_summary = playwright_filter_interactive_elements(page, goal)
+            dom_hash = str(hash(filtered_summary))[-8:]
+            try:
+                save_filtered_dom(goal, filtered_summary)
+            except Exception:
+                pass
+            items = json.loads(filtered_summary)
+        except Exception:
+            items = []
+            dom_hash = ""
+        try:
+            perception = build_perception(page, items, goal)
+            mode = str(perception.get("mode") or PAGE_MODE_NORMAL)
+        except Exception:
+            mode = PAGE_MODE_NORMAL
+            perception = {"mode": PAGE_MODE_NORMAL}
+
+        try:
+            if dom_hash:
+                save_perception(goal, perception, dom_hash)
+        except Exception:
+            pass
+
+        if mode not in {PAGE_MODE_COOKIE_GATE, PAGE_MODE_AGE_GATE, PAGE_MODE_BLOCKING_MODAL}:
+            return None
+
+        best = None
+        best_score = 0
+        for it in items or []:
+            key = (it.get("role"), it.get("name"))
+            if key in blocked:
+                continue
+            sc = _score_gate_candidate(mode, it)
+            if sc > best_score:
+                best_score = sc
+                best = it
+
+        if not best or best_score <= 0:
+            return None
+
+        decision = {
+            "action": "click",
+            "locator_type": "role",
+            "role": best.get("role"),
+            "name": best.get("name"),
+            "confidence": 0.85,
+        }
+        ok = execute_action(page, decision, downloaded_files)
+        if not ok:
+            blocked.add((best.get("role"), best.get("name")))
+            continue
+
+        try:
+            page.wait_for_load_state("networkidle", timeout=5000)
+        except Exception:
+            pass
+        try:
+            page.wait_for_timeout(800)
+        except Exception:
+            pass
+
+        try:
+            after_sum = playwright_filter_interactive_elements(page, goal)
+            after_items = json.loads(after_sum)
+            after_mode = str(build_perception(page, after_items, goal).get("mode") or PAGE_MODE_NORMAL)
+        except Exception:
+            after_mode = PAGE_MODE_NORMAL
+
+        if after_mode != mode:
+            return f"gate:{mode}:click:{best.get('role')}:{best.get('name')}"
+
+    return None
+
 # --- Core Logic ---
 
 def extract_search_query(goal: str) -> str:
@@ -1119,6 +1462,80 @@ def choose_best_page(pages: List[Page], goal: str) -> Optional[Page]:
             best = p
     return best
 
+def _pick_url_from_serper(query: str, data: Dict[str, Any]) -> Optional[str]:
+    candidates: List[Dict[str, Any]] = []
+    kg = data.get("knowledgeGraph") or {}
+    website = kg.get("website")
+    if isinstance(website, str) and website.strip().startswith("http"):
+        title = kg.get("title") or kg.get("name") or ""
+        candidates.append({"url": website.strip(), "title": str(title)})
+    organic = data.get("organic") or []
+    if isinstance(organic, list):
+        for res in organic[:5]:
+            link = res.get("link")
+            if isinstance(link, str) and link.strip().startswith("http"):
+                url = link.strip()
+                title = res.get("title") or ""
+                snippet = res.get("snippet") or ""
+                if not any(c.get("url") == url for c in candidates):
+                    candidates.append(
+                        {
+                            "url": url,
+                            "title": str(title),
+                            "snippet": str(snippet),
+                        }
+                    )
+    if not candidates:
+        return None
+    try:
+        payload = {
+            "goal": query,
+            "candidates": candidates,
+        }
+        completion = client.chat.completions.create(
+            model=config.SMART_MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a URL chooser for a web automation agent. "
+                        "The agent will open ONE website and then act on it to achieve the user's goal. "
+                        "From the candidate URLs, pick the SINGLE best starting URL. "
+                        "Prefer official product/app pages that allow performing the action directly "
+                        "over tutorials, videos, or news articles. "
+                        "When the goal is to CREATE/START/USE something (e.g., a Google Form), "
+                        "prefer the actual app site (for example forms.google.com or docs.google.com/forms) "
+                        "over YouTube or long tutorials, unless no such site is present. "
+                        "Respond as a JSON object with a single key 'url' whose value is the chosen URL."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": json.dumps(payload, ensure_ascii=False),
+                },
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.1,
+        )
+        try:
+            content = completion.choices[0].message.content
+        except Exception:
+            content = None
+        if not content:
+            return None
+        try:
+            obj = json.loads(content)
+        except Exception:
+            return None
+        chosen = obj.get("url") or obj.get("best_url") or obj.get("target_url")
+        if isinstance(chosen, str) and chosen.strip().startswith("http"):
+            print(f"Serper introspection chose URL: {chosen.strip()}")
+            return chosen.strip()
+    except Exception as e:
+        print(f"Serper introspection failed; falling back to default Serper heuristic: {e}")
+    return None
+
+
 def resolve_site_url_via_serper(query: str) -> Optional[str]:
     """Resolve a site URL from natural language using Serper.dev (bot-friendly Google Search API).
 
@@ -1140,6 +1557,9 @@ def resolve_site_url_via_serper(query: str) -> Optional[str]:
         )
         with urllib.request.urlopen(req, timeout=5) as resp:
             data = json.loads(resp.read().decode("utf-8"))
+        chosen = _pick_url_from_serper(query, data)
+        if isinstance(chosen, str) and chosen.strip().startswith("http"):
+            return chosen.strip()
         kg = (data.get("knowledgeGraph") or {})
         website = kg.get("website")
         if isinstance(website, str) and website.strip().startswith("http"):
@@ -1279,7 +1699,12 @@ def analyze_dom_and_act(
         "3. If an input already has the correct value, do NOT type again. Prefer clicking search or a result. "
         "4. Avoid repeating the same click if the URL does not change. If you are stuck in a repeated loop, choose a different control (prefer nav links or exploratory items), or return 'fail'. "
         "5. If a file has been saved to disk that satisfies the goal (see 'Downloads this run'), return 'done'. "
-        "6. If the goal includes download/save, prioritize controls whose names include 'download' or 'save'.")
+        "6. If the goal includes download/save, prioritize controls whose names include 'download' or 'save'. "
+        "Page modes: you will also be given a 'mode' string such as NORMAL, LOGIN, AGE_GATE, COOKIE_GATE, BLOCKING_MODAL. "
+        "- If mode is COOKIE_GATE, focus on dismissing cookie/consent banners (Accept/Agree/Reject/Manage) before other actions. "
+        "- If mode is AGE_GATE, focus on passing age verification (choose 18+/Yes/Enter or fill DOB >= 18) before other actions. "
+        "- If mode is BLOCKING_MODAL, focus on closing/dismissing the modal (Close/X/Not now) before other actions. "
+        "- If mode is LOGIN, prefer login/sign-in controls and do not invent credentials; if you cannot proceed, return 'fail'.")
     
     # Remove blocked (role,name) from the list we show to the LLM
     items_for_llm: List[Dict[str, Any]] = []
@@ -1291,8 +1716,27 @@ def analyze_dom_and_act(
     except Exception:
         filtered_for_llm = filtered_summary
 
+    perception: Dict[str, Any] = {"mode": PAGE_MODE_NORMAL}
+    mode = PAGE_MODE_NORMAL
+    try:
+        perception = build_perception(page, items_for_llm, goal)
+        mode = str(perception.get("mode") or PAGE_MODE_NORMAL)
+    except Exception:
+        perception = {"mode": PAGE_MODE_NORMAL}
+        mode = PAGE_MODE_NORMAL
+    save_perception(goal, perception, dom_hash)
+    try:
+        print(f"Page mode detected: {mode}")
+    except Exception:
+        pass
+    try:
+        perception_json = json.dumps(perception, ensure_ascii=False)
+    except Exception:
+        perception_json = "{}"
+
     context_note = (
         f"Current URL: {current_url}\n"
+        f"Page mode: {mode}\n"
         f"Recent actions: {', '.join(recent_actions[-3:]) if recent_actions else 'none'}\n"
         f"Blocked choices: {', '.join([f'{r}:{n}' for (r,n) in (blocked_choices or [])]) if blocked_choices else 'none'}\n"
         f"Downloads this run: {', '.join([os.path.basename(f) for f in (downloaded_files or [])]) if (downloaded_files and len(downloaded_files)>0) else 'none'}\n"
@@ -1305,7 +1749,12 @@ def analyze_dom_and_act(
                 model=config.SMART_MODEL,
                 messages=[
                     {"role": "system", "content": system_prompt},
-                    {"role": "user", "content": context_note + f"Current DOM Elements (JSON array with role/name):\n{filtered_for_llm}"},
+                    {
+                        "role": "user",
+                        "content": context_note
+                        + f"Perception (semantic summary JSON):\n{perception_json}\n"
+                        + f"Current DOM Elements (JSON array with role/name):\n{filtered_for_llm}",
+                    },
                 ],
                 response_format={"type": "json_object"},
                 temperature=0.1,
@@ -1376,6 +1825,7 @@ def analyze_dom_and_act(
             response = {"action": "fail", "locator_type": "role", "role": None, "name": None, "confidence": 0.0}
     
     response['dom_hash'] = dom_hash
+    response['mode'] = mode
     # Return a small candidate list to the caller for fallback exploration
     try:
         response['filtered_items'] = items_for_llm[:40]
@@ -1840,6 +2290,25 @@ def main():
             step_count += 1
             print(f"\n--- Step {step_count} ---")
             current_url = page.url
+
+            try:
+                gate_action = try_handle_gate(page, args.prompt, downloaded_files)
+            except Exception:
+                gate_action = None
+            if gate_action:
+                recent_actions.append(gate_action)
+                try:
+                    page.wait_for_load_state("networkidle", timeout=5000)
+                except Exception:
+                    pass
+                try:
+                    last_url = page.url
+                    last_dom_hash = ""
+                    last_choice = None
+                except Exception:
+                    pass
+                time.sleep(1)
+                continue
 
             # Quick path: if the task is to download/save, try an obvious download control now
             if download_intent:

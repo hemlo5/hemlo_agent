@@ -1,0 +1,152 @@
+{
+  "ts": "2025-12-22 15:06:08",
+  "goal": "go to gamma and create a new ppt on 'animal kingdom' for me by telling its ai",
+  "dom_hash": "20645690",
+  "perception": {
+    "mode": "NORMAL",
+    "url": "https://gamma.app/",
+    "title": "Gammas - Gamma",
+    "role_counts": {
+      "textbox": 1,
+      "button": 16,
+      "link": 12,
+      "tab": 8
+    },
+    "gate_scores": {
+      "cookie_score": 1,
+      "cookie_word": false,
+      "age_score": 0
+    },
+    "has_modal": false,
+    "login_like": false,
+    "inputs": [
+      {
+        "role": "textbox",
+        "name": "Jump to"
+      }
+    ],
+    "possible_gate_controls": [
+      {
+        "role": "button",
+        "name": "Manage templates"
+      },
+      {
+        "role": "link",
+        "name": "Settings & members"
+      },
+      {
+        "role": "button",
+        "name": "Close"
+      }
+    ],
+    "top_controls": [
+      {
+        "role": "textbox",
+        "name": "Jump to",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "Contact support",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "ANIKETVAISHU.M'sWorkspace ANIKET VAISHU.M's Workspace FREE",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "Create or join a folder",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "Upgrade for more AI",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "269 credits",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "New in Gamma",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "Create new",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "New gamma",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "Add to favorites",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "button",
+        "name": "Manage templates",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "link",
+        "name": "Gammas",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "link",
+        "name": "Shared with you",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "link",
+        "name": "AI Images",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "link",
+        "name": "Create or join a folder",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      }
+    ],
+    "text_excerpt": "",
+    "goal": "go to gamma and create a new ppt on 'animal kingdom' for me by telling its ai"
+  }
+}
