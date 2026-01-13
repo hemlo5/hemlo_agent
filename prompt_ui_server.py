@@ -6,6 +6,7 @@ import queue
 import os
 import sys
 import json
+import time
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hemlo-secret-key-2024'
@@ -17,14 +18,51 @@ REMEMBER_FLAG_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "remember_workf
 APPROVAL_FLAG_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "money_approval.flag")
 LOGIN_CHOICE_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "login_choice.json")
 
+CONTROL_PATH = os.path.join(os.path.dirname(AGENT_SCRIPT), "agent_control.json")
+STATUS_PREFIX = "__HEMLO_STATUS__"
+USER_DATA_DIR = os.path.join(os.path.expanduser("~"), ".hemlo_browser_data")
+
 running_process = None
+agent_state = "idle"
+stop_requested = False
+
+
+def _write_control(payload: dict) -> None:
+    payload = dict(payload or {})
+    payload["nonce"] = int(time.time() * 1000)
+    tmp = CONTROL_PATH + ".tmp"
+    with open(tmp, "w", encoding="utf-8") as f:
+        f.write(json.dumps(payload, ensure_ascii=False))
+    os.replace(tmp, CONTROL_PATH)
+
+
+def _clear_agent_files() -> None:
+    for p in [CONTROL_PATH, REMEMBER_FLAG_PATH, APPROVAL_FLAG_PATH, LOGIN_CHOICE_PATH]:
+        try:
+            if os.path.exists(p):
+                os.remove(p)
+        except Exception:
+            pass
+
+
+def _reset_browser_profile() -> None:
+    try:
+        if os.path.exists(USER_DATA_DIR):
+            ts = __import__("time").strftime("%Y%m%d_%H%M%S")
+            backup = USER_DATA_DIR + f"_reset_{ts}"
+            os.rename(USER_DATA_DIR, backup)
+    except Exception:
+        pass
 
 def run_agent(prompt, sid):
     """Run the agent script and stream output"""
     global running_process
+    global agent_state
+    global stop_requested
     
     try:
-        cmd = [PYTHON_PATH, "-u", AGENT_SCRIPT, "--prompt", prompt]  # -u for unbuffered
+        _clear_agent_files()
+        cmd = [PYTHON_PATH, "-u", AGENT_SCRIPT, "--prompt", prompt, "--session"]  # -u for unbuffered
         
         # Set environment to disable Python buffering
         env = os.environ.copy()
@@ -43,6 +81,7 @@ def run_agent(prompt, sid):
             errors="replace",       # Replace any invalid bytes instead of crashing
         )
         
+        agent_state = "running"
         socketio.emit('status', {'status': 'running'}, room=sid)
         
         # Stream output line by line
@@ -56,6 +95,17 @@ def run_agent(prompt, sid):
                     continue
                 
                 line_out = line.rstrip()
+                # Special channel: status emitted by agent
+                if line_out.startswith(STATUS_PREFIX):
+                    try:
+                        payload = json.loads(line_out[len(STATUS_PREFIX):])
+                        if isinstance(payload, dict):
+                            agent_state = str(payload.get("status") or agent_state)
+                            socketio.emit('status', payload, room=sid)
+                    except Exception:
+                        pass
+                    continue
+
                 # Special channel: login options emitted by agent
                 if line_out.startswith("__LOGIN_OPTIONS__"):
                     try:
@@ -75,16 +125,30 @@ def run_agent(prompt, sid):
         
         # Wait for process to complete
         running_process.wait()
-        
-        if running_process.returncode == 0:
+
+        final_state = agent_state
+        if stop_requested:
+            agent_state = "idle"
+            socketio.emit('status', {'status': 'stopped'}, room=sid)
+        elif final_state in {"completed", "stopped", "error"}:
+            if final_state == "error":
+                socketio.emit('status', {'status': 'error', 'message': 'Agent reported an error'}, room=sid)
+            else:
+                socketio.emit('status', {'status': final_state}, room=sid)
+            agent_state = "idle"
+        elif running_process.returncode == 0:
+            agent_state = "idle"
             socketio.emit('status', {'status': 'completed'}, room=sid)
         else:
+            agent_state = "error"
             socketio.emit('status', {'status': 'error', 'message': f'Process exited with code {running_process.returncode}'}, room=sid)
             
     except Exception as e:
         socketio.emit('status', {'status': 'error', 'message': str(e)}, room=sid)
     finally:
         running_process = None
+        agent_state = "idle"
+        stop_requested = False
 
 @app.route('/')
 def index():
@@ -108,7 +172,11 @@ def handle_run_prompt(data):
         return
     
     if running_process:
-        emit('status', {'status': 'error', 'message': 'Agent is already running'})
+        try:
+            _write_control({"command": "new_task", "prompt": prompt})
+            emit('status', {'status': 'running', 'message': 'New task sent to existing session'})
+        except Exception as e:
+            emit('status', {'status': 'error', 'message': f'Failed to send new task: {str(e)}'})
         return
     
     # Run in background thread
@@ -119,14 +187,68 @@ def handle_run_prompt(data):
 @socketio.on('stop_agent')
 def handle_stop():
     global running_process
+    global agent_state
+    global stop_requested
     if running_process:
         try:
+            stop_requested = True
             running_process.terminate()
             emit('status', {'status': 'stopped'})
+            agent_state = "idle"
         except Exception as e:
             emit('status', {'status': 'error', 'message': f'Failed to stop: {str(e)}'})
     else:
         emit('status', {'status': 'idle'})
+
+
+@socketio.on('pause_agent')
+def handle_pause_agent():
+    if not running_process:
+        emit('status', {'status': 'idle'})
+        return
+    try:
+        _write_control({"command": "pause"})
+        emit('output', {'data': 'Pause requested'})
+    except Exception as e:
+        emit('status', {'status': 'error', 'message': f'Failed to pause: {str(e)}'})
+
+
+@socketio.on('resume_agent')
+def handle_resume_agent(data):
+    if not running_process:
+        emit('status', {'status': 'idle'})
+        return
+    payload = {"command": "resume"}
+    try:
+        prompt = (data or {}).get('prompt')
+        if isinstance(prompt, str) and prompt.strip():
+            payload["prompt"] = prompt.strip()
+        _write_control(payload)
+        emit('output', {'data': 'Resume requested'})
+    except Exception as e:
+        emit('status', {'status': 'error', 'message': f'Failed to resume: {str(e)}'})
+
+
+@socketio.on('reset_session')
+def handle_reset_session():
+    global running_process
+    global agent_state
+    global stop_requested
+    try:
+        if running_process:
+            try:
+                stop_requested = True
+                running_process.terminate()
+                running_process.wait(timeout=5)
+            except Exception:
+                pass
+            running_process = None
+        _clear_agent_files()
+        _reset_browser_profile()
+        agent_state = "idle"
+        emit('status', {'status': 'idle', 'message': 'Session reset complete'})
+    except Exception as e:
+        emit('status', {'status': 'error', 'message': f'Reset failed: {str(e)}'})
 
 @socketio.on('save_workflow')
 def handle_save_workflow():

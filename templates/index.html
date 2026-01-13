@@ -18,6 +18,44 @@
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        body.light-theme {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 20px;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
+        body.light-theme .theme-toggle {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.1);
         }
 
         .background-grid {
@@ -32,6 +70,13 @@
             background-size: 50px 50px;
             z-index: 0;
             pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        body.light-theme .background-grid {
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
         }
 
         .glow-orb {
@@ -43,6 +88,11 @@
             opacity: 0.15;
             pointer-events: none;
             z-index: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        body.light-theme .glow-orb {
+            opacity: 0.05;
         }
 
         .orb-1 {
@@ -57,6 +107,11 @@
             bottom: -200px;
             left: -200px;
             animation: float 25s ease-in-out infinite reverse;
+        }
+
+        body.light-theme .orb-1,
+        body.light-theme .orb-2 {
+            background: radial-gradient(circle, #333 0%, transparent 70%);
         }
 
         @keyframes float {
@@ -80,6 +135,27 @@
             text-align: center;
             margin-bottom: 50px;
             animation: fadeInDown 0.8s ease;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-glass {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 28px;
+            border-radius: 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+            backdrop-filter: blur(14px) saturate(140%);
+            -webkit-backdrop-filter: blur(14px) saturate(140%);
+        }
+
+        body.light-theme .hero-glass {
+            background: rgba(255, 255, 255, 0.55);
+            border-color: rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         @keyframes fadeInDown {
@@ -102,6 +178,14 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 10px;
+            transition: background 0.4s ease;
+        }
+
+        body.light-theme .logo {
+            background: linear-gradient(135deg, #333 0%, #666 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .tagline {
@@ -109,6 +193,11 @@
             font-size: 1.1rem;
             letter-spacing: 3px;
             text-transform: uppercase;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .tagline {
+            color: #666;
         }
 
         .main-panel {
@@ -122,6 +211,13 @@
             flex-grow: 1;
             display: flex;
             flex-direction: column;
+            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        body.light-theme .main-panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
         }
 
         @keyframes fadeInUp {
@@ -144,6 +240,12 @@
             background: rgba(0, 0, 0, 0.4);
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        body.light-theme .status-bar {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
         }
 
         .status-indicator {
@@ -159,9 +261,27 @@
             box-shadow: 0 0 10px #fff, 0 0 20px #fff;
         }
 
+        body.light-theme .status-indicator.connected {
+            background: #333;
+            box-shadow: 0 0 10px #333, 0 0 20px #333;
+        }
+
         .status-indicator.running {
             background: #fff;
             animation: blink 0.8s ease-in-out infinite;
+        }
+
+        body.light-theme .status-indicator.running {
+            background: #333;
+        }
+
+        .status-indicator.paused {
+            background: #999;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        body.light-theme .status-indicator.paused {
+            background: #666;
         }
 
         @keyframes pulse {
@@ -178,6 +298,11 @@
             color: #888;
             font-size: 0.9rem;
             letter-spacing: 1px;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .status-text {
+            color: #666;
         }
 
         .input-section {
@@ -187,7 +312,23 @@
         .input-wrapper {
             position: relative;
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .input-wrapper .btn {
+            white-space: nowrap;
+        }
+
+        .button-row {
+            display: flex;
+            gap: 12px;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+
+        .button-row .btn {
+            flex-shrink: 0;
         }
 
         .prompt-input {
@@ -202,14 +343,30 @@
             transition: all 0.3s ease;
         }
 
+        body.light-theme .prompt-input {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
         .prompt-input:focus {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.3);
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
         }
 
+        body.light-theme .prompt-input:focus {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.08);
+        }
+
         .prompt-input::placeholder {
             color: #666;
+        }
+
+        body.light-theme .prompt-input::placeholder {
+            color: #999;
         }
 
         .btn {
@@ -250,9 +407,18 @@
             position: relative;
         }
 
+        body.light-theme .btn-primary {
+            background: #333;
+            color: #fff;
+        }
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+        }
+
+        body.light-theme .btn-primary:hover {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:active {
@@ -271,9 +437,20 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
+        body.light-theme .btn-stop {
+            background: rgba(0, 0, 0, 0.05);
+            color: #333;
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+
         .btn-stop:hover {
             background: rgba(255, 255, 255, 0.2);
             border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        body.light-theme .btn-stop:hover {
+            background: rgba(0, 0, 0, 0.1);
+            border-color: rgba(0, 0, 0, 0.2);
         }
 
         .output-section {
@@ -291,6 +468,12 @@
             display: none;
             flex-direction: column;
             gap: 12px;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        body.light-theme .login-options {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
         }
 
         .login-options h4 {
@@ -299,6 +482,11 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             font-size: 0.85rem;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .login-options h4 {
+            color: #666;
         }
 
         .login-options .options-row {
@@ -321,6 +509,13 @@
             padding: 12px 14px;
             color: #fff;
             min-width: 200px;
+            transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease;
+        }
+
+        body.light-theme .login-options input {
+            background: rgba(0, 0, 0, 0.05);
+            border-color: rgba(0, 0, 0, 0.15);
+            color: #333;
         }
 
         .output-header {
@@ -329,6 +524,11 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 15px;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .output-header {
+            color: #666;
         }
 
         .output-container {
@@ -343,12 +543,23 @@
             max-height: 400px;
             flex-grow: 1;
             position: relative;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        body.light-theme .output-container {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
         }
 
         .output-line {
             color: #aaa;
             margin-bottom: 8px;
             animation: slideIn 0.3s ease;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .output-line {
+            color: #666;
         }
 
         @keyframes slideIn {
@@ -367,12 +578,22 @@
             text-align: center;
             padding: 60px 20px;
             font-style: italic;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .output-empty {
+            color: #999;
         }
 
         .quick-prompts {
             margin-top: 30px;
             padding-top: 30px;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
+            transition: border-color 0.4s ease;
+        }
+
+        body.light-theme .quick-prompts {
+            border-top-color: rgba(0, 0, 0, 0.08);
         }
 
         .quick-prompts-header {
@@ -381,6 +602,11 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             margin-bottom: 15px;
+            transition: color 0.4s ease;
+        }
+
+        body.light-theme .quick-prompts-header {
+            color: #666;
         }
 
         .quick-prompt-grid {
@@ -401,11 +627,23 @@
             font-size: 0.9rem;
         }
 
+        body.light-theme .quick-prompt-btn {
+            background: rgba(0, 0, 0, 0.03);
+            border-color: rgba(0, 0, 0, 0.08);
+            color: #666;
+        }
+
         .quick-prompt-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
             transform: translateX(5px);
+        }
+
+        body.light-theme .quick-prompt-btn:hover {
+            background: rgba(0, 0, 0, 0.08);
+            border-color: rgba(0, 0, 0, 0.2);
+            color: #333;
         }
 
         .scrollbar-custom::-webkit-scrollbar {
@@ -417,13 +655,25 @@
             border-radius: 10px;
         }
 
+        body.light-theme .scrollbar-custom::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.03);
+        }
+
         .scrollbar-custom::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
         }
 
+        body.light-theme .scrollbar-custom::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
         .scrollbar-custom::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.2);
+        }
+
+        body.light-theme .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.2);
         }
 
         @media (max-width: 768px) {
@@ -443,14 +693,17 @@
     </style>
 </head>
 <body>
+    <div class="theme-toggle" id="themeToggle" title="Toggle theme">🌙</div>
     <div class="background-grid"></div>
     <div class="glow-orb orb-1"></div>
     <div class="glow-orb orb-2"></div>
 
     <div class="container">
         <div class="header">
-            <div class="logo">HEMLO</div>
-            <div class="tagline">Command Center</div>
+            <div class="hero-glass">
+                <div class="logo">HEMLO</div>
+                <div class="tagline">Command Center</div>
+            </div>
         </div>
 
         <div class="main-panel">
@@ -468,18 +721,32 @@
                         placeholder="Enter your command... (e.g., open google meet and create a new meeting)"
                         autocomplete="off"
                     >
-                    <button class="btn btn-primary" id="runBtn" onclick="runPrompt()">
-                        <span>Execute</span>
-                    </button>
-                    <button class="btn btn-stop" id="stopBtn" onclick="stopAgent()" style="display: none;">
-                        <span>Stop</span>
-                    </button>
-                    <button class="btn btn-stop" id="rememberBtn" onclick="rememberWorkflow()" style="display: none;">
-                        <span>Remember</span>
-                    </button>
-                    <button class="btn btn-stop" id="approveBtn" onclick="approveMoneyAction()" style="display: none;">
-                        <span>Approve</span>
-                    </button>
+                    <div class="button-row">
+                        <button class="btn btn-primary" id="runBtn" onclick="runPrompt()">
+                            <span>Execute</span>
+                        </button>
+                        <button class="btn btn-stop" id="stopBtn" onclick="stopAgent()" style="display: none;">
+                            <span>Stop</span>
+                        </button>
+                        <button class="btn btn-stop" id="pauseBtn" onclick="pauseAgent()" style="display: none;">
+                            <span>Pause</span>
+                        </button>
+                        <button class="btn btn-stop" id="resumeBtn" onclick="resumeAgent()" style="display: none;">
+                            <span>Resume</span>
+                        </button>
+                        <button class="btn btn-stop" id="newTaskBtn" onclick="sendNewTask()" style="display: none;">
+                            <span>New Task</span>
+                        </button>
+                        <button class="btn btn-stop" id="resetBtn" onclick="resetSession()">
+                            <span>Reset</span>
+                        </button>
+                        <button class="btn btn-stop" id="rememberBtn" onclick="rememberWorkflow()" style="display: none;">
+                            <span>Remember</span>
+                        </button>
+                        <button class="btn btn-stop" id="approveBtn" onclick="approveMoneyAction()" style="display: none;">
+                            <span>Approve</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -522,12 +789,17 @@
     <script>
         const socket = io();
         let isRunning = false;
+        let isPaused = false;
 
         const statusIndicator = document.getElementById('statusIndicator');
         const statusText = document.getElementById('statusText');
         const promptInput = document.getElementById('promptInput');
         const runBtn = document.getElementById('runBtn');
         const stopBtn = document.getElementById('stopBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
+        const newTaskBtn = document.getElementById('newTaskBtn');
+        const resetBtn = document.getElementById('resetBtn');
         const rememberBtn = document.getElementById('rememberBtn');
         const approveBtn = document.getElementById('approveBtn');
         const loginOptionsContainer = document.getElementById('loginOptionsContainer');
@@ -550,17 +822,37 @@
             const status = data.status;
             if (status === 'running') {
                 isRunning = true;
+                isPaused = false;
                 updateStatus('running', 'Agent Running...');
                 runBtn.disabled = true;
                 stopBtn.style.display = 'block';
+                pauseBtn.style.display = 'block';
+                resumeBtn.style.display = 'none';
+                newTaskBtn.style.display = 'block';
+                runBtn.style.display = 'none';
+                rememberBtn.style.display = 'block';
+                approveBtn.style.display = 'block';
+            } else if (status === 'paused') {
+                isRunning = true;
+                isPaused = true;
+                updateStatus('paused', 'Paused - Awaiting resume');
+                runBtn.disabled = true;
+                stopBtn.style.display = 'block';
+                pauseBtn.style.display = 'none';
+                resumeBtn.style.display = 'block';
+                newTaskBtn.style.display = 'block';
                 runBtn.style.display = 'none';
                 rememberBtn.style.display = 'block';
                 approveBtn.style.display = 'block';
             } else if (status === 'completed') {
                 isRunning = false;
+                isPaused = false;
                 updateStatus('connected', 'Completed - Ready');
                 runBtn.disabled = false;
                 stopBtn.style.display = 'none';
+                pauseBtn.style.display = 'none';
+                resumeBtn.style.display = 'none';
+                newTaskBtn.style.display = 'none';
                 runBtn.style.display = 'block';
                 rememberBtn.style.display = 'none';
                 approveBtn.style.display = 'none';
@@ -568,19 +860,43 @@
                 addOutput('✓ Task completed successfully', 'success');
             } else if (status === 'stopped') {
                 isRunning = false;
+                isPaused = false;
                 updateStatus('connected', 'Stopped - Ready');
                 runBtn.disabled = false;
                 stopBtn.style.display = 'none';
+                pauseBtn.style.display = 'none';
+                resumeBtn.style.display = 'none';
+                newTaskBtn.style.display = 'none';
                 runBtn.style.display = 'block';
                 rememberBtn.style.display = 'none';
                 approveBtn.style.display = 'none';
                 hideLoginOptions();
                 addOutput('⚠ Agent stopped by user', 'warning');
+            } else if (status === 'idle') {
+                isRunning = false;
+                isPaused = false;
+                updateStatus('connected', 'Ready');
+                runBtn.disabled = false;
+                stopBtn.style.display = 'none';
+                pauseBtn.style.display = 'none';
+                resumeBtn.style.display = 'none';
+                newTaskBtn.style.display = 'none';
+                runBtn.style.display = 'block';
+                rememberBtn.style.display = 'none';
+                approveBtn.style.display = 'none';
+                hideLoginOptions();
+                if (data.message) {
+                    addOutput(String(data.message));
+                }
             } else if (status === 'error') {
                 isRunning = false;
+                isPaused = false;
                 updateStatus('connected', 'Error - Ready');
                 runBtn.disabled = false;
                 stopBtn.style.display = 'none';
+                pauseBtn.style.display = 'none';
+                resumeBtn.style.display = 'none';
+                newTaskBtn.style.display = 'none';
                 runBtn.style.display = 'block';
                 rememberBtn.style.display = 'none';
                 approveBtn.style.display = 'none';
@@ -641,8 +957,53 @@
             socket.emit('run_prompt', { prompt: prompt });
         }
 
+        function sendNewTask() {
+            const prompt = promptInput.value.trim();
+            if (!prompt) {
+                alert('Please enter a command');
+                return;
+            }
+
+            addOutput('→ New task: ' + prompt);
+            addOutput('');
+            socket.emit('run_prompt', { prompt: prompt });
+            promptInput.value = '';
+            promptInput.focus();
+        }
+
         function stopAgent() {
             socket.emit('stop_agent');
+        }
+
+        function pauseAgent() {
+            if (!isRunning || isPaused) {
+                return;
+            }
+            socket.emit('pause_agent');
+        }
+
+        function resumeAgent() {
+            if (!isRunning) {
+                return;
+            }
+            const prompt = promptInput.value.trim();
+            if (prompt) {
+                socket.emit('resume_agent', { prompt: prompt });
+                addOutput('→ Resuming with: ' + prompt);
+                addOutput('');
+                promptInput.value = '';
+            } else {
+                socket.emit('resume_agent', {});
+            }
+            promptInput.focus();
+        }
+
+        function resetSession() {
+            const ok = confirm('Reset session? This will stop the agent and reset the browser profile.');
+            if (!ok) {
+                return;
+            }
+            socket.emit('reset_session');
         }
 
         function rememberWorkflow() {
@@ -719,9 +1080,36 @@
             promptInput.focus();
         }
 
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                themeToggle.textContent = '🌙';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.add('light-theme');
+                themeToggle.textContent = '☀️';
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            document.getElementById('themeToggle').textContent = '☀️';
+        }
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+
         promptInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !isRunning) {
-                runPrompt();
+            if (e.key === 'Enter') {
+                if (isRunning) {
+                    sendNewTask();
+                } else {
+                    runPrompt();
+                }
             }
         });
     </script>

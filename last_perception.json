@@ -1,16 +1,14 @@
 {
-  "ts": "2025-12-22 15:06:08",
-  "goal": "go to gamma and create a new ppt on 'animal kingdom' for me by telling its ai",
-  "dom_hash": "20645690",
+  "ts": "2026-01-13 17:58:19",
+  "goal": "order milk from blinkit",
+  "dom_hash": "89258187",
   "perception": {
     "mode": "NORMAL",
-    "url": "https://gamma.app/",
-    "title": "Gammas - Gamma",
+    "url": "https://blinkit.com/prn/amul-gold-full-cream-milk/prid/561268",
+    "title": "Amul Gold Full Cream Milk Price - Buy Online at ₹69 in India",
     "role_counts": {
-      "textbox": 1,
-      "button": 16,
-      "link": 12,
-      "tab": 8
+      "button": 34,
+      "link": 36
     },
     "gate_scores": {
       "cookie_score": 1,
@@ -19,134 +17,129 @@
     },
     "has_modal": false,
     "login_like": false,
-    "inputs": [
-      {
-        "role": "textbox",
-        "name": "Jump to"
-      }
-    ],
-    "possible_gate_controls": [
-      {
-        "role": "button",
-        "name": "Manage templates"
-      },
-      {
-        "role": "link",
-        "name": "Settings & members"
-      },
-      {
-        "role": "button",
-        "name": "Close"
-      }
-    ],
+    "inputs": [],
+    "possible_gate_controls": [],
     "top_controls": [
       {
-        "role": "textbox",
-        "name": "Jump to",
+        "role": "button",
+        "name": "Add to cart",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": true
+      },
+      {
+        "role": "button",
+        "name": "8 MINS Amul Buffalo Milk (90 Days Shelf Life) 450 ml ₹36 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "Contact support",
+        "name": "8 MINS Amul Taaza Toned Milk 500 ml ₹29 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "ANIKETVAISHU.M'sWorkspace ANIKET VAISHU.M's Workspace FREE",
+        "name": "8 MINS Amul Cow Milk 500 ml ₹30 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "Create or join a folder",
+        "name": "8 MINS Mother Dairy Full Cream Milk 500 ml ₹35 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "Upgrade for more AI",
+        "name": "8 MINS Amul Moti Toned Milk (90 Days Shelf Life) 450 ml ₹32 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "269 credits",
+        "name": "8 MINS Amul Gold Milk 1 l ₹80 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "New in Gamma",
+        "name": "8 MINS Mother Dairy Buffalo Fresh Milk 500 ml ₹38 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "Create new",
+        "name": "8 MINS Mother Dairy Cow Milk 500 ml ₹30 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "New gamma",
+        "name": "8 MINS Amul Gold Full Cream Milk 1 l ₹69 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "Add to favorites",
+        "name": "8% OFF 8 MINS Country Delight Cow Fresh Milk 450 ml ₹44 ₹48 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "Manage templates",
+        "name": "7% OFF 8 MINS Country Delight Buffalo Fresh Milk 450 ml ₹51 ₹55 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
-        "role": "link",
-        "name": "Gammas",
+        "role": "button",
+        "name": "8 MINS Mother Dairy Toned Toned Milk 1 l ₹57 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
-        "role": "link",
-        "name": "Shared with you",
+        "role": "button",
+        "name": "8 MINS Mother Dairy Pro Milk 500 ml ₹35 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
-        "role": "link",
-        "name": "AI Images",
-        "href_kind": null,
-        "aria_expanded": null,
-        "is_money_action": false
-      },
-      {
-        "role": "link",
-        "name": "Create or join a folder",
+        "role": "button",
+        "name": "8 MINS Mother Dairy Probiotic Tadka Salted Buttermilk 270 ml ₹10 ADD",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       }
     ],
     "text_excerpt": "",
-    "goal": "go to gamma and create a new ppt on 'animal kingdom' for me by telling its ai"
+    "success_signals": {
+      "generator_goal": false,
+      "generation_in_progress": false,
+      "topic_match_score": 2,
+      "has_output_controls": false,
+      "has_output_words": false,
+      "success_likely": false,
+      "judge_called": false,
+      "judge_done": false,
+      "judge_confidence": 0.0,
+      "judge_reason": "",
+      "success_confirmed": false
+    },
+    "goal": "order milk from blinkit"
   }
 }

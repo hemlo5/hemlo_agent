@@ -1,0 +1,49 @@
+{
+  "ts": "2026-01-13 17:51:54",
+  "goal": "order milk from blinkit",
+  "url": "https://blinkit.com/cn/milk/cid/14/922?srsltid=AfmBOoos-VABR_KyprMLvXWCI6ciQbmsC2lX3jYxrrfDhsZ8-3uhXP0r",
+  "model": "xiaomi/mimo-v2-flash:free",
+  "raw_response": {
+    "id": "gen-1768306910-wjxEzZTCKRQWPteprYz3",
+    "provider": "Xiaomi",
+    "model": "xiaomi/mimo-v2-flash:free",
+    "object": "chat.completion",
+    "created": 1768306910,
+    "choices": [
+      {
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "stop",
+        "index": 0,
+        "message": {
+          "role": "assistant",
+          "content": "{\n  \"site\": \"blinkit.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Add\", \"alternatives\": [\"ADD\", \"Add to cart\", \"+ Add\"], \"value\": null, \"notes\": \"Add milk variant to cart\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"View Cart\", \"alternatives\": [\"Cart\", \"View cart\", \"Checkout\"], \"value\": null, \"notes\": \"Open cart drawer/page\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Proceed to Checkout\", \"alternatives\": [\"Checkout\", \"Place Order\", \"Continue\"], \"value\": null, \"notes\": \"Start checkout\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"Search for society, area, landmark\", \"alternatives\": [\"Enter delivery address\", \"Address line 1\", \"Add new address\"], \"value\": \"User Address\", \"notes\": \"Enter delivery location\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Save & Continue\", \"alternatives\": [\"Continue\", \"Proceed\", \"Confirm Address\"], \"value\": null, \"notes\": \"Confirm address\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Pay Now\", \"alternatives\": [\"Pay\", \"Place Order\", \"Complete Order\"], \"value\": null, \"notes\": \"Complete payment\"}\n  ],\n  \"intent_keywords\": [\"order milk\", \"buy milk\", \"add to cart\", \"checkout\", \"payment\"],\n  \"candidate_button_texts\": [\"Add\", \"Add to cart\", \"View Cart\", \"Proceed to Checkout\", \"Pay Now\", \"Place Order\"],\n  \"candidate_field_labels\": [\"Search for society, area, landmark\", \"Enter delivery address\", \"Address line 1\", \"Add new address\"],\n  \"success_indicators\": [\"Order placed\", \"Thank you\", \"Order confirmed\", \"Payment successful\", \"Delivery scheduled\"]\n}",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 340,
+      "completion_tokens": 435,
+      "total_tokens": 775,
+      "cost": 0,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 34,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": null,
+        "upstream_inference_prompt_cost": 0,
+        "upstream_inference_completions_cost": 0
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0
+      }
+    }
+  },
+  "raw_text": "{\n  \"site\": \"blinkit.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Add\", \"alternatives\": [\"ADD\", \"Add to cart\", \"+ Add\"], \"value\": null, \"notes\": \"Add milk variant to cart\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"View Cart\", \"alternatives\": [\"Cart\", \"View cart\", \"Checkout\"], \"value\": null, \"notes\": \"Open cart drawer/page\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Proceed to Checkout\", \"alternatives\": [\"Checkout\", \"Place Order\", \"Continue\"], \"value\": null, \"notes\": \"Start checkout\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"Search for society, area, landmark\", \"alternatives\": [\"Enter delivery address\", \"Address line 1\", \"Add new address\"], \"value\": \"User Address\", \"notes\": \"Enter delivery location\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Save & Continue\", \"alternatives\": [\"Continue\", \"Proceed\", \"Confirm Address\"], \"value\": null, \"notes\": \"Confirm address\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Pay Now\", \"alternatives\": [\"Pay\", \"Place Order\", \"Complete Order\"], \"value\": null, \"notes\": \"Complete payment\"}\n  ],\n  \"intent_keywords\": [\"order milk\", \"buy milk\", \"add to cart\", \"checkout\", \"payment\"],\n  \"candidate_button_texts\": [\"Add\", \"Add to cart\", \"View Cart\", \"Proceed to Checkout\", \"Pay Now\", \"Place Order\"],\n  \"candidate_field_labels\": [\"Search for society, area, landmark\", \"Enter delivery address\", \"Address line 1\", \"Add new address\"],\n  \"success_indicators\": [\"Order placed\", \"Thank you\", \"Order confirmed\", \"Payment successful\", \"Delivery scheduled\"]\n}"
+}
