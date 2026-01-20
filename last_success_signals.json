@@ -1,12 +1,12 @@
 {
-  "ts": "2026-01-13 17:58:19",
-  "goal": "order milk from blinkit",
-  "dom_hash": "89258187",
+  "ts": "2026-01-20 20:58:11",
+  "goal": "in canva upload an image and edit it by changing its filter to fresco",
+  "dom_hash": "19416782",
   "success_signals": {
     "generator_goal": false,
     "generation_in_progress": false,
-    "topic_match_score": 2,
-    "has_output_controls": false,
+    "topic_match_score": 5,
+    "has_output_controls": true,
     "has_output_words": false,
     "success_likely": false,
     "judge_called": false,

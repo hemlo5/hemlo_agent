@@ -1,14 +1,14 @@
 {
-  "ts": "2026-01-13 17:51:54",
-  "goal": "order milk from blinkit",
-  "url": "https://blinkit.com/cn/milk/cid/14/922?srsltid=AfmBOoos-VABR_KyprMLvXWCI6ciQbmsC2lX3jYxrrfDhsZ8-3uhXP0r",
+  "ts": "2026-01-20 20:57:20",
+  "goal": "in canva upload an image and edit it by changing its filter to fresco",
+  "url": "https://www.canva.com/ai",
   "model": "xiaomi/mimo-v2-flash:free",
   "raw_response": {
-    "id": "gen-1768306910-wjxEzZTCKRQWPteprYz3",
+    "id": "gen-1768922836-v1KGihjt7S5Z4M1Mac4E",
     "provider": "Xiaomi",
     "model": "xiaomi/mimo-v2-flash:free",
     "object": "chat.completion",
-    "created": 1768306910,
+    "created": 1768922836,
     "choices": [
       {
         "logprobs": null,
@@ -17,20 +17,20 @@
         "index": 0,
         "message": {
           "role": "assistant",
-          "content": "{\n  \"site\": \"blinkit.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Add\", \"alternatives\": [\"ADD\", \"Add to cart\", \"+ Add\"], \"value\": null, \"notes\": \"Add milk variant to cart\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"View Cart\", \"alternatives\": [\"Cart\", \"View cart\", \"Checkout\"], \"value\": null, \"notes\": \"Open cart drawer/page\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Proceed to Checkout\", \"alternatives\": [\"Checkout\", \"Place Order\", \"Continue\"], \"value\": null, \"notes\": \"Start checkout\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"Search for society, area, landmark\", \"alternatives\": [\"Enter delivery address\", \"Address line 1\", \"Add new address\"], \"value\": \"User Address\", \"notes\": \"Enter delivery location\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Save & Continue\", \"alternatives\": [\"Continue\", \"Proceed\", \"Confirm Address\"], \"value\": null, \"notes\": \"Confirm address\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Pay Now\", \"alternatives\": [\"Pay\", \"Place Order\", \"Complete Order\"], \"value\": null, \"notes\": \"Complete payment\"}\n  ],\n  \"intent_keywords\": [\"order milk\", \"buy milk\", \"add to cart\", \"checkout\", \"payment\"],\n  \"candidate_button_texts\": [\"Add\", \"Add to cart\", \"View Cart\", \"Proceed to Checkout\", \"Pay Now\", \"Place Order\"],\n  \"candidate_field_labels\": [\"Search for society, area, landmark\", \"Enter delivery address\", \"Address line 1\", \"Add new address\"],\n  \"success_indicators\": [\"Order placed\", \"Thank you\", \"Order confirmed\", \"Payment successful\", \"Delivery scheduled\"]\n}",
+          "content": "{\n  \"site\": \"canva.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Create a design\", \"alternatives\": [\"Create\", \"Start a design\", \"Create new\"], \"value\": null, \"notes\": \"Open design creation modal\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"Upload\", \"alternatives\": [\"Uploads\", \"Upload files\"], \"value\": null, \"notes\": \"Go to uploads tab\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Upload files\", \"alternatives\": [\"Upload\", \"Add files\"], \"value\": null, \"notes\": \"Open file picker\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"file input\", \"alternatives\": [\"Choose files\", \"Select files\"], \"value\": null, \"notes\": \"Select image file from system\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Use in a new design\", \"alternatives\": [\"Use in design\", \"Add to design\"], \"value\": null, \"notes\": \"Add uploaded image to canvas\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Edit image\", \"alternatives\": [\"Edit\", \"Adjust\", \"Image options\"], \"value\": null, \"notes\": \"Open image editing panel\"},\n    {\"step\": 7, \"action\": \"click\", \"target_text\": \"Filters\", \"alternatives\": [\"Filter\", \"Effects\"], \"value\": null, \"notes\": \"Open filters section\"},\n    {\"step\": 8, \"action\": \"click\", \"target_text\": \"Fresco\", \"alternatives\": [\"Fresco filter\", \"Fresco effect\"], \"value\": null, \"notes\": \"Apply fresco filter\"}\n  ],\n  \"candidate_button_texts\": [\"Create a design\", \"Upload\", \"Upload files\", \"Use in a new design\", \"Edit image\", \"Filters\", \"Fresco\"],\n  \"candidate_field_labels\": [\"Upload files\", \"Choose files\", \"Search filters\"],\n  \"success_indicators\": [\"Fresco filter applied\", \"Image edited\", \"Filter changed to Fresco\"]\n}",
           "refusal": null,
           "reasoning": null
         }
       }
     ],
     "usage": {
-      "prompt_tokens": 340,
-      "completion_tokens": 435,
-      "total_tokens": 775,
+      "prompt_tokens": 279,
+      "completion_tokens": 481,
+      "total_tokens": 760,
       "cost": 0,
       "is_byok": false,
       "prompt_tokens_details": {
-        "cached_tokens": 34,
+        "cached_tokens": 33,
         "audio_tokens": 0,
         "video_tokens": 0
       },
@@ -45,5 +45,5 @@
       }
     }
   },
-  "raw_text": "{\n  \"site\": \"blinkit.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Add\", \"alternatives\": [\"ADD\", \"Add to cart\", \"+ Add\"], \"value\": null, \"notes\": \"Add milk variant to cart\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"View Cart\", \"alternatives\": [\"Cart\", \"View cart\", \"Checkout\"], \"value\": null, \"notes\": \"Open cart drawer/page\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Proceed to Checkout\", \"alternatives\": [\"Checkout\", \"Place Order\", \"Continue\"], \"value\": null, \"notes\": \"Start checkout\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"Search for society, area, landmark\", \"alternatives\": [\"Enter delivery address\", \"Address line 1\", \"Add new address\"], \"value\": \"User Address\", \"notes\": \"Enter delivery location\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Save & Continue\", \"alternatives\": [\"Continue\", \"Proceed\", \"Confirm Address\"], \"value\": null, \"notes\": \"Confirm address\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Pay Now\", \"alternatives\": [\"Pay\", \"Place Order\", \"Complete Order\"], \"value\": null, \"notes\": \"Complete payment\"}\n  ],\n  \"intent_keywords\": [\"order milk\", \"buy milk\", \"add to cart\", \"checkout\", \"payment\"],\n  \"candidate_button_texts\": [\"Add\", \"Add to cart\", \"View Cart\", \"Proceed to Checkout\", \"Pay Now\", \"Place Order\"],\n  \"candidate_field_labels\": [\"Search for society, area, landmark\", \"Enter delivery address\", \"Address line 1\", \"Add new address\"],\n  \"success_indicators\": [\"Order placed\", \"Thank you\", \"Order confirmed\", \"Payment successful\", \"Delivery scheduled\"]\n}"
+  "raw_text": "{\n  \"site\": \"canva.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Create a design\", \"alternatives\": [\"Create\", \"Start a design\", \"Create new\"], \"value\": null, \"notes\": \"Open design creation modal\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"Upload\", \"alternatives\": [\"Uploads\", \"Upload files\"], \"value\": null, \"notes\": \"Go to uploads tab\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Upload files\", \"alternatives\": [\"Upload\", \"Add files\"], \"value\": null, \"notes\": \"Open file picker\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"file input\", \"alternatives\": [\"Choose files\", \"Select files\"], \"value\": null, \"notes\": \"Select image file from system\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Use in a new design\", \"alternatives\": [\"Use in design\", \"Add to design\"], \"value\": null, \"notes\": \"Add uploaded image to canvas\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Edit image\", \"alternatives\": [\"Edit\", \"Adjust\", \"Image options\"], \"value\": null, \"notes\": \"Open image editing panel\"},\n    {\"step\": 7, \"action\": \"click\", \"target_text\": \"Filters\", \"alternatives\": [\"Filter\", \"Effects\"], \"value\": null, \"notes\": \"Open filters section\"},\n    {\"step\": 8, \"action\": \"click\", \"target_text\": \"Fresco\", \"alternatives\": [\"Fresco filter\", \"Fresco effect\"], \"value\": null, \"notes\": \"Apply fresco filter\"}\n  ],\n  \"candidate_button_texts\": [\"Create a design\", \"Upload\", \"Upload files\", \"Use in a new design\", \"Edit image\", \"Filters\", \"Fresco\"],\n  \"candidate_field_labels\": [\"Upload files\", \"Choose files\", \"Search filters\"],\n  \"success_indicators\": [\"Fresco filter applied\", \"Image edited\", \"Filter changed to Fresco\"]\n}"
 }

@@ -6,7 +6,8 @@ import re
 import math
 import hashlib
 import contextlib
-from typing import List, Dict, Any, Optional, Union
+import typing
+from typing import List, Dict, Any, Optional, Union, Set, Tuple
 from urllib.parse import urlparse
 import urllib.request, urllib.error
 from dotenv import load_dotenv
@@ -87,6 +88,110 @@ LOGIN_CHOICE_PATH = os.path.join(os.path.dirname(__file__), "login_choice.json")
 
 CONTROL_PATH = os.path.join(os.path.dirname(__file__), "agent_control.json")
 STATUS_PREFIX = "__HEMLO_STATUS__"
+
+UPLOAD_LIKE_TOKENS = [
+    "upload your image",
+    "upload",
+    "upload image",
+    "upload photo",
+    "upload video",
+    "choose file",
+    "choose files",
+    "choose image",
+    "choose photo",
+    "select file",
+    "select files",
+    "browse files",
+    "browse your files",
+    "pick file",
+    "pick files",
+    "add image",
+    "add photo",
+    "add media",
+]
+
+
+def _is_upload_like_label(label: Any) -> bool:
+    try:
+        lab = str(label or "").lower()
+    except Exception:
+        lab = ""
+    if not lab:
+        return False
+    try:
+        if re.search(r"\bupload\b", lab):
+            return True
+    except Exception:
+        pass
+    try:
+        for tok in UPLOAD_LIKE_TOKENS:
+            if tok == "upload":
+                continue
+            if tok and tok in lab:
+                return True
+    except Exception:
+        pass
+    return False
+
+
+def _run_memory_add_milestone(run_memory: Optional[Dict[str, Any]], milestone: str) -> None:
+    if not isinstance(run_memory, dict):
+        return
+    try:
+        ms = run_memory.get("milestones")
+        if not isinstance(ms, list):
+            ms = []
+            run_memory["milestones"] = ms
+        if milestone and milestone not in ms:
+            ms.append(milestone)
+    except Exception:
+        return
+
+
+def _run_memory_choice_key_from_decision(decision: Optional[Dict[str, Any]]) -> str:
+    if not isinstance(decision, dict):
+        return ""
+    try:
+        lt = str(decision.get("locator_type") or "").lower().strip()
+    except Exception:
+        lt = ""
+    if lt == "css" and decision.get("locator"):
+        try:
+            return "css:" + str(decision.get("locator"))
+        except Exception:
+            return "css:"
+    try:
+        r = str(decision.get("role") or "")
+    except Exception:
+        r = ""
+    try:
+        n = str(decision.get("name") or "")
+    except Exception:
+        n = ""
+    return f"role:{r}:{n}"
+
+
+def _run_memory_choice_key_from_item(it: Optional[Dict[str, Any]]) -> str:
+    if not isinstance(it, dict):
+        return ""
+    try:
+        lt = str(it.get("locator_type") or "").lower().strip()
+    except Exception:
+        lt = ""
+    if lt == "css" and it.get("locator"):
+        try:
+            return "css:" + str(it.get("locator"))
+        except Exception:
+            return "css:"
+    try:
+        r = str(it.get("role") or "")
+    except Exception:
+        r = ""
+    try:
+        n = str(it.get("name") or "")
+    except Exception:
+        n = ""
+    return f"role:{r}:{n}"
 
 # --- Workflow Memory ---
 
@@ -382,6 +487,31 @@ def log_thought(step_name: str, dom_snippet: str, decision: Any):
     print(f"📝 Logged thought for '{step_name}'")
 
 
+def append_step_trace(record: Dict[str, Any]) -> None:
+    try:
+        base_dir = os.path.dirname(__file__)
+        path = os.path.join(base_dir, "step_trace.jsonl")
+        with open(path, "a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        last_path = os.path.join(base_dir, "last_step_trace.json")
+        existing: List[Dict[str, Any]] = []
+        try:
+            if os.path.exists(last_path):
+                with open(last_path, "r", encoding="utf-8") as rf:
+                    prev = json.load(rf)
+                if isinstance(prev, list):
+                    existing = [x for x in prev if isinstance(x, dict)]
+                elif isinstance(prev, dict):
+                    existing = [prev]
+        except Exception:
+            existing = []
+        existing.append(record)
+        with open(last_path, "w", encoding="utf-8") as f:
+            json.dump(existing, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+
 def wait_for_money_approval(timeout_seconds: int = 600) -> bool:
     """Wait for UI-driven approval of a money action via flag file."""
     # Clear any stale flag from prior runs so we only react to fresh approval.
@@ -404,12 +534,47 @@ def wait_for_money_approval(timeout_seconds: int = 600) -> bool:
                 return True
         except Exception:
             pass
-
         if timeout_seconds is not None and timeout_seconds > 0 and (time.time() - start) > timeout_seconds:
             print("Money action approval timed out.")
             return False
 
         time.sleep(1.0)
+
+
+def save_run_memory(goal: str, run_memory: Dict[str, Any], step: int, url: Optional[str] = None) -> None:
+    """Persist the compact run_memory each step to a JSONL log and mirror in last_run_memory.json.
+
+    Mirrors the pattern used by save_filtered_dom: maintains a long JSONL log and a short
+    last_run_memory.json file which accumulates records for the current run (reset at start).
+    """
+    try:
+        record = {
+            "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "goal": goal,
+            "step": int(step),
+            "url": url,
+            "run_memory": run_memory,
+        }
+        base_dir = os.path.dirname(__file__)
+        with open(os.path.join(base_dir, "run_memory_log.jsonl"), "a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        last_path = os.path.join(base_dir, "last_run_memory.json")
+        existing: typing.List[Dict[str, Any]] = []
+        try:
+            if os.path.exists(last_path):
+                with open(last_path, "r", encoding="utf-8") as rf:
+                    prev = json.load(rf)
+                if isinstance(prev, list):
+                    existing = [x for x in prev if isinstance(x, dict)]
+                elif isinstance(prev, dict):
+                    existing = [prev]
+        except Exception:
+            existing = []
+        existing.append(record)
+        with open(last_path, "w", encoding="utf-8") as f:
+            json.dump(existing, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        print(f"Failed saving run memory: {e}")
 
 
 def wait_for_login_choice(timeout_seconds: int = 900) -> Optional[Dict[str, Any]]:
@@ -662,6 +827,136 @@ def _flatten_ax_nodes(node: Dict[str, Any], out: List[Dict[str, Any]]):
         _flatten_ax_nodes(ch, out)
 
 
+_GOAL_PRIORITY_SPEC_CACHE: Dict[str, Dict[str, Any]] = {}
+
+
+def _extract_planner_keywords(planner_assist: Optional[Dict[str, Any]]) -> Dict[str, List[str]]:
+    must: List[str] = []
+    boost: List[str] = []
+    if not isinstance(planner_assist, dict) or not planner_assist:
+        return {"must_include": must, "boost": boost}
+    try:
+        plan = planner_assist.get("plan") or {}
+        steps = plan.get("steps") or []
+        if isinstance(steps, list):
+            for st in steps:
+                if not isinstance(st, dict):
+                    continue
+                tt = st.get("target_text")
+                if isinstance(tt, str) and tt.strip():
+                    must.append(tt.strip())
+                alts = st.get("alternatives") or []
+                if isinstance(alts, list):
+                    for a in alts:
+                        if isinstance(a, str) and a.strip():
+                            boost.append(a.strip())
+        cbtn = plan.get("candidate_button_texts") or []
+        if isinstance(cbtn, list):
+            for b in cbtn:
+                if isinstance(b, str) and b.strip():
+                    boost.append(b.strip())
+        cfields = plan.get("candidate_field_labels") or []
+        if isinstance(cfields, list):
+            for f in cfields:
+                if isinstance(f, str) and f.strip():
+                    boost.append(f.strip())
+    except Exception:
+        return {"must_include": must, "boost": boost}
+    return {"must_include": must, "boost": boost}
+
+
+def _norm_keywords(words: typing.List[str], limit: int) -> typing.List[str]:
+    out: typing.List[str] = []
+    seen: typing.Set[str] = set()
+    for w in words or []:
+        if not isinstance(w, str):
+            continue
+        s = re.sub(r"\s+", " ", w).strip().lower()
+        if not s:
+            continue
+        if len(s) < 3:
+            continue
+        if s in seen:
+            continue
+        seen.add(s)
+        out.append(s)
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _get_goal_priority_spec(goal: str, current_host: str, planner_assist: Optional[Dict[str, Any]] = None) -> Dict[str, typing.List[str]]:
+    try:
+        key = hashlib.sha256((current_host + "|" + (goal or "")).encode("utf-8")).hexdigest()[:18]
+    except Exception:
+        key = (current_host or "") + "|" + (goal or "")
+    if key in _GOAL_PRIORITY_SPEC_CACHE:
+        cached = _GOAL_PRIORITY_SPEC_CACHE.get(key)
+        if isinstance(cached, dict):
+            mi = cached.get("must_include")
+            bo = cached.get("boost")
+            if isinstance(mi, list) and isinstance(bo, list):
+                return {"must_include": mi, "boost": bo}
+
+    planner_kw = _extract_planner_keywords(planner_assist)
+    planner_must = planner_kw.get("must_include") or []
+    planner_boost = planner_kw.get("boost") or []
+
+    must_include: typing.List[str] = []
+    boost: typing.List[str] = []
+    try:
+        completion = client.chat.completions.create(
+            model=config.SMART_MODEL,
+            messages=[
+                {
+                    "role": "system",
+                    "content": (
+                        "You help a web automation agent prioritize which clickable/interactive UI controls to keep. "
+                        "Given a user goal, output a JSON object with keys: must_include, boost. "
+                        "Each value is an array of short UI text snippets (typically 1-4 words) that are likely to appear on buttons/links/controls. "
+                        "must_include should contain the few critical controls that must not be lost during DOM trimming. "
+                        "boost should contain additional helpful controls. "
+                        "Avoid generic words like 'click', 'button', 'link'. "
+                        "Return at most 12 must_include and at most 18 boost. JSON only."
+                    ),
+                },
+                {
+                    "role": "user",
+                    "content": json.dumps(
+                        {
+                            "goal": goal,
+                            "site": current_host,
+                            "planner_hints": {
+                                "must_include": planner_must[:12],
+                                "boost": planner_boost[:18],
+                            },
+                        },
+                        ensure_ascii=False,
+                    ),
+                },
+            ],
+            response_format={"type": "json_object"},
+            temperature=0.0,
+        )
+        raw = completion.choices[0].message.content or "{}"
+        obj = json.loads(raw)
+        mi = obj.get("must_include")
+        bo = obj.get("boost")
+        if isinstance(mi, list):
+            must_include = [x for x in mi if isinstance(x, str)]
+        if isinstance(bo, list):
+            boost = [x for x in bo if isinstance(x, str)]
+    except Exception:
+        must_include = []
+        boost = []
+
+    merged_must = _norm_keywords(list(planner_must) + list(must_include), limit=14)
+    merged_boost = _norm_keywords(list(planner_boost) + list(boost), limit=25)
+    spec = {"must_include": merged_must, "boost": merged_boost}
+    _GOAL_PRIORITY_SPEC_CACHE[key] = spec
+    return spec
+
+
 def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist: Optional[Dict[str, Any]] = None) -> str:
     """Deterministically filter interactive elements using Playwright AX snapshot.
 
@@ -675,6 +970,10 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         current_host = urlparse(page.url).hostname or ""
     except Exception:
         current_host = ""
+
+    priority_spec = _get_goal_priority_spec(goal, current_host, planner_assist)
+    must_keywords = _norm_keywords(list(priority_spec.get("must_include") or []), limit=14)
+    boost_keywords = _norm_keywords(list(priority_spec.get("boost") or []), limit=25)
     try:
         snapshot: Dict[str, Any] = page.accessibility.snapshot() or {}
     except Exception as e:
@@ -700,7 +999,7 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         except Exception:
             pass
 
-    flat: List[Dict[str, Any]] = []
+    flat: typing.List[Dict[str, Any]] = []
     if snapshot:
         _flatten_ax_nodes(snapshot, flat)
 
@@ -720,7 +1019,7 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         "slider",
     }
 
-    items: List[Dict[str, Any]] = []
+    items: typing.List[Dict[str, Any]] = []
     for node in flat:
         role = node.get("role")
         name = node.get("name") or ""
@@ -751,103 +1050,13 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
 
     # Deduplicate by (role, name)
     seen = set()
-    uniq: List[Dict[str, Any]] = []
+    uniq: typing.List[Dict[str, Any]] = []
     for it in items:
         key = (it["role"], it["name"])
         if key in seen:
             continue
         seen.add(key)
         uniq.append(it)
-
-    # Commerce sites sometimes render critical controls (cart / checkout) as clickable divs
-    # that do not surface in the accessibility tree. Add CSS-based fallbacks.
-    try:
-        gtmp = str(goal or "").lower()
-        commerce_goal = any(k in gtmp for k in ["order", "buy", "checkout", "cart", "pay", "purchase"])
-    except Exception:
-        commerce_goal = False
-    if commerce_goal:
-        try:
-            existing_names = set()
-            existing_locators = set()
-            for it in uniq:
-                existing_names.add(str(it.get("name") or ""))
-                if it.get("locator_type") == "css" and it.get("locator"):
-                    existing_locators.add(str(it.get("locator")))
-
-            # Generic text-based fallbacks (works when text is present but not in AX snapshot)
-            for nm, loc in [
-                ("View Cart", r'text=/view\s*cart/i'),
-                ("Proceed to checkout", r'text=/proceed\s*to\s*checkout/i'),
-            ]:
-                if nm not in existing_names and loc not in existing_locators:
-                    try:
-                        loc_obj = page.locator(loc)
-                        chosen_visible = False
-                        try:
-                            cnt = min(int(loc_obj.count()), 8)
-                        except Exception:
-                            cnt = 1
-                        for i in range(cnt):
-                            try:
-                                cand = loc_obj.nth(i)
-                                if cand.is_visible(timeout=200):
-                                    chosen_visible = True
-                                    break
-                            except Exception:
-                                continue
-                        if chosen_visible:
-                            uniq.append(
-                                {
-                                    "role": "button",
-                                    "name": nm,
-                                    "locator_type": "css",
-                                    "locator": loc,
-                                    "text": nm,
-                                    "is_money_action": any(w in nm.lower() for w in ["checkout", "pay"]),
-                                }
-                            )
-                            existing_names.add(nm)
-                            existing_locators.add(loc)
-                    except Exception:
-                        pass
-
-            # Blinkit-specific cart button container (often no role)
-            try:
-                if "blinkit" in (current_host or ""):
-                    loc = '[class*="CartButton__Container"]'
-                    if "View Cart" not in existing_names and loc not in existing_locators:
-                        loc_obj = page.locator(loc)
-                        chosen_visible = False
-                        try:
-                            cnt = min(int(loc_obj.count()), 8)
-                        except Exception:
-                            cnt = 1
-                        for i in range(cnt):
-                            try:
-                                cand = loc_obj.nth(i)
-                                if cand.is_visible(timeout=200):
-                                    chosen_visible = True
-                                    break
-                            except Exception:
-                                continue
-                        if chosen_visible:
-                            uniq.append(
-                                {
-                                    "role": "button",
-                                    "name": "View Cart",
-                                    "locator_type": "css",
-                                    "locator": loc,
-                                    "text": "View Cart",
-                                    "is_money_action": False,
-                                }
-                            )
-                            existing_names.add("View Cart")
-                            existing_locators.add(loc)
-            except Exception:
-                pass
-        except Exception:
-            pass
 
     # Enrich with attributes (href, aria-expanded) and kind for links/buttons
     for it in uniq:
@@ -888,7 +1097,7 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         except Exception:
             pass
 
-    extra: List[Dict[str, Any]] = []
+    extra: typing.List[Dict[str, Any]] = []
     bases = [
         'input:not([type="hidden"])',
         "textarea",
@@ -897,7 +1106,7 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         '[contenteditable]:not([contenteditable="false"])',
     ]
     try:
-        seen_locators: set[str] = set()
+        seen_locators: typing.Set[str] = set()
     except Exception:
         seen_locators = set()
     try:
@@ -1029,6 +1238,8 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
             for it in uniq:
                 if it.get("locator_type") == "css" and it.get("locator"):
                     existing_locators.add(str(it.get("locator")))
+                else:
+                    existing_locators.add((str(it.get("role")), str(it.get("name"))))
             for it in extra:
                 loc = str(it.get("locator") or "")
                 if loc and loc not in existing_locators:
@@ -1037,287 +1248,200 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         except Exception:
             uniq.extend(extra)
 
-    planner_intent_terms: List[str] = []
-    planner_button_texts: List[str] = []
-    planner_field_labels: List[str] = []
     try:
-        if isinstance(planner_assist, dict) and planner_assist:
-            v1 = planner_assist.get("intent_keywords")
-            if isinstance(v1, list):
-                for s in v1:
-                    if isinstance(s, str) and s.strip():
-                        planner_intent_terms.append(s.strip())
-            v2 = planner_assist.get("candidate_button_texts")
-            if isinstance(v2, list):
-                for s in v2:
-                    if isinstance(s, str) and s.strip():
-                        planner_button_texts.append(s.strip())
-            v3 = planner_assist.get("candidate_field_labels")
-            if isinstance(v3, list):
-                for s in v3:
-                    if isinstance(s, str) and s.strip():
-                        planner_field_labels.append(s.strip())
-            steps = planner_assist.get("steps") or []
-            if isinstance(steps, list):
-                for st in steps:
-                    if not isinstance(st, dict):
-                        continue
-                    try:
-                        act = st.get("action")
-                    except Exception:
-                        act = None
-                    try:
-                        tt = st.get("target_text")
-                    except Exception:
-                        tt = None
-                    try:
-                        alts = st.get("alternatives")
-                    except Exception:
-                        alts = None
-                    if isinstance(tt, str) and tt.strip():
-                        if str(act).lower().strip() == "type":
-                            planner_field_labels.append(tt.strip())
-                        else:
-                            planner_button_texts.append(tt.strip())
-                    if isinstance(alts, list):
-                        for a in alts:
-                            if isinstance(a, str) and a.strip():
-                                if str(act).lower().strip() == "type":
-                                    planner_field_labels.append(a.strip())
-                                else:
-                                    planner_button_texts.append(a.strip())
+        hybrid_raw = page.evaluate(
+            """() => {
+  const out = [];
+  const seen = new Set();
+  let c = 0;
+  const maxOut = 140;
+  const maxOverlay = 60;
+
+  const pushEl = (el, inOverlay) => {
+    if (!el || !el.getBoundingClientRect) return;
+    if (c >= maxOut) return;
+    const rect = el.getBoundingClientRect();
+    if (!rect || rect.width < 8 || rect.height < 8) return;
+    if (rect.bottom < 0 || rect.right < 0 || rect.top > window.innerHeight || rect.left > window.innerWidth) return;
+    const tag = (el.tagName || '').toLowerCase();
+    if (tag === 'input') {
+      const t = (el.getAttribute('type') || '').toLowerCase();
+      if (t === 'hidden') return;
+    }
+    const roleAttr = (el.getAttribute('role') || '').toLowerCase();
+    const isRole = ['button','link','checkbox','radio','menuitem','tab','switch','option'].includes(roleAttr);
+    const isTag = ['a','button','input','select','textarea'].includes(tag);
+    let style = null;
+    try { style = window.getComputedStyle(el); } catch (e) { style = null; }
+    if (style) {
+      if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return;
+    }
+    let isPointer = false;
+    if (!isTag && !isRole) {
+      isPointer = !!(style && style.cursor === 'pointer');
+    }
+    const tabindex = el.getAttribute('tabindex');
+    const hasTab = tabindex !== null && String(tabindex).trim() !== '' && !isNaN(parseInt(tabindex, 10));
+    if (!(isTag || isRole || isPointer || hasTab)) return;
+
+    let label = '';
+    try {
+      label = (el.innerText || '').trim();
+    } catch (e) {
+      label = '';
+    }
+    if (!label) {
+      const cand = el.getAttribute('aria-label') || el.getAttribute('title') || el.getAttribute('placeholder') || el.getAttribute('name') || '';
+      label = (cand || '').trim();
+    }
+    if (!label) return;
+    label = label.replace(/\s+/g, ' ').slice(0, 80);
+
+    let sel = '';
+    const dt = el.getAttribute('data-testid') || el.getAttribute('data-test-id') || el.getAttribute('data-test');
+    if (dt && String(dt).trim()) {
+      sel = `[data-testid="${String(dt).trim()}"]`;
+      if (!el.matches(sel)) {
+        sel = `[data-test-id="${String(dt).trim()}"]`;
+      }
+    }
+    if (!sel) {
+      const id = el.getAttribute('id');
+      if (id && String(id).trim()) {
+        sel = `#${String(id).trim()}`;
+      }
+    }
+    if (!sel) {
+      let eid = el.getAttribute('data-hemlo-eid');
+      if (!eid) {
+        eid = 'hemlo-' + Math.random().toString(16).slice(2) + '-' + Date.now().toString(16);
+        try { el.setAttribute('data-hemlo-eid', eid); } catch (e) {}
+      }
+      sel = `[data-hemlo-eid="${eid}"]`;
+    }
+    if (seen.has(sel)) return;
+    seen.add(sel);
+
+    const href = tag === 'a' ? (el.getAttribute('href') || null) : (el.getAttribute('href') || null);
+    const target = el.getAttribute('target') || null;
+    const ariaExpanded = el.getAttribute('aria-expanded') || null;
+    let role = roleAttr;
+    if (!role) {
+      if (tag === 'a') role = 'link';
+      else if (tag === 'button') role = 'button';
+      else if (isPointer) role = 'button';
+      else role = 'button';
+    }
+    out.push({ role, name: label, selector: sel, href, target, aria_expanded: ariaExpanded, in_overlay: !!inOverlay });
+    c++;
+  };
+
+  let overlayCount = 0;
+  try {
+    const overlays = document.querySelectorAll('[role="menu"],[role="listbox"],[role="dialog"],[role="alertdialog"],[aria-modal="true"]');
+    for (let i = 0; i < overlays.length; i++) {
+      if (overlayCount >= maxOverlay || c >= maxOut) break;
+      const root = overlays[i];
+      if (!root || !root.getBoundingClientRect) continue;
+      const r = root.getBoundingClientRect();
+      if (!r || r.width < 10 || r.height < 10) continue;
+      const st = window.getComputedStyle(root);
+      if (st && (st.display === 'none' || st.visibility === 'hidden' || st.opacity === '0')) continue;
+      const nodes = root.querySelectorAll('a,button,input,select,textarea,[role],[tabindex],div,span');
+      for (let j = 0; j < nodes.length; j++) {
+        if (overlayCount >= maxOverlay || c >= maxOut) break;
+        const before = c;
+        pushEl(nodes[j], true);
+        if (c > before) overlayCount++;
+      }
+    }
+  } catch (e) {}
+
+  const candidates = document.querySelectorAll('a,button,input,select,textarea,[role],[tabindex],div,span');
+  for (let i = 0; i < candidates.length; i++) {
+    if (c >= maxOut) break;
+    pushEl(candidates[i], false);
+  }
+  return out;
+}"""
+        )
     except Exception:
-        planner_intent_terms = []
-        planner_button_texts = []
-        planner_field_labels = []
-
-    def _normalize_terms(xs: List[str], limit: int) -> List[str]:
-        out: List[str] = []
-        seen2: set[str] = set()
-        for s in xs:
-            if not isinstance(s, str):
-                continue
-            t = s.strip().lower()
-            if not t:
-                continue
-            if t in seen2:
-                continue
-            seen2.add(t)
-            out.append(t)
-            if len(out) >= limit:
-                break
-        return out
-
-    intent_terms_norm = _normalize_terms(planner_intent_terms + planner_button_texts, 24)
-    field_terms_norm = _normalize_terms(planner_field_labels, 24)
-
-    probe_texts: List[str] = []
+        hybrid_raw = []
     try:
-        seen_probe: set[str] = set()
-        for s in (planner_button_texts + planner_intent_terms):
-            if not isinstance(s, str):
-                continue
-            t = s.strip()
-            if not t:
-                continue
-            if len(t) < 3:
-                continue
-            if len(t) > 60:
-                t = t[:60]
-            k = t.lower()
-            if k in seen_probe:
-                continue
-            seen_probe.add(k)
-            probe_texts.append(t)
-            if len(probe_texts) >= 10:
-                break
-    except Exception:
-        probe_texts = []
-
-    if probe_texts:
-        try:
-            existing_names_l = set()
-            existing_locators2 = set()
+        if isinstance(hybrid_raw, list) and hybrid_raw:
+            existing = set()
             for it in uniq:
-                try:
-                    nm = str(it.get("name") or "")
-                    if nm:
-                        existing_names_l.add(nm.lower())
-                except Exception:
-                    pass
                 if it.get("locator_type") == "css" and it.get("locator"):
-                    existing_locators2.add(str(it.get("locator")))
-
-            def _text_regex_pattern(t: str) -> str:
-                try:
-                    pat = re.escape(t.strip())
-                except Exception:
-                    pat = t.strip()
-                pat = pat.replace(r"\ ", r"\\s*")
-                return pat
-
-            added_dynamic = 0
-            for t in probe_texts:
-                if added_dynamic >= 12:
-                    break
-                if t.lower() in existing_names_l:
-                    continue
-                esc = t.replace("\\", "\\\\").replace('"', '\\"')
-                locators_to_try = [
-                    f':is(button,a,[role="button"],[role="link"],[onclick],[tabindex]):has-text("{esc}")',
-                    f'text=/{_text_regex_pattern(t)}/i',
-                ]
-                for loc in locators_to_try:
-                    if loc in existing_locators2:
-                        continue
-                    try:
-                        loc_obj = page.locator(loc)
-                        chosen_visible = False
-                        try:
-                            cnt = min(int(loc_obj.count()), 8)
-                        except Exception:
-                            cnt = 1
-                        for i in range(cnt):
-                            try:
-                                cand = loc_obj.nth(i)
-                                if cand.is_visible(timeout=200):
-                                    chosen_visible = True
-                                    break
-                            except Exception:
-                                continue
-                        if chosen_visible:
-                            uniq.append(
-                                {
-                                    "role": "button",
-                                    "name": t,
-                                    "locator_type": "css",
-                                    "locator": loc,
-                                    "text": t,
-                                    "is_money_action": any(w in t.lower() for w in ["buy", "checkout", "place order", "pay", "add to cart"]),
-                                }
-                            )
-                            existing_locators2.add(loc)
-                            existing_names_l.add(t.lower())
-                            added_dynamic += 1
-                            break
-                    except Exception:
-                        continue
-        except Exception:
-            pass
-
-    try:
-        existing_names_l2: set[str] = set()
-        existing_locators3: set[str] = set()
-        for it in uniq:
-            try:
-                nm = str(it.get("name") or "")
-                if nm:
-                    existing_names_l2.add(nm.lower())
-            except Exception:
-                pass
-            if it.get("locator_type") == "css" and it.get("locator"):
-                existing_locators3.add(str(it.get("locator")))
-
-        click_bases = [
-            "button",
-            "a",
-            "[role=\"button\"]",
-            "[role=\"link\"]",
-            "[onclick]",
-            "[tabindex]:not([tabindex=\"-1\"])",
-        ]
-        added_click_extra = 0
-        for base in click_bases:
-            if added_click_extra >= 32:
-                break
-            try:
-                loc_obj = page.locator(base)
-            except Exception:
-                continue
-            try:
-                cnt = min(int(loc_obj.count()), 14)
-            except Exception:
-                cnt = 0
-            for idx in range(cnt):
-                if added_click_extra >= 32:
-                    break
-                try:
-                    el = loc_obj.nth(idx)
-                except Exception:
-                    continue
-                try:
-                    if not el.is_visible(timeout=150):
-                        continue
-                except Exception:
-                    continue
-
-                nm = ""
-                for attr in ("aria-label", "title", "name", "value", "alt"):
-                    try:
-                        v = el.get_attribute(attr, timeout=150)
-                    except Exception:
-                        v = None
-                    if isinstance(v, str) and v.strip():
-                        nm = v.strip()
-                        break
-                if not nm:
-                    try:
-                        nm = (el.inner_text(timeout=200) or "").strip()
-                    except Exception:
-                        nm = ""
-                if not nm:
-                    continue
-                if len(nm) > 60:
-                    nm = nm[:60]
-                if nm.lower() in existing_names_l2:
-                    continue
-
-                try:
-                    locator = f":nth-match({base}, {idx + 1})"
-                except Exception:
-                    continue
-                if locator in existing_locators3:
-                    continue
-
-                role_guess = "button"
-                if base == "a":
-                    role_guess = "link"
+                    existing.add(("css", str(it.get("locator"))))
                 else:
-                    try:
-                        href = el.get_attribute("href", timeout=150)
-                    except Exception:
-                        href = None
-                    if isinstance(href, str) and href.strip():
-                        role_guess = "link"
-
+                    existing.add((str(it.get("role")), str(it.get("name"))))
+            for hr in hybrid_raw:
+                try:
+                    name = str((hr or {}).get("name") or "").strip()
+                except Exception:
+                    name = ""
+                try:
+                    role = str((hr or {}).get("role") or "button").strip().lower()
+                except Exception:
+                    role = "button"
+                try:
+                    locator = str((hr or {}).get("selector") or "").strip()
+                except Exception:
+                    locator = ""
+                if not name or not locator:
+                    continue
+                key = ("css", locator)
+                if key in existing:
+                    continue
+                if (role, name) in existing:
+                    continue
+                lower = name.lower()
+                is_money = any(w in lower for w in ["buy", "checkout", "place order", "pay", "add to cart"])
+                href = (hr or {}).get("href")
+                target = (hr or {}).get("target")
+                aria_expanded = (hr or {}).get("aria_expanded")
+                in_overlay = bool((hr or {}).get("in_overlay"))
+                href_kind = None
+                try:
+                    if isinstance(href, str):
+                        h = href.strip().lower()
+                        if h.startswith("http") or h.startswith("/"):
+                            href_kind = "nav"
+                        elif h.startswith("#"):
+                            href_kind = "anchor"
+                        elif h.startswith("javascript"):
+                            href_kind = "js"
+                        else:
+                            href_kind = "other"
+                except Exception:
+                    href_kind = None
                 uniq.append(
                     {
-                        "role": role_guess,
-                        "name": nm,
+                        "role": role,
+                        "name": name,
                         "locator_type": "css",
                         "locator": locator,
-                        "text": nm,
-                        "is_money_action": any(w in nm.lower() for w in ["buy", "checkout", "place order", "pay", "add to cart"]),
+                        "text": name,
+                        "is_money_action": bool(is_money),
+                        "href": href,
+                        "href_kind": href_kind,
+                        "aria_expanded": aria_expanded,
+                        "in_overlay": bool(in_overlay),
+                        "target": target,
                     }
                 )
-                existing_names_l2.add(nm.lower())
-                existing_locators3.add(locator)
-                added_click_extra += 1
+                existing.add(key)
     except Exception:
         pass
 
     # Rank by relevance to goal, control type, and link quality
     g = goal.lower()
-    primary_keywords = [
-        "prompt",
-        "describe",
-        "topic",
-        "title",
-        "what",
-        "tell",
-        "generate",
-        "create",
-    ]
+    input_keywords: typing.List[str] = []
+    try:
+        toks = [t for t in g.split() if isinstance(t, str) and len(t) >= 3]
+        input_keywords = _norm_keywords(list(must_keywords) + list(boost_keywords) + toks, limit=35)
+    except Exception:
+        input_keywords = []
     for it in uniq:
         try:
             nlow = str(it.get("name") or "").lower()
@@ -1325,8 +1449,14 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
             nlow = ""
         it["is_primary_input"] = bool(
             it.get("role") in ("textbox", "searchbox", "combobox")
-            and (it.get("is_rich") or any(k in nlow for k in primary_keywords) or any(k in nlow for k in field_terms_norm))
+            and (it.get("is_rich") or (input_keywords and any(k in nlow for k in input_keywords)))
         )
+
+    menu_open = False
+    try:
+        menu_open = any(str(x.get("aria_expanded") or "").lower() == "true" for x in uniq)
+    except Exception:
+        menu_open = False
 
     def _score(it: Dict[str, Any]) -> int:
         n = it["name"].lower()
@@ -1335,40 +1465,28 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
             s += 3
             if it.get("is_primary_input"):
                 s += 6
-        if intent_terms_norm:
-            if any(k in n for k in intent_terms_norm):
-                s += 6
-        if field_terms_norm and it["role"] in ("searchbox", "textbox", "combobox"):
-            if any(k in n for k in field_terms_norm):
-                s += 4
         if any(tok and tok in n for tok in g.split()):
             s += 2
-        # Strongly prioritize download/save controls when the goal is to download/save
-        if any(k in g for k in ["download", "save"]):
-            if any(w in n for w in ["download", "save", "save image", "get image", "jpg", "png", "jpeg"]):
+        if boost_keywords and any(k in n for k in boost_keywords):
+            s += 6
+        if must_keywords and any(k in n for k in must_keywords):
+            s += 10
+        if menu_open:
+            if it.get("role") in {"menuitem", "option"}:
                 s += 8
+            if it.get("in_overlay"):
+                s += 5
+            if any(x in n for x in ["event", "task", "appointment", "schedule", "meeting"]):
+                s += 12
+            try:
+                if str(it.get("aria_expanded") or "").lower() == "true" and any(x in n for x in ["create", "add", "more", "options"]):
+                    s -= 30
+            except Exception:
+                pass
         if it.get("is_money_action"):
             s += 4
         if it["role"] == "button":
             s += 1
-        # Commerce flows: cart/checkout controls must win even when pages have tons of footer/header nav links.
-        commerce_goal = any(k in g for k in ["order", "buy", "checkout", "cart", "pay", "purchase"])
-        if commerce_goal:
-            if any(k in n for k in [
-                "add", "add to cart", "cart", "view cart", "go to cart", "bag", "basket",
-                "checkout", "proceed", "place order", "payment", "pay now", "upi", "gpay", "phonepe"
-            ]):
-                s += 12
-            # Downrank common footer/legal links that are rarely relevant to the goal.
-            if n in {"privacy", "terms", "faqs", "faq", "security", "partner", "franchise", "seller", "warehouse", "deliver", "resources", "blog", "contact"}:
-                s -= 8
-        # Exploration keywords (generic, non site-specific)
-        if any(k in n for k in [
-            "apply", "application", "form", "admission", "admissions",
-            "learn more", "get started", "explore", "program", "course",
-            "contact", "about", "next", "continue"
-        ]):
-            s += 2
         # Prefer real navigation links over anchors/js
         hk = it.get("href_kind")
         if hk == "nav":
@@ -1390,11 +1508,624 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
         return s
 
     uniq.sort(key=_score, reverse=True)
-    trimmed = uniq[:70]
-    return json.dumps(trimmed, ensure_ascii=False)
+    max_items = 40
+
+    def _item_key(it: Dict[str, Any]) -> typing.Tuple[str, str]:
+        if it.get("locator_type") == "css" and it.get("locator"):
+            return ("css", str(it.get("locator")))
+        return (str(it.get("role")), str(it.get("name")))
+
+    def _matches_priority(it: Dict[str, Any]) -> bool:
+        try:
+            nlow = str(it.get("name") or "").lower()
+        except Exception:
+            nlow = ""
+        if must_keywords and any(k in nlow for k in must_keywords):
+            return True
+        return False
+
+    out: typing.List[Dict[str, Any]] = []
+    seen_out: typing.Set[typing.Tuple[str, str]] = set()
+
+    if must_keywords:
+        try:
+            prioritized = sorted(list(must_keywords), key=lambda x: len(str(x or "")), reverse=True)
+        except Exception:
+            prioritized = list(must_keywords)
+        for kw in prioritized:
+            if len(out) >= max_items:
+                break
+            try:
+                kw_low = str(kw or "").lower().strip()
+            except Exception:
+                kw_low = ""
+            if not kw_low:
+                continue
+            added_for_kw = 0
+            for it in uniq:
+                if len(out) >= max_items:
+                    break
+                try:
+                    nlow = str(it.get("name") or "").lower()
+                except Exception:
+                    nlow = ""
+                if kw_low not in nlow:
+                    continue
+                k = _item_key(it)
+                if k in seen_out:
+                    continue
+                seen_out.add(k)
+                out.append(it)
+                added_for_kw += 1
+                if added_for_kw >= 2:
+                    break
+
+    if len(out) < max_items:
+        for it in uniq:
+            k = _item_key(it)
+            if k in seen_out:
+                continue
+            seen_out.add(k)
+            out.append(it)
+            if len(out) >= max_items:
+                break
+
+    return json.dumps(out, ensure_ascii=False)
 
 
-def save_filtered_dom(goal: str, filtered_json_array: str) -> None:
+def playwright_filter_interactive_elements_gold(
+    page: Page,
+    goal: str,
+    planner_assist: Optional[Dict[str, Any]] = None,
+    max_items: int = 180,
+    grid_step: int = 55,
+) -> str:
+    print(f"Filtering DOM for goal (gold): '{goal}'...")
+    current_host = ""
+    try:
+        current_host = urlparse(page.url).hostname or ""
+    except Exception:
+        current_host = ""
+
+    try:
+        max_items = int(max_items)
+    except Exception:
+        max_items = 180
+    if max_items < 20:
+        max_items = 20
+    if max_items > 400:
+        max_items = 400
+
+    try:
+        grid_step = int(grid_step)
+    except Exception:
+        grid_step = 55
+    if grid_step < 25:
+        grid_step = 25
+    if grid_step > 120:
+        grid_step = 120
+
+    priority_spec = _get_goal_priority_spec(goal, current_host, planner_assist)
+    must_keywords = _norm_keywords(list(priority_spec.get("must_include") or []), limit=14)
+    boost_keywords = _norm_keywords(list(priority_spec.get("boost") or []), limit=25)
+
+    goal_tokens: typing.List[str] = []
+    try:
+        toks = re.findall(r"[a-zA-Z]{3,}", str(goal or "").lower())
+        goal_tokens = _norm_keywords([t for t in toks if t], limit=40)
+    except Exception:
+        goal_tokens = []
+
+    uniq: typing.List[Dict[str, Any]] = []
+    try:
+        snapshot: Dict[str, Any] = page.accessibility.snapshot() or {}
+    except Exception:
+        snapshot = {}
+
+    flat: typing.List[Dict[str, Any]] = []
+    if snapshot:
+        _flatten_ax_nodes(snapshot, flat)
+
+    interactive_roles = {
+        "button",
+        "link",
+        "textbox",
+        "searchbox",
+        "combobox",
+        "checkbox",
+        "radio",
+        "menuitem",
+        "tab",
+        "listbox",
+        "option",
+        "switch",
+        "slider",
+    }
+
+    seen_role_keys: typing.Set[typing.Tuple[str, str]] = set()
+    for node in flat:
+        try:
+            role = node.get("role")
+            name = node.get("name")
+        except Exception:
+            role = None
+            name = None
+        if not role or role not in interactive_roles:
+            continue
+        if not isinstance(name, str) or not name.strip():
+            continue
+        nm = re.sub(r"\s+", " ", name).strip()
+        key = (role, nm)
+        if key in seen_role_keys:
+            continue
+        seen_role_keys.add(key)
+        uniq.append(
+            {
+                "role": role,
+                "name": nm,
+                "locator_type": "role",
+                "text": nm,
+                "is_money_action": bool(any(w in nm.lower() for w in ["buy", "checkout", "place order", "pay", "add to cart"])),
+                "href": None,
+                "href_kind": None,
+                "aria_expanded": None,
+                "in_overlay": False,
+                "in_viewport": False,
+                "target": None,
+            }
+        )
+
+    try:
+        hybrid_raw = page.evaluate(
+            r"""(gridStep, goalTokens, mustKeywords, boostKeywords) => {
+  const out = [];
+  const seen = new Set();
+  let c = 0;
+  const maxOut = 900;
+  const maxOverlay = 140;
+  const maxViewport = 220;
+
+  const normList = (xs) => {
+    try {
+      return (Array.isArray(xs) ? xs : []).map(x => String(x || '').toLowerCase().trim()).filter(x => x.length >= 3);
+    } catch (e) { return []; }
+  };
+  const kws = Array.from(new Set([ ...normList(goalTokens), ...normList(mustKeywords), ...normList(boostKeywords) ])).slice(0, 60);
+  const hasKw = (label) => {
+    try {
+      if (!kws.length) return false;
+      const s = String(label || '').toLowerCase();
+      for (const k of kws) { if (k && s.includes(k)) return true; }
+    } catch (e) {}
+    return false;
+  };
+
+  const isVisible = (el) => {
+    try {
+      if (!el || !el.getBoundingClientRect) return false;
+      const rect = el.getBoundingClientRect();
+      if (!rect || rect.width < 6 || rect.height < 6) return false;
+      if (rect.bottom < 0 || rect.right < 0 || rect.top > window.innerHeight || rect.left > window.innerWidth) return false;
+      const style = window.getComputedStyle(el);
+      if (style && (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0')) return false;
+      return true;
+    } catch (e) { return false; }
+  };
+
+  const isActionable = (el) => {
+    try {
+      if (!el) return false;
+      const tag = (el.tagName || '').toLowerCase();
+      if (tag === 'input') {
+        const t = (el.getAttribute('type') || '').toLowerCase();
+        if (t === 'hidden') return false;
+      }
+      const roleAttr = (el.getAttribute('role') || '').toLowerCase();
+      const isRole = ['button','link','checkbox','radio','menuitem','tab','switch','option','textbox','searchbox','combobox'].includes(roleAttr);
+      const isTag = ['a','button','input','select','textarea'].includes(tag);
+      let style = null;
+      try { style = window.getComputedStyle(el); } catch (e) { style = null; }
+      let isPointer = false;
+      if (!isTag && !isRole) {
+        isPointer = !!(style && style.cursor === 'pointer');
+      }
+      const tabindex = el.getAttribute('tabindex');
+      const hasTab = tabindex !== null && String(tabindex).trim() !== '' && !isNaN(parseInt(tabindex, 10));
+      return !!(isTag || isRole || isPointer || hasTab);
+    } catch (e) { return false; }
+  };
+
+  const labelFromLabelledby = (el) => {
+    try {
+      const raw = (el.getAttribute('aria-labelledby') || '').trim();
+      if (!raw) return '';
+      const ids = raw.split(/\s+/g).filter(Boolean);
+      if (!ids.length) return '';
+      let txt = '';
+      for (const id of ids) {
+        const ref = document.getElementById(id);
+        if (!ref) continue;
+        const t = (ref.innerText || ref.textContent || '').trim();
+        if (t) txt += (txt ? ' ' : '') + t;
+      }
+      return (txt || '').trim();
+    } catch (e) { return ''; }
+  };
+
+  const getLabel = (el) => {
+    let label = '';
+    try { label = (el.innerText || '').trim(); } catch (e) { label = ''; }
+    try {
+      if (label) {
+        const words = label.split(/\s+/g).filter(Boolean);
+        if (words.length > 12 || label.length > 90) label = '';
+      }
+    } catch (e) {}
+    if (!label) {
+      const via = labelFromLabelledby(el);
+      if (via) label = via;
+    }
+    if (!label) {
+      const cand = el.getAttribute('aria-label') || el.getAttribute('title') || el.getAttribute('placeholder') || el.getAttribute('name') || el.getAttribute('alt') || '';
+      label = (cand || '').trim();
+    }
+    if (!label) {
+      try {
+        const tc = (el.textContent || '').trim();
+        if (tc && tc.length <= 40) label = tc;
+      } catch (e) {}
+    }
+    if (!label) {
+      try {
+        const tag = (el.tagName || '').toLowerCase();
+        const cls = (el.getAttribute('class') || '').trim().split(/\s+/g).filter(Boolean)[0] || '';
+        if (cls) label = `Unlabeled ${tag}.${cls}`;
+        else label = `Unlabeled ${tag}`;
+      } catch (e) {
+        label = 'Unlabeled';
+      }
+    }
+    label = label.replace(/\s+/g, ' ').slice(0, 80);
+    return label;
+  };
+
+  const ensureSelector = (el) => {
+    let sel = '';
+    const dt = el.getAttribute('data-testid') || el.getAttribute('data-test-id') || el.getAttribute('data-test');
+    if (dt && String(dt).trim()) {
+      sel = `[data-testid="${String(dt).trim()}"]`;
+      if (!el.matches(sel)) {
+        sel = `[data-test-id="${String(dt).trim()}"]`;
+      }
+    }
+    if (!sel) {
+      const id = el.getAttribute('id');
+      if (id && String(id).trim()) {
+        sel = `#${String(id).trim()}`;
+      }
+    }
+    if (!sel) {
+      let eid = el.getAttribute('data-hemlo-eid');
+      if (!eid) {
+        eid = 'hemlo-' + Math.random().toString(16).slice(2) + '-' + Date.now().toString(16);
+        try { el.setAttribute('data-hemlo-eid', eid); } catch (e) {}
+      }
+      sel = `[data-hemlo-eid="${eid}"]`;
+    }
+    return sel;
+  };
+
+  const pushEl = (el, inOverlay, inViewport) => {
+    if (!el || !el.getBoundingClientRect) return;
+    if (c >= maxOut) return;
+    if (!isVisible(el)) return;
+    if (!isActionable(el)) return;
+
+    const sel = ensureSelector(el);
+    if (!sel) return;
+    if (seen.has(sel)) return;
+    seen.add(sel);
+
+    const tag = (el.tagName || '').toLowerCase();
+    const roleAttr = (el.getAttribute('role') || '').toLowerCase();
+    let role = roleAttr;
+    if (!role) {
+      if (tag === 'a') role = 'link';
+      else if (tag === 'button') role = 'button';
+      else if (tag === 'input' || tag === 'textarea') role = 'textbox';
+      else if (tag === 'select') role = 'combobox';
+      else role = 'generic';
+    }
+    const label = getLabel(el);
+    const href = el.getAttribute('href') || null;
+    const target = el.getAttribute('target') || null;
+    const ariaExpanded = el.getAttribute('aria-expanded') || null;
+    out.push({ role, name: label, selector: sel, href, target, aria_expanded: ariaExpanded, in_overlay: !!inOverlay, in_viewport: !!inViewport });
+    c++;
+  };
+
+  const isPreferred = (el) => {
+    try {
+      if (!el) return false;
+      const tag = (el.tagName || '').toLowerCase();
+      if (['a','button','input','select','textarea'].includes(tag)) return true;
+      const roleAttr = (el.getAttribute('role') || '').toLowerCase();
+      return ['button','link','checkbox','radio','menuitem','tab','switch','option','textbox','searchbox','combobox','slider'].includes(roleAttr);
+    } catch (e) { return false; }
+  };
+
+  const climbToActionable = (el) => {
+    let cur = el;
+    for (let i = 0; i < 7; i++) {
+      if (!cur) return null;
+      if (isPreferred(cur) && isVisible(cur)) return cur;
+      cur = cur.parentElement;
+    }
+    cur = el;
+    for (let i = 0; i < 7; i++) {
+      if (!cur) return null;
+      if (isActionable(cur) && isVisible(cur)) return cur;
+      cur = cur.parentElement;
+    }
+    return null;
+  };
+
+  let overlayCount = 0;
+  try {
+    const overlays = document.querySelectorAll('[role="menu"],[role="listbox"],[role="dialog"],[role="alertdialog"],[aria-modal="true"]');
+    for (let i = 0; i < overlays.length; i++) {
+      if (overlayCount >= maxOverlay || c >= maxOut) break;
+      const root = overlays[i];
+      if (!root || !isVisible(root)) continue;
+      const nodes = root.querySelectorAll('a,button,input,select,textarea,[role],[tabindex]');
+      for (let j = 0; j < nodes.length; j++) {
+        if (overlayCount >= maxOverlay || c >= maxOut) break;
+        const before = c;
+        pushEl(nodes[j], true, false);
+        if (c > before) overlayCount++;
+      }
+    }
+  } catch (e) {}
+
+  let viewportCount = 0;
+  try {
+    const step = Math.max(25, Math.min(120, parseInt(gridStep || 55, 10) || 55));
+    for (let y = 0; y < window.innerHeight; y += step) {
+      for (let x = 0; x < window.innerWidth; x += step) {
+        if (viewportCount >= maxViewport || c >= maxOut) break;
+        let stack = null;
+        try { stack = document.elementsFromPoint(x, y); } catch (e) { stack = null; }
+        const els = Array.isArray(stack) ? stack : [];
+        let picked = null;
+        for (let k = 0; k < els.length; k++) {
+          const cand = climbToActionable(els[k]);
+          if (!cand) continue;
+          picked = cand;
+          if (isPreferred(cand)) break;
+        }
+        if (!picked) continue;
+        const inOverlay = !!(picked.closest && picked.closest('[role="menu"],[role="listbox"],[role="dialog"],[role="alertdialog"],[aria-modal="true"]'));
+        const before = c;
+        pushEl(picked, inOverlay, true);
+        if (c > before) viewportCount++;
+      }
+      if (viewportCount >= maxViewport || c >= maxOut) break;
+    }
+  } catch (e) {}
+
+  try {
+    const candidates = document.querySelectorAll('a,button,input,select,textarea,[role],[tabindex]');
+    for (let i = 0; i < candidates.length; i++) {
+      if (c >= maxOut) break;
+      pushEl(candidates[i], false, false);
+    }
+  } catch (e) {}
+
+  try {
+    if (kws.length) {
+      const focus = document.querySelectorAll('button,a,[role="button"],[role="tab"],[role="menuitem"],input,select,textarea');
+      for (let i = 0; i < focus.length; i++) {
+        if (c >= maxOut) break;
+        const el = focus[i];
+        const label = getLabel(el);
+        if (!label) continue;
+        if (!hasKw(label)) continue;
+        const inOverlay = !!(el.closest && el.closest('[role="menu"],[role="listbox"],[role="dialog"],[role="alertdialog"],[aria-modal="true"]'));
+        pushEl(el, inOverlay, true);
+      }
+    }
+  } catch (e) {}
+
+  return out;
+}""",
+            grid_step,
+            goal_tokens,
+            must_keywords,
+            boost_keywords,
+        )
+    except Exception:
+        hybrid_raw = []
+
+    try:
+        existing = set()
+        for it in uniq:
+            existing.add((str(it.get("role")), str(it.get("name"))))
+        if isinstance(hybrid_raw, list) and hybrid_raw:
+            for hr in hybrid_raw:
+                try:
+                    name = str((hr or {}).get("name") or "").strip()
+                except Exception:
+                    name = ""
+                try:
+                    role = str((hr or {}).get("role") or "button").strip().lower()
+                except Exception:
+                    role = "button"
+                try:
+                    locator = str((hr or {}).get("selector") or "").strip()
+                except Exception:
+                    locator = ""
+                if not name or not locator:
+                    continue
+                if (role, name) in existing:
+                    continue
+                lower = name.lower()
+                is_money = any(w in lower for w in ["buy", "checkout", "place order", "pay", "add to cart"])
+                href = (hr or {}).get("href")
+                target = (hr or {}).get("target")
+                aria_expanded = (hr or {}).get("aria_expanded")
+                in_overlay = bool((hr or {}).get("in_overlay"))
+                in_viewport = bool((hr or {}).get("in_viewport"))
+                href_kind = None
+                try:
+                    if isinstance(href, str):
+                        h = href.strip().lower()
+                        if h.startswith("http") or h.startswith("/"):
+                            href_kind = "nav"
+                        elif h.startswith("#"):
+                            href_kind = "anchor"
+                        elif h.startswith("javascript"):
+                            href_kind = "js"
+                        else:
+                            href_kind = "other"
+                except Exception:
+                    href_kind = None
+                uniq.append(
+                    {
+                        "role": role,
+                        "name": name,
+                        "locator_type": "css",
+                        "locator": locator,
+                        "text": name,
+                        "is_money_action": bool(is_money),
+                        "href": href,
+                        "href_kind": href_kind,
+                        "aria_expanded": aria_expanded,
+                        "in_overlay": bool(in_overlay),
+                        "in_viewport": bool(in_viewport),
+                        "target": target,
+                    }
+                )
+                existing.add((role, name))
+    except Exception:
+        pass
+
+    g = goal.lower()
+    for it in uniq:
+        try:
+            nlow = str(it.get("name") or "").lower()
+        except Exception:
+            nlow = ""
+        it["is_primary_input"] = bool(it.get("role") in ("textbox", "searchbox", "combobox") and (must_keywords and any(k in nlow for k in must_keywords)))
+
+    menu_open = False
+    try:
+        menu_open = any(str(x.get("aria_expanded") or "").lower() == "true" for x in uniq)
+    except Exception:
+        menu_open = False
+
+    def _score(it: Dict[str, Any]) -> int:
+        n_raw = str(it.get("name") or "")
+        n = n_raw.lower()
+        s = 0
+        if it.get("role") in ("searchbox", "textbox"):
+            s += 3
+            if it.get("is_primary_input"):
+                s += 6
+        if any(tok and len(tok) >= 4 and tok in n for tok in g.split()):
+            s += 2
+        if boost_keywords and any(k in n for k in boost_keywords):
+            s += 6
+        if must_keywords and any(k in n for k in must_keywords):
+            s += 10
+        if n.startswith("unlabeled"):
+            s -= 10
+        if len(n_raw) > 90:
+            s -= 20
+        elif len(n_raw) > 60:
+            s -= 10
+        if str(it.get("role") or "").lower() == "generic":
+            s -= 6
+        if ("filter" in g) or ("filters" in g):
+            if re.search(r"\bfilters?\b", n):
+                s += 30
+            elif any(x in n for x in ["effect", "effects", "adjust", "adjustments"]):
+                s += 10
+        if it.get("in_viewport"):
+            s += 8
+        if it.get("in_overlay"):
+            s += 5
+        if menu_open:
+            if str(it.get("role") or "").lower() in {"menuitem", "option"}:
+                s += 8
+            if any(x in n for x in ["event", "task", "appointment", "schedule", "meeting"]):
+                s += 12
+            try:
+                if str(it.get("aria_expanded") or "").lower() == "true" and any(x in n for x in ["create", "add", "more", "options"]):
+                    s -= 30
+            except Exception:
+                pass
+        if it.get("is_money_action"):
+            s += 4
+        if it.get("role") == "button":
+            s += 1
+        hk = it.get("href_kind")
+        if hk == "nav":
+            s += 3
+        elif hk in {"anchor", "js"}:
+            s -= 2
+        if hk == "nav":
+            href = (it.get("href") or "").strip()
+            if href:
+                try:
+                    href_host = urlparse(href).hostname or current_host
+                    if current_host and href_host != current_host:
+                        s -= 2
+                    elif current_host and href_host == current_host:
+                        s += 1
+                except Exception:
+                    pass
+        return s
+
+    uniq.sort(key=_score, reverse=True)
+
+    def _item_key(it: Dict[str, Any]) -> typing.Tuple[str, str]:
+        if it.get("locator_type") == "css" and it.get("locator"):
+            return ("css", str(it.get("locator")))
+        return (str(it.get("role")), str(it.get("name")))
+
+    out: typing.List[Dict[str, Any]] = []
+    seen_out: typing.Set[typing.Tuple[str, str]] = set()
+    for it in uniq:
+        k = _item_key(it)
+        if k in seen_out:
+            continue
+        seen_out.add(k)
+        out.append(it)
+        if len(out) >= max_items:
+            break
+
+    for i, it in enumerate(out):
+        try:
+            it["id"] = i + 1
+        except Exception:
+            pass
+    return json.dumps(out, ensure_ascii=False)
+
+
+def filter_interactive_elements(
+    page: Page,
+    goal: str,
+    planner_assist: Optional[Dict[str, Any]] = None,
+    dom_mode: str = "legacy",
+    max_items: int = 40,
+) -> str:
+    dm = str(dom_mode or "legacy").strip().lower()
+    if dm == "gold":
+        return playwright_filter_interactive_elements_gold(page, goal, planner_assist, max_items=max_items)
+    return playwright_filter_interactive_elements(page, goal, planner_assist)
+
+
+def save_filtered_dom(goal: str, filtered_json_array: str, dom_hash: Optional[str] = None, url: Optional[str] = None) -> None:
     """Persist the filtered DOM that we send to Groq on every step.
 
     Writes a JSONL entry to filtered_dom_log.jsonl and a snapshot to last_filtered_dom.json.
@@ -1403,12 +2134,28 @@ def save_filtered_dom(goal: str, filtered_json_array: str) -> None:
         record = {
             "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
             "goal": goal,
+            "dom_hash": dom_hash,
+            "url": url,
             "elements": json.loads(filtered_json_array),
         }
-        with open("filtered_dom_log.jsonl", "a", encoding="utf-8") as f:
+        base_dir = os.path.dirname(__file__)
+        with open(os.path.join(base_dir, "filtered_dom_log.jsonl"), "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
-        with open("last_filtered_dom.json", "w", encoding="utf-8") as f:
-            json.dump(record, f, ensure_ascii=False, indent=2)
+        last_path = os.path.join(base_dir, "last_filtered_dom.json")
+        existing: typing.List[Dict[str, Any]] = []
+        try:
+            if os.path.exists(last_path):
+                with open(last_path, "r", encoding="utf-8") as rf:
+                    prev = json.load(rf)
+                if isinstance(prev, list):
+                    existing = [x for x in prev if isinstance(x, dict)]
+                elif isinstance(prev, dict):
+                    existing = [prev]
+        except Exception:
+            existing = []
+        existing.append(record)
+        with open(last_path, "w", encoding="utf-8") as f:
+            json.dump(existing, f, ensure_ascii=False, indent=2)
     except Exception as e:
         print(f"Failed saving filtered DOM: {e}")
 
@@ -1421,9 +2168,10 @@ def save_perception(goal: str, perception: Dict[str, Any], dom_hash: str) -> Non
             "dom_hash": dom_hash,
             "perception": perception,
         }
-        with open("perception_log.jsonl", "a", encoding="utf-8") as f:
+        base_dir = os.path.dirname(__file__)
+        with open(os.path.join(base_dir, "perception_log.jsonl"), "a", encoding="utf-8") as f:
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
-        with open("last_perception.json", "w", encoding="utf-8") as f:
+        with open(os.path.join(base_dir, "last_perception.json"), "w", encoding="utf-8") as f:
             json.dump(record, f, ensure_ascii=False, indent=2)
         # Also mirror success detection signals into their own debug files for quick inspection
         try:
@@ -1435,9 +2183,9 @@ def save_perception(goal: str, perception: Dict[str, Any], dom_hash: str) -> Non
                     "dom_hash": dom_hash,
                     "success_signals": success,
                 }
-                with open("success_signals_log.jsonl", "a", encoding="utf-8") as sf:
+                with open(os.path.join(base_dir, "success_signals_log.jsonl"), "a", encoding="utf-8") as sf:
                     sf.write(json.dumps(srec, ensure_ascii=False) + "\n")
-                with open("last_success_signals.json", "w", encoding="utf-8") as sf:
+                with open(os.path.join(base_dir, "last_success_signals.json"), "w", encoding="utf-8") as sf:
                     json.dump(srec, sf, ensure_ascii=False, indent=2)
         except Exception:
             pass
@@ -1487,7 +2235,7 @@ def _has_visible_modal(page: Page) -> bool:
         return False
 
 
-def _gate_scores(items: List[Dict[str, Any]], body_text: str) -> Dict[str, Any]:
+def _gate_scores(items: typing.List[Dict[str, Any]], body_text: str) -> Dict[str, Any]:
     t = (body_text or "").lower()
     names = " ".join([(it.get("name") or "") for it in (items or [])]).lower()
 
@@ -1521,7 +2269,7 @@ def _gate_scores(items: List[Dict[str, Any]], body_text: str) -> Dict[str, Any]:
     }
 
 
-def detect_page_mode(page: Page, items: List[Dict[str, Any]], body_text: str, scores: Optional[Dict[str, Any]] = None) -> str:
+def detect_page_mode(page: Page, items: typing.List[Dict[str, Any]], body_text: str, scores: Optional[Dict[str, Any]] = None) -> str:
     scores = scores or _gate_scores(items, body_text)
     try:
         cookie_score = int(scores.get("cookie_score", 0) or 0)
@@ -1551,7 +2299,7 @@ def detect_page_mode(page: Page, items: List[Dict[str, Any]], body_text: str, sc
     return PAGE_MODE_NORMAL
 
 
-def build_perception(page: Page, items: List[Dict[str, Any]], goal: str, dom_hash: str = "") -> Dict[str, Any]:
+def build_perception(page: Page, items: typing.List[Dict[str, Any]], goal: str, dom_hash: str = "") -> Dict[str, Any]:
     url = ""
     try:
         url = page.url
@@ -1584,18 +2332,18 @@ def build_perception(page: Page, items: List[Dict[str, Any]], goal: str, dom_has
         r = str(it.get("role") or "")
         role_counts[r] = role_counts.get(r, 0) + 1
 
-    top_controls: List[Dict[str, Any]] = []
+    top_controls: typing.List[Dict[str, Any]] = []
     for it in (items or [])[:15]:
         top_controls.append({k: it.get(k) for k in ("role", "name", "href_kind", "aria_expanded", "is_money_action")})
 
-    inputs: List[Dict[str, Any]] = []
+    inputs: typing.List[Dict[str, Any]] = []
     for it in items or []:
         if it.get("role") in ("textbox", "searchbox", "combobox"):
             inputs.append({"role": it.get("role"), "name": it.get("name")})
         if len(inputs) >= 8:
             break
 
-    possible_gate_controls: List[Dict[str, Any]] = []
+    possible_gate_controls: typing.List[Dict[str, Any]] = []
     gate_words = [
         "accept",
         "reject",
@@ -1840,11 +2588,18 @@ def _score_gate_candidate(mode: str, it: Dict[str, Any]) -> int:
     return s
 
 
-def try_handle_gate(page: Page, goal: str, downloaded_files: Optional[List[str]] = None, planner_assist: Optional[Dict[str, Any]] = None) -> Optional[str]:
-    blocked: set[tuple] = set()
+def try_handle_gate(
+    page: Page,
+    goal: str,
+    downloaded_files: Optional[List[str]] = None,
+    planner_assist: Optional[Dict[str, Any]] = None,
+    dom_mode: str = "legacy",
+    max_items: int = 40,
+) -> Optional[str]:
+    blocked: Set[Tuple[Any, ...]] = set()
     for _ in range(3):
         try:
-            filtered_summary = playwright_filter_interactive_elements(page, goal, planner_assist=planner_assist)
+            filtered_summary = filter_interactive_elements(page, goal, planner_assist, dom_mode=dom_mode, max_items=max_items)
             dom_hash = str(hash(filtered_summary))[-8:]
             try:
                 save_filtered_dom(goal, filtered_summary)
@@ -1886,6 +2641,12 @@ def try_handle_gate(page: Page, goal: str, downloaded_files: Optional[List[str]]
             # Treat generic overlays with no form inputs as gates; keep form modals (with inputs) for the main task flow.
             if len(inputs_for_gate) == 0:
                 modal_gate_like = True
+            else:
+                try:
+                    if cookie_score >= 2 or age_score >= 2:
+                        modal_gate_like = True
+                except Exception:
+                    modal_gate_like = False
 
         try:
             if dom_hash:
@@ -1924,7 +2685,7 @@ def try_handle_gate(page: Page, goal: str, downloaded_files: Optional[List[str]]
             continue
 
         try:
-            page.wait_for_load_state("networkidle", timeout=5000)
+            page.wait_for_load_state("domcontentloaded", timeout=5000)
         except Exception:
             pass
         try:
@@ -1933,7 +2694,7 @@ def try_handle_gate(page: Page, goal: str, downloaded_files: Optional[List[str]]
             pass
 
         try:
-            after_sum = playwright_filter_interactive_elements(page, goal, planner_assist=planner_assist)
+            after_sum = playwright_filter_interactive_elements(page, goal)
             after_dom_hash = str(hash(after_sum))[-8:]
             after_items = json.loads(after_sum)
             after_mode = str(build_perception(page, after_items, goal, after_dom_hash).get("mode") or PAGE_MODE_NORMAL)
@@ -2687,7 +3448,7 @@ def _brief_planner_assist(obj: Dict[str, Any]) -> Dict[str, Any]:
             out["steps"] = []
     except Exception:
         out["steps"] = []
-    for k in ("intent_keywords", "candidate_button_texts", "candidate_field_labels", "success_indicators"):
+    for k in ("candidate_button_texts", "candidate_field_labels", "success_indicators"):
         try:
             v = obj.get(k)
         except Exception:
@@ -2725,7 +3486,6 @@ def gemini_planner_assist(goal: str, current_url: str, page_title: str = "") -> 
         "  \"steps\": [\n"
         "    {\"step\": int, \"action\": \"click\"|\"type\"|\"wait\", \"target_text\": string, \"alternatives\": [string], \"value\": string|null, \"notes\": string}\n"
         "  ],\n"
-        "  \"intent_keywords\": [string],\n"
         "  \"candidate_button_texts\": [string],\n"
         "  \"candidate_field_labels\": [string],\n"
         "  \"success_indicators\": [string]\n"
@@ -2839,57 +3599,99 @@ def analyze_dom_and_act(
     goal: str,
     current_url: str,
     recent_actions: List[str],
-    blocked_choices: Union[List[tuple], set[tuple]],
+    blocked_choices: Union[List[Tuple[Any, ...]], Set[Tuple[Any, ...]]],
     downloaded_files: Optional[List[str]] = None,
     planner_assist: Optional[Dict[str, Any]] = None,
+    dom_mode: str = "legacy",
+    max_items: int = 40,
+    upload_done: bool = False,
+    run_memory: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
     """Phase 2: ReAct Loop - Analyze DOM and decide NEXT action based on GOAL."""
     
     # 1-2. Deterministic filter via Playwright AX snapshot (replaces Ollama)
-    filtered_summary = playwright_filter_interactive_elements(page, goal)
+    filtered_summary = filter_interactive_elements(page, goal, planner_assist, dom_mode=dom_mode, max_items=max_items)
     dom_hash = str(hash(filtered_summary))[-8:]
     print(f"Filtered DOM Hash: {dom_hash} | Length: {len(filtered_summary)}")
-    save_filtered_dom(goal, filtered_summary)
+    save_filtered_dom(goal, filtered_summary, dom_hash, current_url)
     
     # 3. Decide Action (Groq)
     print("Deciding next action...")
-    system_prompt = (
-        "You are an autonomous web agent. "
-        f"Your ultimate goal is: '{goal}'. "
-        "You are looking at the current interactive elements of the page. "
-        "Decide the IMMEDIATE NEXT action to move closer to the goal. "
-        "Return a JSON object with keys: action, locator_type, role, name, locator, value, confidence. "
-        "Rules: "
-        "- action must be one of: 'click', 'type', 'hover', 'wait', 'done', 'fail'. "
-        "- Choose an element from the list and copy its locator details. Respect the element's locator_type. "
-        "  - If the element has locator_type='role', set locator_type='role' and include exact 'role' and 'name' from the list. "
-        "  - If the element has locator_type='css', set locator_type='css' and provide 'locator' exactly as given in the list. "
-        "- Prefer role-based targeting when available, but do NOT convert a css-only element into a role-based action. "
-        "- You may be given a Planner-assist map (Gemini). It is non-binding guidance. Use it only if its suggested control names match the DOM list and the step makes sense. "
-        "- Prefer real navigation links (href_kind='nav') over anchors ('#') or javascript links. "
-        "- If a top-level control toggles a menu (aria-expanded changes), use 'hover' or a subsequent click on a submenu item. "
-        "- value is only for 'type' action (the text to enter). "
-        "- When you need to type text for the main task (prompt/title/description), prioritize an element with is_primary_input=true. "
-        "- If Perception.success_signals.success_confirmed=true and generation_in_progress=false, you should choose action='done'. "
-        "- confidence: 0.0..1.0. "
-        "Safety & Looping: "
-        "1. If the goal content is already visible, return 'done'. Do NOT navigate away. "
-        "2. If you already searched and see results, click a result link; do NOT search again. "
-        "3. If an input already has the correct value, do NOT type again. Prefer clicking search or a result. "
-        "4. Avoid repeating the same click if the URL does not change. If you are stuck in a repeated loop, choose a different control (prefer nav links or exploratory items), or return 'fail'. "
-        "5. If a file has been saved to disk that satisfies the goal (see 'Downloads this run'), return 'done'. "
-        "6. If the goal includes download/save, prioritize controls whose names include 'download' or 'save'. "
-        "Page modes: you will also be given a 'mode' string such as NORMAL, LOGIN, AGE_GATE, COOKIE_GATE, BLOCKING_MODAL. "
-        "- If mode is COOKIE_GATE, focus on dismissing cookie/consent banners (Accept/Agree/Reject/Manage) before other actions. "
-        "- If mode is AGE_GATE, focus on passing age verification (choose 18+/Yes/Enter or fill DOB >= 18) before other actions. "
-        "- If mode is BLOCKING_MODAL, treat the modal as part of the current page. First inspect its inputs and buttons: if they clearly relate to the goal (for example a form to create or configure something, or a Submit/Continue button for this goal), interact with those inputs/buttons instead of closing it. Only close/dismiss the modal (Close/X/Not now) if it appears unrelated to the goal (for example cookie consent, newsletter signup, or generic promotions). "
-        "- If mode is LOGIN, prefer login/sign-in controls and do not invent credentials; if you cannot proceed, return 'fail'.")
+    dm = str(dom_mode or "legacy").strip().lower()
+    if dm == "gold":
+        system_prompt = (
+            "You are an autonomous web agent. "
+            f"Your ultimate goal is: '{goal}'. "
+            "You are looking at the current interactive elements of the page. "
+            "Decide the IMMEDIATE NEXT action to move closer to the goal. "
+            "Return a JSON object with keys: action, id, value, confidence. "
+            "Rules: "
+            "- action must be one of: 'click', 'type', 'hover', 'wait', 'done', 'fail'. "
+            "- You MUST choose a control by numeric 'id' from the list. "
+            "- value is only for 'type' action (the text to enter). "
+            "- Prefer real navigation links (href_kind='nav') over anchors ('#') or javascript links. "
+            "- If a top-level control toggles a menu (aria-expanded changes), choose a menu item next. "
+            "- If Perception.success_signals.success_confirmed=true and generation_in_progress=false, you should choose action='done'. "
+            "- confidence: 0.0..1.0. "
+            "Safety & Looping: "
+            "1. If the goal content is already visible, return 'done'. Do NOT navigate away. "
+            "2. If you already searched and see results, click a result link; do NOT search again. "
+            "3. If an input already has the correct value, do NOT type again. Prefer clicking search or a result. "
+            "4. Avoid repeating the same click if the URL does not change. If you are stuck in a repeated loop, choose a different control (prefer nav links or exploratory items), or return 'fail'. "
+            "5. If upload_done=true (provided in context), do NOT click upload/choose-file/select-file controls again unless the goal explicitly asks to upload another or replace. Prefer editing controls (filters/adjust/effects). "
+            "6. You will be given a run_memory JSON summary containing recent actions and whether they succeeded, changed URL, or made no progress. Use it to avoid repeating actions that already failed or caused no progress; pick a different control and move forward. "
+            "5. If a file has been saved to disk that satisfies the goal (see 'Downloads this run'), return 'done'. "
+            "6. If the goal includes download/save, prioritize controls whose names include 'download' or 'save'. "
+            "Page modes: you will also be given a 'mode' string such as NORMAL, LOGIN, AGE_GATE, COOKIE_GATE, BLOCKING_MODAL. "
+            "- If mode is COOKIE_GATE, focus on dismissing cookie/consent banners (Accept/Agree/Reject/Manage) before other actions. "
+            "- If mode is AGE_GATE, focus on passing age verification (choose 18+/Yes/Enter or fill DOB >= 18) before other actions. "
+            "- If mode is BLOCKING_MODAL, treat the modal as part of the current page. First inspect its inputs and buttons: if they clearly relate to the goal, interact with those. Only close/dismiss if unrelated.")
+    else:
+        system_prompt = (
+            "You are an autonomous web agent. "
+            f"Your ultimate goal is: '{goal}'. "
+            "You are looking at the current interactive elements of the page. "
+            "Decide the IMMEDIATE NEXT action to move closer to the goal. "
+            "Return a JSON object with keys: action, locator_type, role, name, locator, value, confidence. "
+            "Rules: "
+            "- action must be one of: 'click', 'type', 'hover', 'wait', 'done', 'fail'. "
+            "- Choose an element from the list and copy its locator details. Respect the element's locator_type. "
+            "  - If the element has locator_type='role', set locator_type='role' and include exact 'role' and 'name' from the list. "
+            "  - If the element has locator_type='css', set locator_type='css' and provide 'locator' exactly as given in the list. "
+            "- Prefer role-based targeting when available, but do NOT convert a css-only element into a role-based action. "
+            "- You may be given a Planner-assist map (Gemini). It is non-binding guidance. Use it only if its suggested control names match the DOM list and the step makes sense. "
+            "- Prefer real navigation links (href_kind='nav') over anchors ('#') or javascript links. "
+            "- If a top-level control toggles a menu (aria-expanded changes), use 'hover' or a subsequent click on a submenu item. "
+            "- value is only for 'type' action (the text to enter). "
+            "- When you need to type text for the main task (prompt/title/description), prioritize an element with is_primary_input=true. "
+            "- If Perception.success_signals.success_confirmed=true and generation_in_progress=false, you should choose action='done'. "
+            "- confidence: 0.0..1.0. "
+            "Safety & Looping: "
+            "1. If the goal content is already visible, return 'done'. Do NOT navigate away. "
+            "2. If you already searched and see results, click a result link; do NOT search again. "
+            "3. If an input already has the correct value, do NOT type again. Prefer clicking search or a result. "
+            "4. Avoid repeating the same click if the URL does not change. If you are stuck in a repeated loop, choose a different control (prefer nav links or exploratory items), or return 'fail'. "
+            "5. If upload_done=true (provided in context), do NOT click upload/choose-file/select-file controls again unless the goal explicitly asks to upload another or replace. Prefer editing controls (filters/adjust/effects). "
+            "6. You will be given a run_memory JSON summary containing recent actions and whether they succeeded, changed URL, or made no progress. Use it to avoid repeating actions that already failed or caused no progress; pick a different control and move forward. "
+            "5. If a file has been saved to disk that satisfies the goal (see 'Downloads this run'), return 'done'. "
+            "6. If the goal includes download/save, prioritize controls whose names include 'download' or 'save'. "
+            "Page modes: you will also be given a 'mode' string such as NORMAL, LOGIN, AGE_GATE, COOKIE_GATE, BLOCKING_MODAL. "
+            "- If mode is COOKIE_GATE, focus on dismissing cookie/consent banners (Accept/Agree/Reject/Manage) before other actions. "
+            "- If mode is AGE_GATE, focus on passing age verification (choose 18+/Yes/Enter or fill DOB >= 18) before other actions. "
+            "- If mode is BLOCKING_MODAL, treat the modal as part of the current page. First inspect its inputs and buttons: if they clearly relate to the goal (for example a form to create or configure something, or a Submit/Continue button for this goal), interact with those inputs/buttons instead of closing it. Only close/dismiss the modal (Close/X/Not now) if it appears unrelated to the goal (for example cookie consent, newsletter signup, or generic promotions). "
+            "- If mode is LOGIN, prefer login/sign-in controls and do not invent credentials; if you cannot proceed, return 'fail'.")
     
     # Remove blocked (role,name) from the list we show to the LLM
     items_for_llm: List[Dict[str, Any]] = []
     try:
         items_for_llm = json.loads(filtered_summary)
-        blocked_set = set(blocked_choices or [])
+        avoid_set: Set[str] = set()
+        try:
+            if isinstance(run_memory, dict) and isinstance(run_memory.get("avoid_choices"), list):
+                avoid_set = set([str(x) for x in (run_memory.get("avoid_choices") or []) if x is not None])
+        except Exception:
+            avoid_set = set()
+        blocked_set: Set[Tuple[Any, ...]] = set(blocked_choices or [])
         tmp: List[Dict[str, Any]] = []
         for it in items_for_llm:
             k_role = (it.get("role"), it.get("name"))
@@ -2899,9 +3701,42 @@ def analyze_dom_and_act(
                 k_css = ("css", str(it.get("locator")))
                 if k_css in blocked_set:
                     continue
+            try:
+                if avoid_set:
+                    ck = _run_memory_choice_key_from_item(it)
+                    if ck and ck in avoid_set:
+                        continue
+            except Exception:
+                pass
             tmp.append(it)
         items_for_llm = tmp
-        filtered_for_llm = json.dumps(items_for_llm, ensure_ascii=False)
+        compact: List[Dict[str, Any]] = []
+        for it in items_for_llm:
+            ci: Dict[str, Any] = {"role": it.get("role"), "name": it.get("name")}
+            if dm != "gold":
+                ci["locator_type"] = it.get("locator_type")
+                if it.get("locator_type") == "css" and it.get("locator"):
+                    ci["locator"] = it.get("locator")
+            else:
+                if it.get("id") is not None:
+                    ci["id"] = it.get("id")
+            if it.get("href_kind"):
+                ci["href_kind"] = it.get("href_kind")
+            if it.get("aria_expanded") is not None:
+                ci["aria_expanded"] = it.get("aria_expanded")
+            if it.get("target"):
+                ci["target"] = it.get("target")
+            if dm == "gold":
+                if it.get("in_overlay"):
+                    ci["in_overlay"] = True
+                if it.get("in_viewport"):
+                    ci["in_viewport"] = True
+            if it.get("is_primary_input"):
+                ci["is_primary_input"] = True
+            if it.get("is_money_action"):
+                ci["is_money_action"] = True
+            compact.append(ci)
+        filtered_for_llm = json.dumps(compact, ensure_ascii=False)
     except Exception:
         filtered_for_llm = filtered_summary
 
@@ -2913,6 +3748,67 @@ def analyze_dom_and_act(
     except Exception:
         perception = {"mode": PAGE_MODE_NORMAL}
         mode = PAGE_MODE_NORMAL
+
+    try:
+        if mode == PAGE_MODE_BLOCKING_MODAL and isinstance(items_for_llm, list) and items_for_llm:
+            modal_filtered: List[Dict[str, Any]] = []
+            for it in items_for_llm:
+                try:
+                    lt = it.get("locator_type")
+                    if lt == "role":
+                        role = it.get("role")
+                        name = it.get("name")
+                        loc = page.get_by_role(role, name=name).first
+                    elif lt == "css" and it.get("locator"):
+                        loc = page.locator(str(it.get("locator"))).first
+                    else:
+                        continue
+                    in_modal = False
+                    try:
+                        in_modal = bool(
+                            loc.evaluate(
+                                """(el) => {
+  try {
+    const m = el.closest('[role="dialog"], [role="alertdialog"], [aria-modal="true"]');
+    if (!m) return false;
+    const st = window.getComputedStyle(m);
+    if (!st) return true;
+    return st.display !== 'none' && st.visibility !== 'hidden' && st.opacity !== '0';
+  } catch (e) { return false; }
+}"""
+                            )
+                        )
+                    except Exception:
+                        in_modal = False
+                    if in_modal:
+                        modal_filtered.append(it)
+                except Exception:
+                    continue
+            if len(modal_filtered) >= 2:
+                items_for_llm = modal_filtered
+                compact: List[Dict[str, Any]] = []
+                for it in items_for_llm:
+                    ci: Dict[str, Any] = {
+                        "role": it.get("role"),
+                        "name": it.get("name"),
+                        "locator_type": it.get("locator_type"),
+                    }
+                    if it.get("locator_type") == "css" and it.get("locator"):
+                        ci["locator"] = it.get("locator")
+                    if it.get("href_kind"):
+                        ci["href_kind"] = it.get("href_kind")
+                    if it.get("aria_expanded") is not None:
+                        ci["aria_expanded"] = it.get("aria_expanded")
+                    if it.get("target"):
+                        ci["target"] = it.get("target")
+                    if it.get("is_primary_input"):
+                        ci["is_primary_input"] = True
+                    if it.get("is_money_action"):
+                        ci["is_money_action"] = True
+                    compact.append(ci)
+                filtered_for_llm = json.dumps(compact, ensure_ascii=False)
+    except Exception:
+        pass
     save_perception(goal, perception, dom_hash)
     try:
         print(f"Page mode detected: {mode}")
@@ -2947,9 +3843,24 @@ def analyze_dom_and_act(
     except Exception:
         blocked_txt = "none"
 
+    rm_compact: Dict[str, Any] = {}
+    try:
+        if isinstance(run_memory, dict):
+            rm_compact = {
+                "milestones": (run_memory.get("milestones") or [])[:12] if isinstance(run_memory.get("milestones"), list) else [],
+                "avoid_choices": (run_memory.get("avoid_choices") or [])[:12] if isinstance(run_memory.get("avoid_choices"), list) else [],
+                "repeat_streak": int(run_memory.get("repeat_streak") or 0),
+                "last_choice": run_memory.get("last_choice"),
+                "recent_steps": (run_memory.get("recent_steps") or [])[-8:] if isinstance(run_memory.get("recent_steps"), list) else [],
+            }
+    except Exception:
+        rm_compact = {}
+
     context_note = (
         f"Current URL: {current_url}\n"
         f"Page mode: {mode}\n"
+        f"Upload milestone: upload_done={'true' if upload_done else 'false'}\n"
+        f"Run memory: {json.dumps(rm_compact or {}, ensure_ascii=False)}\n"
         f"Recent actions: {', '.join(recent_actions[-3:]) if recent_actions else 'none'}\n"
         f"Blocked choices: {blocked_txt}\n"
         f"Downloads this run: {', '.join([os.path.basename(f) for f in (downloaded_files or [])]) if (downloaded_files and len(downloaded_files)>0) else 'none'}\n"
@@ -2980,10 +3891,36 @@ def analyze_dom_and_act(
             wait = 1.0 * (2 ** attempt)
             print(f"Decision error/rate-limit; retrying in {wait:.1f}s: {e}")
             time.sleep(wait)
+
+    if isinstance(response, dict) and dm == "gold":
+        picked = None
+        try:
+            pid = response.get("id")
+            if pid is None:
+                pid = response.get("element_id")
+            pid_i = int(pid) if pid is not None else None
+        except Exception:
+            pid_i = None
+        if pid_i is not None:
+            try:
+                for it in items_for_llm:
+                    try:
+                        if int(it.get("id") or 0) == pid_i:
+                            picked = it
+                            break
+                    except Exception:
+                        continue
+            except Exception:
+                picked = None
+        if picked is not None:
+            response["locator_type"] = picked.get("locator_type")
+            response["role"] = picked.get("role")
+            response["name"] = picked.get("name")
+            response["locator"] = picked.get("locator")
     if response is None:
         host = urlparse(current_url).hostname or ""
         fallback = None
-        blocked_set: set = set()
+        blocked_set: Set[Tuple[Any, ...]] = set()
         try:
             blocked_set = set(blocked_choices or [])
         except Exception:
@@ -3053,6 +3990,77 @@ def analyze_dom_and_act(
         else:
             response = {"action": "fail", "locator_type": "role", "role": None, "name": None, "confidence": 0.0}
 
+    def _norm_name_for_match(s: Any) -> str:
+        try:
+            return re.sub(r"\s+", " ", str(s or "")).strip().lower()
+        except Exception:
+            return ""
+
+    def _best_match_for_decision(dec: Dict[str, Any], candidates: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
+        try:
+            lt = str(dec.get("locator_type") or "").lower().strip()
+        except Exception:
+            lt = ""
+        try:
+            loc = str(dec.get("locator") or "")
+        except Exception:
+            loc = ""
+        if lt == "css" and loc:
+            for it in candidates:
+                try:
+                    if it.get("locator_type") == "css" and str(it.get("locator") or "") == loc:
+                        return it
+                except Exception:
+                    continue
+
+        dec_role = str(dec.get("role") or "").lower().strip()
+        dec_name = _norm_name_for_match(dec.get("name"))
+        if dec_role and dec_name:
+            for it in candidates:
+                try:
+                    if str(it.get("role") or "").lower().strip() != dec_role:
+                        continue
+                    if _norm_name_for_match(it.get("name")) == dec_name:
+                        return it
+                except Exception:
+                    continue
+
+        if not dec_name:
+            return None
+
+        toks = set([t for t in dec_name.split() if t])
+        best = None
+        best_score = -10**9
+        for it in candidates:
+            try:
+                iname = _norm_name_for_match(it.get("name"))
+            except Exception:
+                iname = ""
+            if not iname:
+                continue
+            score = 0
+            if iname == dec_name:
+                score += 200
+            if dec_name and dec_name in iname:
+                score += 80
+            itoks = set([t for t in iname.split() if t])
+            if toks:
+                score += 6 * len(toks & itoks)
+            try:
+                if it.get("locator_type") == "css":
+                    score += 4
+            except Exception:
+                pass
+            if score > best_score:
+                best_score = score
+                best = it
+
+        if best is None:
+            return None
+        if best_score < 6:
+            return None
+        return best
+
     try:
         sig = (perception or {}).get("success_signals") or {}
         response["generator_goal"] = bool(sig.get("generator_goal"))
@@ -3073,9 +4081,26 @@ def analyze_dom_and_act(
     
     response['dom_hash'] = dom_hash
     response['mode'] = mode
+
+    try:
+        if isinstance(response, dict) and response.get("action") in {"click", "type", "hover"}:
+            cand = _best_match_for_decision(response, items_for_llm if isinstance(items_for_llm, list) else [])
+            if cand is not None:
+                response["locator_type"] = cand.get("locator_type") or response.get("locator_type")
+                response["role"] = cand.get("role")
+                response["name"] = cand.get("name")
+                response["locator"] = cand.get("locator")
+            else:
+                response["action"] = "fail"
+                response["confidence"] = 0.0
+    except Exception:
+        pass
     # Return a small candidate list to the caller for fallback exploration
     try:
-        response['filtered_items'] = items_for_llm[:40]
+        if dm == "gold":
+            response['filtered_items'] = items_for_llm[:120]
+        else:
+            response['filtered_items'] = items_for_llm[:40]
     except Exception:
         response['filtered_items'] = []
     try:
@@ -3100,24 +4125,10 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
     
     try:
         if action == "click":
-            last_click_error = ""
-            def _log_click_fail(stage: str, e: Exception) -> None:
-                nonlocal last_click_error
-                try:
-                    last_click_error = f"{stage}: {type(e).__name__}: {e}"
-                except Exception:
-                    last_click_error = f"{stage}: {type(e).__name__}"
-                try:
-                    print(f"Click attempt failed [{stage}]: {type(e).__name__}: {e}")
-                except Exception:
-                    pass
-
-            role = decision.get("role")
-            name = decision.get("name")
             label_for_check = " ".join(
                 [
                     str(locator_str or ""),
-                    str(name or ""),
+                    str(decision.get("name") or ""),
                 ]
             ).lower()
             if any(x in label_for_check for x in ["buy", "place order", "pay", "checkout", "add to cart"]):
@@ -3131,62 +4142,128 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                 if not approved:
                     print("Money action not approved via UI; skipping click.")
                     return False
+            role = None
+            name = decision.get("name")
             if locator_type == "role":
-                chosen = None
-                try:
-                    roles_to_try = []
-                    if isinstance(role, str) and role:
-                        roles_to_try.append(str(role).lower())
-                    for r in ("button", "link"):
-                        if r not in roles_to_try:
-                            roles_to_try.append(r)
-                    if isinstance(name, str) and name.strip():
-                        for r in roles_to_try:
+                role = decision.get("role")
+                elem = page.get_by_role(role, name=name)
+            else:
+                if not locator_str or not isinstance(locator_str, str):
+                    if isinstance(decision.get("filtered_items"), list):
+                        for it in decision.get("filtered_items"):
                             try:
-                                loc = page.get_by_role(r, name=name)
-                                if loc.count() > 0:
-                                    chosen = r
+                                if it.get("locator_type") == "css" and it.get("locator"):
+                                    if name and isinstance(it.get("name"), str) and it.get("name").strip().lower() == str(name).strip().lower():
+                                        locator_str = str(it.get("locator"))
+                                        break
+                            except Exception:
+                                continue
+                elem = page.locator(locator_str)
+
+            if locator_type == "role":
+                try:
+                    if elem.count() == 0 and name and isinstance(decision.get("filtered_items"), list):
+                        for it in decision.get("filtered_items"):
+                            try:
+                                if not isinstance(it, dict):
+                                    continue
+                                it_name = it.get("name")
+                                if not isinstance(it_name, str):
+                                    continue
+                                if it_name.strip().lower() != str(name).strip().lower():
+                                    continue
+                                if it.get("locator_type") == "css" and it.get("locator"):
+                                    locator_str = str(it.get("locator"))
+                                    locator_type = "css"
+                                    elem = page.locator(locator_str)
                                     break
                             except Exception:
                                 continue
                 except Exception:
-                    chosen = None
-                if chosen:
-                    role = chosen
-                if isinstance(name, str) and name.strip():
-                    loc = page.get_by_role(role, name=name)
-                else:
-                    loc = page.get_by_role(role)
+                    pass
+                try:
+                    if elem.count() == 0 and role in {"link", "button"} and name:
+                        alt_role = "button" if role == "link" else "link"
+                        alt = page.get_by_role(alt_role, name=name)
+                        if alt.count():
+                            elem = alt
+                except Exception:
+                    pass
 
-                # Prefer a visible match if there are multiple.
-                elem = loc.first
-                try:
-                    cnt = min(int(loc.count()), 8)
-                except Exception:
-                    cnt = 1
-                for i in range(cnt):
-                    try:
-                        cand = loc.nth(i)
-                        if cand.is_visible(timeout=200):
+            try:
+                if elem.count() > 1:
+                    for i in range(min(int(elem.count() or 0), 6)):
+                        cand = elem.nth(i)
+                        ok = False
+                        try:
+                            ok = bool(cand.is_visible(timeout=800))
+                        except Exception:
+                            ok = False
+                        if not ok:
+                            continue
+                        try:
+                            bb = cand.bounding_box(timeout=800)
+                        except Exception:
+                            bb = None
+                        if bb and float(bb.get("width") or 0) >= 6 and float(bb.get("height") or 0) >= 6:
                             elem = cand
                             break
-                    except Exception:
-                        continue
-            else:
-                loc = page.locator(locator_str)
-                elem = loc.first
-                try:
-                    cnt = min(int(loc.count()), 8)
-                except Exception:
-                    cnt = 1
-                for i in range(cnt):
+            except Exception:
+                pass
+
+            try:
+                if elem.count() > 0:
+                    vis = False
                     try:
-                        cand = loc.nth(i)
-                        if cand.is_visible(timeout=200):
-                            elem = cand
-                            break
+                        vis = bool(elem.is_visible(timeout=800))
                     except Exception:
-                        continue
+                        vis = False
+                    bb = None
+                    try:
+                        bb = elem.bounding_box(timeout=800)
+                    except Exception:
+                        bb = None
+                    if (not vis) or (bb is not None and (float(bb.get("width") or 0) < 6 or float(bb.get("height") or 0) < 6)):
+                        if name and isinstance(decision.get("filtered_items"), list):
+                            want = re.sub(r"\s+", " ", str(name or "")).strip().lower()
+                            best = None
+                            best_score = -10**9
+                            for it in decision.get("filtered_items"):
+                                try:
+                                    iname = re.sub(r"\s+", " ", str(it.get("name") or "")).strip().lower()
+                                except Exception:
+                                    iname = ""
+                                if not iname:
+                                    continue
+                                score = 0
+                                if iname == want:
+                                    score += 200
+                                if want and want in iname:
+                                    score += 80
+                                toks = set([t for t in want.split() if t])
+                                itoks = set([t for t in iname.split() if t])
+                                if toks:
+                                    score += 6 * len(toks & itoks)
+                                if it.get("locator_type") == "css":
+                                    score += 4
+                                if score > best_score:
+                                    best_score = score
+                                    best = it
+                            if best and best_score >= 6:
+                                try:
+                                    if best.get("locator_type") == "css" and best.get("locator"):
+                                        locator_str = str(best.get("locator"))
+                                        locator_type = "css"
+                                        elem = page.locator(locator_str)
+                                    elif best.get("role") and best.get("name"):
+                                        locator_type = "role"
+                                        role = best.get("role")
+                                        name = best.get("name")
+                                        elem = page.get_by_role(role, name=name)
+                                except Exception:
+                                    pass
+            except Exception:
+                pass
             # If this element would open a new tab, navigate directly instead
             try:
                 t = elem.get_attribute("target", timeout=1000)
@@ -3263,14 +4340,13 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                             with page.context.expect_download(timeout=10000) as dl_info:
                                 page.goto(href, timeout=20000)
                             _save_download_to_disk(dl_info.value)
-                        except Exception as e:
-                            _log_click_fail("goto_blank_expect_download", e)
+                        except Exception:
                             page.goto(href, timeout=20000)
                     else:
                         page.goto(href, timeout=20000)
                     return True
-                except Exception as e:
-                    _log_click_fail("goto_blank", e)
+                except Exception:
+                    pass
             # If the link goes to a different host, prefer direct navigation
             if href and current_host and href_host and href_host != current_host and (href.strip().lower().startswith("http") or href.strip().startswith("/")):
                 try:
@@ -3280,14 +4356,13 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                             with page.context.expect_download(timeout=10000) as dl_info:
                                 page.goto(href, timeout=20000)
                             _save_download_to_disk(dl_info.value)
-                        except Exception as e:
-                            _log_click_fail("goto_external_expect_download", e)
+                        except Exception:
                             page.goto(href, timeout=20000)
                     else:
                         page.goto(href, timeout=20000)
                     return True
-                except Exception as e:
-                    _log_click_fail("goto_external", e)
+                except Exception:
+                    pass
             # If we still expect a popup, use expect_popup to ensure creation is captured
             expect_popup = bool((t and t.lower() == "_blank") or (href_host and current_host and href_host != current_host))
             try:
@@ -3299,22 +4374,19 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                                     with page.context.expect_download(timeout=8000) as dl_info:
                                         elem.click(timeout=10000)
                                     _save_download_to_disk(dl_info.value)
-                                except Exception as e:
-                                    _log_click_fail("popup_click_expect_download", e)
+                                except Exception:
                                     elem.click(timeout=10000)
                             else:
                                 elem.click(timeout=10000)
                         _ = pop.value  # ensure popup resolved
-                    except Exception as e:
-                        _log_click_fail("expect_popup", e)
+                    except Exception:
                         # fallback to plain click if popup not raised
                         if expect_dl:
                             try:
                                 with page.context.expect_download(timeout=8000) as dl_info:
                                     elem.click(timeout=10000)
                                 _save_download_to_disk(dl_info.value)
-                            except Exception as e:
-                                _log_click_fail("plain_click_expect_download_after_popup_fail", e)
+                            except Exception:
                                 elem.click(timeout=10000)
                         else:
                             elem.click(timeout=10000)
@@ -3324,14 +4396,13 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                             with page.context.expect_download(timeout=10000) as dl_info:
                                 elem.click(timeout=10000)
                             _save_download_to_disk(dl_info.value)
-                        except Exception as e:
-                            _log_click_fail("plain_click_expect_download", e)
+                        except Exception:
                             elem.click(timeout=10000)
                     else:
                         elem.click(timeout=10000)
                 return True
-            except Exception as e:
-                _log_click_fail("primary_click", e)
+            except Exception:
+                pass
             try:
                 elem.scroll_into_view_if_needed(timeout=5000)
                 if expect_dl:
@@ -3339,14 +4410,13 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                         with page.context.expect_download(timeout=10000) as dl_info:
                             elem.click(timeout=10000, force=True)
                         _save_download_to_disk(dl_info.value)
-                    except Exception as e:
-                        _log_click_fail("force_click_expect_download", e)
+                    except Exception:
                         elem.click(timeout=10000, force=True)
                 else:
                     elem.click(timeout=10000, force=True)
                 return True
-            except Exception as e:
-                _log_click_fail("force_click", e)
+            except Exception:
+                pass
             try:
                 href = href if href is not None else None
                 if href is None:
@@ -3361,113 +4431,16 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                             with page.context.expect_download(timeout=10000) as dl_info:
                                 page.goto(href, timeout=20000)
                             _save_download_to_disk(dl_info.value)
-                        except Exception as e:
-                            _log_click_fail("goto_href_expect_download", e)
+                        except Exception:
                             page.goto(href, timeout=20000)
                     else:
                         page.goto(href, timeout=20000)
                     return True
-            except Exception as e:
-                _log_click_fail("goto_href", e)
+            except Exception:
+                pass
             try:
                 elem.evaluate("el => el.click()")
                 return True
-            except Exception as e:
-                _log_click_fail("js_click_direct", e)
-
-            try:
-                elem.evaluate(
-                    """el => {
-                        const c = el.closest('button,a,[role="button"],[role="link"],[onclick],[tabindex]');
-                        (c || el).click();
-                    }"""
-                )
-                return True
-            except Exception as e:
-                _log_click_fail("js_click_closest", e)
-
-            try:
-                with contextlib.suppress(Exception):
-                    elem.scroll_into_view_if_needed(timeout=3000)
-                box = None
-                try:
-                    box = elem.bounding_box()
-                except Exception:
-                    box = None
-                if isinstance(box, dict) and box.get("width") and box.get("height"):
-                    x = float(box.get("x") or 0.0) + float(box.get("width") or 0.0) / 2.0
-                    y = float(box.get("y") or 0.0) + float(box.get("height") or 0.0) / 2.0
-                    page.mouse.click(x, y)
-                    return True
-            except Exception as e:
-                _log_click_fail("mouse_click", e)
-
-            # Final fallback for sites that render clickable divs without proper ARIA roles
-            try:
-                if isinstance(name, str) and name.strip():
-                    alt_loc = page.get_by_text(name.strip(), exact=True)
-                    alt = alt_loc.first
-                    try:
-                        cnt = min(int(alt_loc.count()), 8)
-                    except Exception:
-                        cnt = 1
-                    for i in range(cnt):
-                        try:
-                            cand = alt_loc.nth(i)
-                            if cand.is_visible(timeout=200):
-                                alt = cand
-                                break
-                        except Exception:
-                            continue
-                    with contextlib.suppress(Exception):
-                        alt.scroll_into_view_if_needed(timeout=5000)
-                    try:
-                        alt.click(timeout=8000, force=True)
-                    except Exception as e:
-                        _log_click_fail("get_by_text_exact_force_click", e)
-                        alt.evaluate(
-                            """el => {
-                                const c = el.closest('button,a,[role="button"],[role="link"],[onclick],[tabindex]');
-                                (c || el).click();
-                            }"""
-                        )
-                    return True
-            except Exception as e:
-                _log_click_fail("get_by_text_exact", e)
-            try:
-                if isinstance(name, str) and name.strip():
-                    alt_loc = page.get_by_text(name.strip(), exact=False)
-                    alt = alt_loc.first
-                    try:
-                        cnt = min(int(alt_loc.count()), 8)
-                    except Exception:
-                        cnt = 1
-                    for i in range(cnt):
-                        try:
-                            cand = alt_loc.nth(i)
-                            if cand.is_visible(timeout=200):
-                                alt = cand
-                                break
-                        except Exception:
-                            continue
-                    with contextlib.suppress(Exception):
-                        alt.scroll_into_view_if_needed(timeout=5000)
-                    try:
-                        alt.click(timeout=8000, force=True)
-                    except Exception as e:
-                        _log_click_fail("get_by_text_fuzzy_force_click", e)
-                        alt.evaluate(
-                            """el => {
-                                const c = el.closest('button,a,[role="button"],[role="link"],[onclick],[tabindex]');
-                                (c || el).click();
-                            }"""
-                        )
-                    return True
-            except Exception as e:
-                _log_click_fail("get_by_text_fuzzy", e)
-            try:
-                if last_click_error:
-                    print(f"Click failed after all fallbacks. Last error: {last_click_error}")
             except Exception:
                 pass
             return False
@@ -3683,12 +4656,33 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--prompt", type=str, required=True, help="Task description")
     parser.add_argument("--session", action="store_true")
+    parser.add_argument("--dom_mode", type=str, default="legacy")
+    parser.add_argument("--max_items", type=int, default=40)
     args = parser.parse_args()
 
     print(f"Agent started with goal: '{args.prompt}'")
 
+    try:
+        base_dir = os.path.dirname(__file__)
+        for fn in ("last_step_trace.json", "last_filtered_dom.json", "last_run_memory.json"):
+            with open(os.path.join(base_dir, fn), "w", encoding="utf-8") as f:
+                json.dump([], f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
     session_mode = bool(getattr(args, "session", False))
     control_nonce = 0
+    dom_mode = str(getattr(args, "dom_mode", "legacy") or "legacy")
+    try:
+        max_items = int(getattr(args, "max_items", 40) or 40)
+    except Exception:
+        max_items = 40
+
+    # Log core DOM configuration so Prompt UI settings are visible in the agent log
+    try:
+        print(f"DOM config: dom_mode={dom_mode!r}, max_items={max_items}")
+    except Exception:
+        pass
 
     # 1. Plan URL
     target_url = plan_initial_url(args.prompt)
@@ -3770,11 +4764,6 @@ def main():
             planner_assist = get_planner_assist(args.prompt, page.url, page_title)
         except Exception:
             planner_assist = None
-        planner_goal = args.prompt
-        try:
-            planner_host = urlparse(page.url).hostname or ""
-        except Exception:
-            planner_host = ""
         try:
             if isinstance(planner_assist, dict) and planner_assist:
                 print("Gemini planner-assist plan received.")
@@ -3826,8 +4815,18 @@ def main():
         last_url = page.url
         last_dom_hash = ""
         searched_once = False
-        blocked_choices: set[tuple] = set()
+        upload_done = False
+        run_memory: Dict[str, Any] = {
+            "milestones": [],
+            "recent_steps": [],
+            "choice_counts": {},
+            "avoid_choices": [],
+            "repeat_streak": 0,
+            "last_choice": None,
+        }
+        blocked_choices: Set[Tuple[Any, ...]] = set()
         last_choice: Optional[tuple] = None
+        repeat_choice_streak = 0
         run_succeeded = False
         last_login_prompt_url = ""
         generator_success_streak = 0
@@ -3851,45 +4850,67 @@ def main():
                                 p2 = cmd2.get("prompt")
                                 if isinstance(p2, str) and p2.strip():
                                     args.prompt = p2.strip()
+                                dm2 = cmd2.get("dom_mode")
+                                if isinstance(dm2, str) and dm2.strip():
+                                    dom_mode = dm2.strip()
+                                mi2 = cmd2.get("max_items")
+                                if mi2 is not None:
+                                    try:
+                                        max_items = int(mi2)
+                                    except Exception:
+                                        pass
+                                try:
+                                    print(f"Session config updated via control (resume/new_task): dom_mode={dom_mode!r}, max_items={max_items}")
+                                except Exception:
+                                    pass
                                 _emit_status("running")
                                 break
                     elif c in {"new_task", "resume"}:
                         p2 = cmd.get("prompt")
                         if isinstance(p2, str) and p2.strip():
                             args.prompt = p2.strip()
+                        dm2 = cmd.get("dom_mode")
+                        if isinstance(dm2, str) and dm2.strip():
+                            dom_mode = dm2.strip()
+                        mi2 = cmd.get("max_items")
+                        if mi2 is not None:
+                            try:
+                                max_items = int(mi2)
+                            except Exception:
+                                pass
+                        try:
+                            print(f"Session config updated via control ({c}): dom_mode={dom_mode!r}, max_items={max_items}")
+                        except Exception:
+                            pass
                         _emit_status("running")
             current_url = page.url
 
+            # In-run milestone: once Canva navigates into the editor (/design/.../edit),
+            # consider the first upload completed so we don't keep selecting upload again.
             try:
-                cur_host = urlparse(current_url).hostname or ""
+                if (not upload_done) and ("canva.com/design/" in (current_url or "")) and ("/edit" in (current_url or "")):
+                    upload_done = True
+                    recent_actions.append("milestone:upload_done")
+                    _run_memory_add_milestone(run_memory, "upload_done")
+                    print("Milestone reached: upload_done=true (entered Canva editor)")
             except Exception:
-                cur_host = ""
-            if (args.prompt != planner_goal) or (cur_host and cur_host != planner_host):
-                try:
-                    page_title = _safe_page_title(page)
-                except Exception:
-                    page_title = ""
-                try:
-                    planner_assist = get_planner_assist(args.prompt, page.url, page_title)
-                except Exception:
-                    planner_assist = None
-                planner_goal = args.prompt
-                planner_host = cur_host
+                pass
 
             try:
-                gate_action = try_handle_gate(page, args.prompt, downloaded_files, planner_assist=planner_assist)
+                gate_action = try_handle_gate(page, args.prompt, downloaded_files, planner_assist, dom_mode=dom_mode, max_items=max_items)
             except Exception:
                 gate_action = None
             if gate_action:
                 recent_actions.append(gate_action)
                 try:
-                    page.wait_for_load_state("networkidle", timeout=5000)
+                    page.wait_for_load_state("domcontentloaded", timeout=5000)
                 except Exception:
                     pass
                 try:
                     last_url = page.url
                     last_dom_hash = ""
                     last_choice = None
+                    repeat_choice_streak = 0
                 except Exception:
                     pass
                 time.sleep(1)
@@ -3920,7 +4941,7 @@ def main():
                             page.wait_for_timeout(1500)
                             # Save filtered DOM for this step as well
                             try:
-                                _fs = playwright_filter_interactive_elements(page, args.prompt)
+                                _fs = playwright_filter_interactive_elements(page, args.prompt, planner_assist)
                                 save_filtered_dom(args.prompt, _fs)
                             except Exception:
                                 pass
@@ -3935,7 +4956,7 @@ def main():
                                 page.wait_for_timeout(2000)
                                 recent_actions.append("click:first_video")
                                 try:
-                                    _fs = playwright_filter_interactive_elements(page, args.prompt)
+                                    _fs = playwright_filter_interactive_elements(page, args.prompt, planner_assist)
                                     save_filtered_dom(args.prompt, _fs)
                                 except Exception:
                                     pass
@@ -3965,16 +4986,61 @@ def main():
                     choice = wait_for_login_choice(timeout_seconds=600)
                     last_login_prompt_url = cur_url
                     if choice:
+                        # Capture pages before applying the choice so we can
+                        # detect any newly opened login popups/tabs (e.g. Google).
+                        try:
+                            pages_before_login = context.pages[:]
+                        except Exception:
+                            pages_before_login = []
+
                         applied = perform_login_choice(page, choice)
                         print(f"Login choice applied: {'success' if applied else 'failed'} for provider={choice.get('provider')}")
                         try:
-                            page.wait_for_load_state("networkidle", timeout=8000)
+                            page.wait_for_load_state("domcontentloaded", timeout=8000)
                         except Exception:
                             pass
+
+                        # If the login click opened a new tab/window (such as
+                        # accounts.google.com), prefer switching control to that
+                        # page so the agent can continue the auth flow there.
+                        try:
+                            pages_after_login = context.pages[:]
+                        except Exception:
+                            pages_after_login = []
+                        new_login_pages = [p for p in pages_after_login if p not in pages_before_login]
+                        if new_login_pages:
+                            for np in new_login_pages:
+                                try:
+                                    np.wait_for_load_state("domcontentloaded", timeout=7000)
+                                except Exception:
+                                    pass
+                            login_candidate = choose_best_page(new_login_pages, args.prompt) or choose_best_page(pages_after_login, args.prompt)
+                            if login_candidate and login_candidate is not page:
+                                try:
+                                    old_url = ""
+                                    try:
+                                        old_url = page.url
+                                    except Exception:
+                                        old_url = ""
+                                    new_url = ""
+                                    try:
+                                        new_url = login_candidate.url
+                                    except Exception:
+                                        new_url = ""
+                                    print(f"Login flow opened new page. Switching page: {old_url} -> {new_url}")
+                                except Exception:
+                                    pass
+                                page = login_candidate
+                                try:
+                                    page.bring_to_front()
+                                except Exception:
+                                    pass
+
                         # Reset DOM hash to avoid loop detection on same page
                         try:
                             last_dom_hash = ""
                             last_url = page.url
+                            repeat_choice_streak = 0
                         except Exception:
                             pass
                         continue
@@ -3984,7 +5050,35 @@ def main():
                         continue
 
             # Analyze & Decide
-            decision = analyze_dom_and_act(page, args.prompt, current_url, recent_actions, blocked_choices, downloaded_files, planner_assist)
+            decision = analyze_dom_and_act(
+                page,
+                args.prompt,
+                current_url,
+                recent_actions,
+                blocked_choices,
+                downloaded_files,
+                planner_assist,
+                dom_mode=dom_mode,
+                max_items=max_items,
+                upload_done=upload_done,
+                run_memory=run_memory,
+            )
+
+            try:
+                append_step_trace(
+                    {
+                        "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+                        "step": step_count,
+                        "stage": "decision",
+                        "goal": args.prompt,
+                        "url": current_url,
+                        "dom_hash": decision.get("dom_hash"),
+                        "decision": {k: decision.get(k) for k in ("action", "locator_type", "role", "name", "locator", "confidence")},
+                        "mode": decision.get("mode"),
+                    }
+                )
+            except Exception:
+                pass
 
             try:
                 if decision.get("generator_goal") and decision.get("success_confirmed") and (not decision.get("generation_in_progress")):
@@ -4015,6 +5109,7 @@ def main():
 
             # Execute
             pages_before = context.pages[:]
+            success = False
             # Skip repeated 'YouTube Home' clicks when URL doesn't change
             name_lower = str(decision.get("name") or "").lower()
             if name_lower == "youtube home" and current_url == last_url:
@@ -4035,10 +5130,31 @@ def main():
                     choice = (decision.get("role"), decision.get("name"))
             except Exception:
                 choice = None
-            no_progress = (current_url == last_url) and (decision.get("dom_hash") == last_dom_hash)
-            if choice and last_choice == choice and no_progress:
+            # Treat upload-style clicks as progress even if URL/DOM hash don't change,
+            # since they usually open a native file chooser dialog.
+            upload_like = False
+            try:
+                label = " ".join(
+                    [
+                        name_lower,
+                        str(decision.get("locator") or "").lower(),
+                    ]
+                )
+                upload_like = _is_upload_like_label(label)
+            except Exception:
+                upload_like = False
+
+            no_progress = (
+                current_url == last_url
+                and (decision.get("dom_hash") == last_dom_hash)
+                and not upload_like
+            )
+            same_choice_same_url = bool(choice and last_choice == choice and (current_url == last_url))
+            tentative_streak = (repeat_choice_streak + 1) if same_choice_same_url else 0
+            if choice and same_choice_same_url and (no_progress or tentative_streak >= 2):
                 print(f"Loop detected on {choice}; blocking and exploring alternative.")
                 blocked_choices.add(choice)
+                repeat_choice_streak = 0
                 # Fallback exploration: pick next best from filtered_items
                 candidates = decision.get("filtered_items") or []
                 fallback = None
@@ -4050,6 +5166,16 @@ def main():
                     except Exception:
                         pass
                     return (it.get("role"), it.get("name"))
+                # Prefer menu items / action items when a menu is likely open
+                for it in candidates:
+                    key = _candidate_key(it)
+                    if key in blocked_choices:
+                        continue
+                    r = str(it.get("role") or "").lower()
+                    n = str(it.get("name") or "").lower()
+                    if r in {"menuitem", "option"} or any(x in n for x in ["event", "task", "appointment", "schedule", "meeting"]):
+                        fallback = it
+                        break
                 # Prefer nav links
                 for it in candidates:
                     key = _candidate_key(it)
@@ -4089,7 +5215,7 @@ def main():
                     recent_actions.append(act_label)
                     # Update trackers
                     try:
-                        page.wait_for_load_state("networkidle", timeout=5000)
+                        page.wait_for_load_state("domcontentloaded", timeout=5000)
                     except Exception:
                         pass
                     last_url = page.url
@@ -4102,6 +5228,26 @@ def main():
                     except Exception:
                         last_choice = None
                     print(f"Action Result: {'Success' if success else 'Fail'} | URL: {page.url}")
+
+            if not (choice and same_choice_same_url and (no_progress or tentative_streak >= 2)):
+                repeat_choice_streak = tentative_streak
+
+            try:
+                append_step_trace(
+                    {
+                        "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+                        "step": step_count,
+                        "stage": "action_result",
+                        "goal": args.prompt,
+                        "url_before": current_url,
+                        "url_after": page.url,
+                        "dom_hash": decision.get("dom_hash"),
+                        "success": bool(success),
+                        "action": {k: decision.get(k) for k in ("action", "locator_type", "role", "name", "locator", "confidence")},
+                    }
+                )
+            except Exception:
+                pass
             # Hard stop if we saved a file and the goal is a download-like task
             if download_intent and len(downloaded_files) > 0:
                 try:
@@ -4116,9 +5262,15 @@ def main():
 
             # Wait for page to settle after action
             try:
-                page.wait_for_load_state("networkidle", timeout=5000)
+                page.wait_for_load_state("domcontentloaded", timeout=5000)
             except:
-                pass  # Continue even if networkidle times out
+                pass
+
+            try:
+                if decision.get("action") == "click" and current_url == page.url:
+                    page.wait_for_timeout(900)
+            except Exception:
+                pass
 
             # Detect newly opened tabs/pages and switch if more relevant
             try:
@@ -4151,6 +5303,7 @@ def main():
                         pass
                     last_url = page.url
                     last_dom_hash = ""
+                    repeat_choice_streak = 0
 
             # If current page got closed, switch to the best remaining one
             try:
@@ -4168,11 +5321,197 @@ def main():
                         pass
                     last_url = page.url
                     last_dom_hash = ""
+                    repeat_choice_streak = 0
                 else:
                     print("All pages closed. Stopping.")
                     break
             
+            # If a likely upload button was clicked successfully but the URL didn't
+            # change, hint to the user that a native file picker may be open.
+            try:
+                if (
+                    success
+                    and decision.get("action") == "click"
+                    and current_url == page.url
+                ):
+                    label = " ".join(
+                        [
+                            str(decision.get("name") or "").lower(),
+                            str(decision.get("locator") or "").lower(),
+                        ]
+                    )
+                    if _is_upload_like_label(label):
+                        msg = (
+                            "Upload/file picker detected. Please select the image/file in the system dialog (like the Windows 'Open' popup). "
+                            "I'll resume automatically after you choose a file."
+                        )
+                        print(msg)
+                        if session_mode:
+                            _emit_status("paused", message=msg, reason="file_picker")
+                        t0 = time.time()
+                        while True:
+                            file_selected = False
+                            try:
+                                check_js = (
+                                    """
+                                    () => {
+                                      const seen = new Set();
+                                      const out = [];
+                                      const collect = (root) => {
+                                        if (!root || seen.has(root)) return;
+                                        seen.add(root);
+                                        try {
+                                          const nodes = root.querySelectorAll ? root.querySelectorAll('input[type="file"]') : [];
+                                          for (const n of nodes) out.push(n);
+                                        } catch (e) {}
+                                        let all = [];
+                                        try { all = root.querySelectorAll ? root.querySelectorAll('*') : []; } catch (e) { all = []; }
+                                        for (const el of all) {
+                                          try {
+                                            if (el && el.shadowRoot) collect(el.shadowRoot);
+                                          } catch (e) {}
+                                        }
+                                      };
+                                      collect(document);
+                                      for (const i of out) {
+                                        try {
+                                          if (i && i.files && i.files.length > 0) return true;
+                                        } catch (e) {}
+                                      }
+                                      return false;
+                                    }
+                                    """
+                                )
+                                for fr in page.frames:
+                                    try:
+                                        if bool(fr.evaluate(check_js)):
+                                            file_selected = True
+                                            break
+                                    except Exception:
+                                        continue
+                            except Exception:
+                                file_selected = False
+                            if file_selected:
+                                print("File selection detected. Resuming.")
+                                try:
+                                    if not upload_done:
+                                        upload_done = True
+                                        recent_actions.append("milestone:upload_done")
+                                        _run_memory_add_milestone(run_memory, "upload_done")
+                                        print("Milestone reached: upload_done=true (file selected)")
+                                except Exception:
+                                    pass
+                                if session_mode:
+                                    _emit_status("running")
+                                try:
+                                    last_dom_hash = ""
+                                except Exception:
+                                    pass
+                                try:
+                                    repeat_choice_streak = 0
+                                except Exception:
+                                    pass
+                                break
+                            if session_mode:
+                                control_nonce, cmd3 = _read_control_command(control_nonce)
+                                if cmd3:
+                                    c3 = str(cmd3.get("command") or "")
+                                    if c3 in {"resume", "new_task"}:
+                                        p3 = cmd3.get("prompt")
+                                        if isinstance(p3, str) and p3.strip():
+                                            args.prompt = p3.strip()
+                                        dm3 = cmd3.get("dom_mode")
+                                        if isinstance(dm3, str) and dm3.strip():
+                                            dom_mode = dm3.strip()
+                                        mi3 = cmd3.get("max_items")
+                                        if mi3 is not None:
+                                            try:
+                                                max_items = int(mi3)
+                                            except Exception:
+                                                pass
+                                        try:
+                                            print(f"Session config updated via control (resume/new_task): dom_mode={dom_mode!r}, max_items={max_items}")
+                                        except Exception:
+                                            pass
+                                        _emit_status("running")
+                                        break
+                            if time.time() - t0 > 600:
+                                print("Still waiting for file selection. You can select a file in the system dialog, or press Resume in the UI.")
+                                t0 = time.time()
+                            time.sleep(0.25)
+            except Exception:
+                pass
+
             print(f"Action Result: {'Success' if success else 'Fail'} | URL: {page.url}")
+
+            try:
+                ck = _run_memory_choice_key_from_decision(decision)
+                if ck:
+                    last_ck = run_memory.get("last_choice")
+                    if last_ck == ck:
+                        try:
+                            run_memory["repeat_streak"] = int(run_memory.get("repeat_streak") or 0) + 1
+                        except Exception:
+                            run_memory["repeat_streak"] = 1
+                    else:
+                        run_memory["repeat_streak"] = 0
+                    run_memory["last_choice"] = ck
+                    cc = run_memory.get("choice_counts")
+                    if not isinstance(cc, dict):
+                        cc = {}
+                        run_memory["choice_counts"] = cc
+                    st = cc.get(ck)
+                    if not isinstance(st, dict):
+                        st = {"attempts": 0, "success": 0, "url_changes": 0}
+                        cc[ck] = st
+                    st["attempts"] = int(st.get("attempts") or 0) + 1
+                    if bool(success):
+                        st["success"] = int(st.get("success") or 0) + 1
+                    try:
+                        if current_url != page.url:
+                            st["url_changes"] = int(st.get("url_changes") or 0) + 1
+                    except Exception:
+                        pass
+                rs = run_memory.get("recent_steps")
+                if not isinstance(rs, list):
+                    rs = []
+                    run_memory["recent_steps"] = rs
+                entry = {
+                    "step": step_count,
+                    "choice": ck,
+                    "action": decision.get("action"),
+                    "name": decision.get("name"),
+                    "success": bool(success),
+                    "url_changed": bool(current_url != page.url),
+                }
+                rs.append(entry)
+                if len(rs) > 10:
+                    run_memory["recent_steps"] = rs[-10:]
+                avoid: List[str] = []
+                try:
+                    cc = run_memory.get("choice_counts")
+                    if isinstance(cc, dict):
+                        for k, v in cc.items():
+                            if not isinstance(v, dict):
+                                continue
+                            att = int(v.get("attempts") or 0)
+                            suc = int(v.get("success") or 0)
+                            urlc = int(v.get("url_changes") or 0)
+                            if att >= 2 and suc <= 0 and urlc <= 0:
+                                avoid.append(str(k))
+                except Exception:
+                    avoid = []
+                if len(avoid) > 12:
+                    avoid = avoid[:12]
+                run_memory["avoid_choices"] = avoid
+            except Exception:
+                pass
+
+            # Persist run memory snapshot for this step (compact but sufficient for debug/inspection)
+            try:
+                save_run_memory(args.prompt, run_memory, step_count, url=page.url)
+            except Exception:
+                pass
             
             # Record all successful steps so manual "Remember" can snapshot the full path.
             # We still respect WORKFLOW_MIN_STEP_CONF when *automatically* saving at the end.

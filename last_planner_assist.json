@@ -1,111 +1,120 @@
 {
-  "ts": "2026-01-13 17:51:54",
-  "goal": "order milk from blinkit",
-  "url": "https://blinkit.com/cn/milk/cid/14/922?srsltid=AfmBOoos-VABR_KyprMLvXWCI6ciQbmsC2lX3jYxrrfDhsZ8-3uhXP0r",
+  "ts": "2026-01-20 20:57:20",
+  "goal": "in canva upload an image and edit it by changing its filter to fresco",
+  "url": "https://www.canva.com/ai",
   "model": "xiaomi/mimo-v2-flash:free",
   "plan": {
-    "site": "blinkit.com",
+    "site": "canva.com",
     "steps": [
       {
         "step": 1,
         "action": "click",
-        "target_text": "Add",
+        "target_text": "Create a design",
         "alternatives": [
-          "ADD",
-          "Add to cart",
-          "+ Add"
+          "Create",
+          "Start a design",
+          "Create new"
         ],
         "value": null,
-        "notes": "Add milk variant to cart"
+        "notes": "Open design creation modal"
       },
       {
         "step": 2,
         "action": "click",
-        "target_text": "View Cart",
+        "target_text": "Upload",
         "alternatives": [
-          "Cart",
-          "View cart",
-          "Checkout"
+          "Uploads",
+          "Upload files"
         ],
         "value": null,
-        "notes": "Open cart drawer/page"
+        "notes": "Go to uploads tab"
       },
       {
         "step": 3,
         "action": "click",
-        "target_text": "Proceed to Checkout",
+        "target_text": "Upload files",
         "alternatives": [
-          "Checkout",
-          "Place Order",
-          "Continue"
+          "Upload",
+          "Add files"
         ],
         "value": null,
-        "notes": "Start checkout"
+        "notes": "Open file picker"
       },
       {
         "step": 4,
         "action": "type",
-        "target_text": "Search for society, area, landmark",
+        "target_text": "file input",
         "alternatives": [
-          "Enter delivery address",
-          "Address line 1",
-          "Add new address"
+          "Choose files",
+          "Select files"
         ],
-        "value": "User Address",
-        "notes": "Enter delivery location"
+        "value": null,
+        "notes": "Select image file from system"
       },
       {
         "step": 5,
         "action": "click",
-        "target_text": "Save & Continue",
+        "target_text": "Use in a new design",
         "alternatives": [
-          "Continue",
-          "Proceed",
-          "Confirm Address"
+          "Use in design",
+          "Add to design"
         ],
         "value": null,
-        "notes": "Confirm address"
+        "notes": "Add uploaded image to canvas"
       },
       {
         "step": 6,
         "action": "click",
-        "target_text": "Pay Now",
+        "target_text": "Edit image",
         "alternatives": [
-          "Pay",
-          "Place Order",
-          "Complete Order"
+          "Edit",
+          "Adjust",
+          "Image options"
         ],
         "value": null,
-        "notes": "Complete payment"
+        "notes": "Open image editing panel"
+      },
+      {
+        "step": 7,
+        "action": "click",
+        "target_text": "Filters",
+        "alternatives": [
+          "Filter",
+          "Effects"
+        ],
+        "value": null,
+        "notes": "Open filters section"
+      },
+      {
+        "step": 8,
+        "action": "click",
+        "target_text": "Fresco",
+        "alternatives": [
+          "Fresco filter",
+          "Fresco effect"
+        ],
+        "value": null,
+        "notes": "Apply fresco filter"
       }
     ],
-    "intent_keywords": [
-      "order milk",
-      "buy milk",
-      "add to cart",
-      "checkout",
-      "payment"
-    ],
     "candidate_button_texts": [
-      "Add",
-      "Add to cart",
-      "View Cart",
-      "Proceed to Checkout",
-      "Pay Now",
-      "Place Order"
+      "Create a design",
+      "Upload",
+      "Upload files",
+      "Use in a new design",
+      "Edit image",
+      "Filters",
+      "Fresco"
     ],
     "candidate_field_labels": [
-      "Search for society, area, landmark",
-      "Enter delivery address",
-      "Address line 1",
-      "Add new address"
+      "Upload files",
+      "Choose files",
+      "Search filters"
     ],
     "success_indicators": [
-      "Order placed",
-      "Thank you",
-      "Order confirmed",
-      "Payment successful",
-      "Delivery scheduled"
+      "Fresco filter applied",
+      "Image edited",
+      "Filter changed to Fresco"
     ]
   }
 }

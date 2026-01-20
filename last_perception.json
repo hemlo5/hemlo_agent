@@ -1,137 +1,156 @@
 {
-  "ts": "2026-01-13 17:58:19",
-  "goal": "order milk from blinkit",
-  "dom_hash": "89258187",
+  "ts": "2026-01-20 20:58:11",
+  "goal": "in canva upload an image and edit it by changing its filter to fresco",
+  "dom_hash": "19416782",
   "perception": {
-    "mode": "NORMAL",
-    "url": "https://blinkit.com/prn/amul-gold-full-cream-milk/prid/561268",
-    "title": "Amul Gold Full Cream Milk Price - Buy Online at ₹69 in India",
+    "mode": "LOGIN",
+    "url": "https://www.canva.com/ai",
+    "title": "Canva AI - Canva",
     "role_counts": {
-      "button": 34,
-      "link": 36
+      "button": 98,
+      "textbox": 1,
+      "link": 1
     },
     "gate_scores": {
-      "cookie_score": 1,
+      "cookie_score": 2,
       "cookie_word": false,
       "age_score": 0
     },
-    "has_modal": false,
-    "login_like": false,
-    "inputs": [],
-    "possible_gate_controls": [],
+    "has_modal": true,
+    "login_like": true,
+    "inputs": [
+      {
+        "role": "textbox",
+        "name": "Describe your idea, and I’ll bring it to life"
+      }
+    ],
+    "possible_gate_controls": [
+      {
+        "role": "button",
+        "name": "Save to Canva and close"
+      },
+      {
+        "role": "button",
+        "name": "An analysis of changing consumer food preferences"
+      },
+      {
+        "role": "button",
+        "name": "Close"
+      }
+    ],
     "top_controls": [
       {
         "role": "button",
-        "name": "Add to cart",
-        "href_kind": null,
-        "aria_expanded": null,
-        "is_money_action": true
-      },
-      {
-        "role": "button",
-        "name": "8 MINS Amul Buffalo Milk (90 Days Shelf Life) 450 ml ₹36 ADD",
+        "name": "Adjust",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Amul Taaza Toned Milk 500 ml ₹29 ADD",
+        "name": "Next page of list: Effects",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Amul Cow Milk 500 ml ₹30 ADD",
+        "name": "Save to Canva and close",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Mother Dairy Full Cream Milk 500 ml ₹35 ADD",
+        "name": "Fresco",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Amul Moti Toned Milk (90 Days Shelf Life) 450 ml ₹32 ADD",
+        "name": "Canva AI",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "textbox",
+        "name": "Describe your idea, and I’ll bring it to life",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Amul Gold Milk 1 l ₹80 ADD",
+        "name": "A cover image for my travel vlog in Tokyo",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Mother Dairy Buffalo Fresh Milk 500 ml ₹38 ADD",
+        "name": "Create an intro clip for a calming, meditation app",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Mother Dairy Cow Milk 500 ml ₹30 ADD",
+        "name": "An analysis of changing consumer food preferences",
+        "href_kind": null,
+        "aria_expanded": null,
+        "is_money_action": false
+      },
+      {
+        "role": "link",
+        "name": "Canva AI",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Amul Gold Full Cream Milk 1 l ₹69 ADD",
+        "name": "Cancel",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8% OFF 8 MINS Country Delight Cow Fresh Milk 450 ml ₹44 ₹48 ADD",
+        "name": "Undo",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "7% OFF 8 MINS Country Delight Buffalo Fresh Milk 450 ml ₹51 ₹55 ADD",
+        "name": "Redo",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Mother Dairy Toned Toned Milk 1 l ₹57 ADD",
+        "name": "Compare (hold down)",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       },
       {
         "role": "button",
-        "name": "8 MINS Mother Dairy Pro Milk 500 ml ₹35 ADD",
-        "href_kind": null,
-        "aria_expanded": null,
-        "is_money_action": false
-      },
-      {
-        "role": "button",
-        "name": "8 MINS Mother Dairy Probiotic Tadka Salted Buttermilk 270 ml ₹10 ADD",
+        "name": "More information",
         "href_kind": null,
         "aria_expanded": null,
         "is_money_action": false
       }
     ],
-    "text_excerpt": "",
+    "text_excerpt": "Your last payment failed. To avoid losing your Canva Business subscription, update your details now. Cancel Compare ank Create design Save Select area All Click Brush Foreground Background Crop Adjust Pixel Eraser Magic Studio BG Remover BG Generator Magic Eraser Magic Edit Magic Expand Filters See all None Fresco Belvedere Flint Intensity Effects Shadows Auto Focus Blur Duotone Face Retouch 47% S",
     "success_signals": {
       "generator_goal": false,
       "generation_in_progress": false,
-      "topic_match_score": 2,
-      "has_output_controls": false,
+      "topic_match_score": 5,
+      "has_output_controls": true,
       "has_output_words": false,
       "success_likely": false,
       "judge_called": false,
@@ -140,6 +159,6 @@
       "judge_reason": "",
       "success_confirmed": false
     },
-    "goal": "order milk from blinkit"
+    "goal": "in canva upload an image and edit it by changing its filter to fresco"
   }
 }

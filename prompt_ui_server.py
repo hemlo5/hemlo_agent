@@ -25,6 +25,32 @@ USER_DATA_DIR = os.path.join(os.path.expanduser("~"), ".hemlo_browser_data")
 running_process = None
 agent_state = "idle"
 stop_requested = False
+planner_assist_enabled = os.getenv("GEMINI_PLANNER_ASSIST", "1") != "0"
+groq_api_key_override = None
+
+
+def _get_effective_groq_key() -> str:
+    try:
+        if groq_api_key_override:
+            return str(groq_api_key_override)
+    except Exception:
+        pass
+    try:
+        return str(os.getenv("GROQ_API_KEY", "") or "")
+    except Exception:
+        return ""
+
+
+def _get_groq_key_source() -> str:
+    try:
+        if groq_api_key_override:
+            return "override"
+    except Exception:
+        pass
+    try:
+        return "env" if (os.getenv("GROQ_API_KEY") or "") else "none"
+    except Exception:
+        return "none"
 
 
 def _write_control(payload: dict) -> None:
@@ -54,7 +80,7 @@ def _reset_browser_profile() -> None:
     except Exception:
         pass
 
-def run_agent(prompt, sid):
+def run_agent(prompt, sid, dom_mode=None, max_items=None):
     """Run the agent script and stream output"""
     global running_process
     global agent_state
@@ -63,11 +89,24 @@ def run_agent(prompt, sid):
     try:
         _clear_agent_files()
         cmd = [PYTHON_PATH, "-u", AGENT_SCRIPT, "--prompt", prompt, "--session"]  # -u for unbuffered
+        try:
+            if isinstance(dom_mode, str) and dom_mode.strip():
+                cmd.extend(["--dom_mode", dom_mode.strip()])
+        except Exception:
+            pass
+        try:
+            if max_items is not None:
+                cmd.extend(["--max_items", str(int(max_items))])
+        except Exception:
+            pass
         
         # Set environment to disable Python buffering
         env = os.environ.copy()
         env['PYTHONUNBUFFERED'] = '1'
         env['PYTHONIOENCODING'] = 'utf-8'
+        env['GEMINI_PLANNER_ASSIST'] = '1' if planner_assist_enabled else '0'
+        if groq_api_key_override:
+            env['GROQ_API_KEY'] = groq_api_key_override
         
         running_process = subprocess.Popen(
             cmd,
@@ -158,6 +197,15 @@ def index():
 def handle_connect():
     print('Client connected')
     emit('status', {'status': 'connected'})
+    emit(
+        'config',
+        {
+            'planner_assist_enabled': planner_assist_enabled,
+            'groq_key_overridden': bool(groq_api_key_override),
+            'groq_key_current': _get_effective_groq_key(),
+            'groq_key_source': _get_groq_key_source(),
+        },
+    )
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -166,6 +214,8 @@ def handle_disconnect():
 @socketio.on('run_prompt')
 def handle_run_prompt(data):
     prompt = data.get('prompt', '')
+    dom_mode = (data or {}).get('dom_mode')
+    max_items = (data or {}).get('max_items')
     
     if not prompt:
         emit('status', {'status': 'error', 'message': 'No prompt provided'})
@@ -173,14 +223,25 @@ def handle_run_prompt(data):
     
     if running_process:
         try:
-            _write_control({"command": "new_task", "prompt": prompt})
+            payload = {"command": "new_task", "prompt": prompt}
+            try:
+                if isinstance(dom_mode, str) and dom_mode.strip():
+                    payload["dom_mode"] = dom_mode.strip()
+            except Exception:
+                pass
+            try:
+                if max_items is not None:
+                    payload["max_items"] = int(max_items)
+            except Exception:
+                pass
+            _write_control(payload)
             emit('status', {'status': 'running', 'message': 'New task sent to existing session'})
         except Exception as e:
             emit('status', {'status': 'error', 'message': f'Failed to send new task: {str(e)}'})
         return
     
     # Run in background thread
-    thread = threading.Thread(target=run_agent, args=(prompt, request.sid))
+    thread = threading.Thread(target=run_agent, args=(prompt, request.sid, dom_mode, max_items))
     thread.daemon = True
     thread.start()
 
@@ -223,6 +284,15 @@ def handle_resume_agent(data):
         prompt = (data or {}).get('prompt')
         if isinstance(prompt, str) and prompt.strip():
             payload["prompt"] = prompt.strip()
+        dom_mode = (data or {}).get('dom_mode')
+        if isinstance(dom_mode, str) and dom_mode.strip():
+            payload["dom_mode"] = dom_mode.strip()
+        max_items = (data or {}).get('max_items')
+        if max_items is not None:
+            try:
+                payload["max_items"] = int(max_items)
+            except Exception:
+                pass
         _write_control(payload)
         emit('output', {'data': 'Resume requested'})
     except Exception as e:
@@ -249,6 +319,40 @@ def handle_reset_session():
         emit('status', {'status': 'idle', 'message': 'Session reset complete'})
     except Exception as e:
         emit('status', {'status': 'error', 'message': f'Reset failed: {str(e)}'})
+
+
+@socketio.on('set_planner_assist')
+def handle_set_planner_assist(data):
+    global planner_assist_enabled
+    enabled = bool((data or {}).get('enabled'))
+    planner_assist_enabled = enabled
+    emit('config', {'planner_assist_enabled': planner_assist_enabled}, broadcast=True)
+    try:
+        emit('output', {'data': f"Planner Assist set to: {'ON' if planner_assist_enabled else 'OFF'} (applies on next run)"})
+    except Exception:
+        pass
+
+
+@socketio.on('set_groq_key')
+def handle_set_groq_key(data):
+    global groq_api_key_override
+    key = (data or {}).get('key') or ""
+    key = key.strip()
+    groq_api_key_override = key or None
+    emit(
+        'config',
+        {
+            'groq_key_overridden': bool(groq_api_key_override),
+            'groq_key_current': _get_effective_groq_key(),
+            'groq_key_source': _get_groq_key_source(),
+        },
+        room=request.sid,
+    )
+    try:
+        src = _get_groq_key_source()
+        emit('output', {'data': f"GROQ API key updated (source={src}) (applies on next run)"})
+    except Exception:
+        pass
 
 @socketio.on('save_workflow')
 def handle_save_workflow():

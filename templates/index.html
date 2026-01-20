@@ -135,27 +135,6 @@
             text-align: center;
             margin-bottom: 50px;
             animation: fadeInDown 0.8s ease;
-            display: flex;
-            justify-content: center;
-        }
-
-        .hero-glass {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 18px 28px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-            backdrop-filter: blur(14px) saturate(140%);
-            -webkit-backdrop-filter: blur(14px) saturate(140%);
-        }
-
-        body.light-theme .hero-glass {
-            background: rgba(255, 255, 255, 0.55);
-            border-color: rgba(0, 0, 0, 0.08);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         @keyframes fadeInDown {
@@ -278,6 +257,49 @@
         .status-indicator.paused {
             background: #999;
             animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .config-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .config-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .config-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .config-input {
+            min-width: 260px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        body.light-theme .config-input {
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(0, 0, 0, 0.1);
+            color: #333;
+        }
+
+        .config-status-text {
+            font-size: 0.8rem;
+            opacity: 0.75;
         }
 
         body.light-theme .status-indicator.paused {
@@ -700,13 +722,38 @@
 
     <div class="container">
         <div class="header">
-            <div class="hero-glass">
-                <div class="logo">HEMLO</div>
-                <div class="tagline">Command Center</div>
-            </div>
+            <div class="logo">HEMLO</div>
+            <div class="tagline">Command Center</div>
         </div>
 
         <div class="main-panel">
+            <div class="config-bar">
+                <div class="config-group">
+                    <span class="config-label">Planner Assist</span>
+                    <button class="btn btn-stop" id="plannerToggleBtn" type="button">
+                        <span id="plannerToggleText">Planner Assist: ON</span>
+                    </button>
+                </div>
+                <div class="config-group">
+                    <span class="config-label">DOM Mode</span>
+                    <select class="config-input" id="domModeSelect">
+                        <option value="legacy" selected>Legacy</option>
+                        <option value="gold">Gold</option>
+                    </select>
+                </div>
+                <div class="config-group">
+                    <span class="config-label">Max Items</span>
+                    <input type="number" class="config-input" id="maxItemsInput" min="20" max="400" value="40">
+                </div>
+                <div class="config-group">
+                    <span class="config-label">GROQ API Key</span>
+                    <input type="password" class="config-input" id="groqKeyInput" placeholder="Enter GROQ API key">
+                    <button class="btn btn-stop" id="groqShowBtn" type="button">Show</button>
+                    <button class="btn btn-stop" id="groqApplyBtn" type="button">Apply</button>
+                    <span class="config-status-text" id="groqStatusText"></span>
+                </div>
+            </div>
+
             <div class="status-bar">
                 <div class="status-indicator" id="statusIndicator"></div>
                 <div class="status-text" id="statusText">Initializing...</div>
@@ -809,6 +856,20 @@
         const loginPasswordInput = document.getElementById('loginPasswordInput');
         const loginSubmitBtn = document.getElementById('loginSubmitBtn');
         const outputContainer = document.getElementById('outputContainer');
+        const plannerToggleBtn = document.getElementById('plannerToggleBtn');
+        const plannerToggleText = document.getElementById('plannerToggleText');
+        const domModeSelect = document.getElementById('domModeSelect');
+        const maxItemsInput = document.getElementById('maxItemsInput');
+        const groqKeyInput = document.getElementById('groqKeyInput');
+        const groqShowBtn = document.getElementById('groqShowBtn');
+        const groqApplyBtn = document.getElementById('groqApplyBtn');
+        const groqStatusText = document.getElementById('groqStatusText');
+
+        let plannerAssistEnabled = true;
+        let groqKeyOverridden = false;
+        let groqKeyCurrent = '';
+        let groqKeySource = '';
+        let groqKeyShown = false;
 
         socket.on('connect', () => {
             updateStatus('connected', 'Connected - Ready');
@@ -817,6 +878,84 @@
         socket.on('disconnect', () => {
             updateStatus('disconnected', 'Disconnected');
         });
+
+        socket.on('config', (cfg) => {
+            if (!cfg || typeof cfg !== 'object') return;
+            if (typeof cfg.planner_assist_enabled === 'boolean') {
+                plannerAssistEnabled = cfg.planner_assist_enabled;
+            }
+            if (typeof cfg.groq_key_overridden === 'boolean') {
+                groqKeyOverridden = cfg.groq_key_overridden;
+            }
+            if (typeof cfg.groq_key_current === 'string') {
+                groqKeyCurrent = cfg.groq_key_current;
+            }
+            if (typeof cfg.groq_key_source === 'string') {
+                groqKeySource = cfg.groq_key_source;
+            }
+            updateConfigUI();
+        });
+
+        function updateConfigUI() {
+            try {
+                if (plannerToggleText) {
+                    plannerToggleText.textContent = plannerAssistEnabled ? 'Planner Assist: ON' : 'Planner Assist: OFF';
+                }
+                if (plannerToggleBtn) {
+                    plannerToggleBtn.className = plannerAssistEnabled ? 'btn btn-primary' : 'btn btn-stop';
+                }
+
+                if (groqKeyInput) {
+                    if (typeof groqKeyCurrent === 'string' && document.activeElement !== groqKeyInput) {
+                        groqKeyInput.value = groqKeyCurrent;
+                    }
+                    groqKeyInput.type = groqKeyShown ? 'text' : 'password';
+                }
+                if (groqShowBtn) {
+                    groqShowBtn.textContent = groqKeyShown ? 'Hide' : 'Show';
+                }
+                if (groqStatusText) {
+                    const src = groqKeySource || (groqKeyOverridden ? 'override' : 'env');
+                    const label = src === 'override' ? 'override' : (src === 'env' ? '.env' : 'none');
+                    groqStatusText.textContent = `Using: ${label}`;
+                }
+            } catch (e) {
+                
+            }
+        }
+
+        function setPlannerAssist(enabled) {
+            plannerAssistEnabled = !!enabled;
+            updateConfigUI();
+            socket.emit('set_planner_assist', { enabled: plannerAssistEnabled });
+        }
+
+        function applyGroqKey() {
+            const key = (groqKeyInput && groqKeyInput.value ? String(groqKeyInput.value) : '').trim();
+            socket.emit('set_groq_key', { key });
+        }
+
+        if (plannerToggleBtn) {
+            plannerToggleBtn.addEventListener('click', () => {
+                setPlannerAssist(!plannerAssistEnabled);
+            });
+        }
+        if (groqApplyBtn) {
+            groqApplyBtn.addEventListener('click', applyGroqKey);
+        }
+        if (groqKeyInput) {
+            groqKeyInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    applyGroqKey();
+                }
+            });
+        }
+        if (groqShowBtn) {
+            groqShowBtn.addEventListener('click', () => {
+                groqKeyShown = !groqKeyShown;
+                updateConfigUI();
+            });
+        }
 
         socket.on('status', (data) => {
             const status = data.status;
@@ -950,11 +1089,19 @@
                 return;
             }
 
+            const domMode = domModeSelect ? String(domModeSelect.value || 'legacy') : 'legacy';
+            let maxItems = null;
+            try {
+                maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+            } catch (e) {
+                maxItems = null;
+            }
+
             outputContainer.innerHTML = '';
             addOutput('→ Executing: ' + prompt);
             addOutput('');
 
-            socket.emit('run_prompt', { prompt: prompt });
+            socket.emit('run_prompt', { prompt: prompt, dom_mode: domMode, max_items: maxItems });
         }
 
         function sendNewTask() {
@@ -964,9 +1111,17 @@
                 return;
             }
 
+            const domMode = domModeSelect ? String(domModeSelect.value || 'legacy') : 'legacy';
+            let maxItems = null;
+            try {
+                maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+            } catch (e) {
+                maxItems = null;
+            }
+
             addOutput('→ New task: ' + prompt);
             addOutput('');
-            socket.emit('run_prompt', { prompt: prompt });
+            socket.emit('run_prompt', { prompt: prompt, dom_mode: domMode, max_items: maxItems });
             promptInput.value = '';
             promptInput.focus();
         }
@@ -988,12 +1143,26 @@
             }
             const prompt = promptInput.value.trim();
             if (prompt) {
-                socket.emit('resume_agent', { prompt: prompt });
+                const domMode = domModeSelect ? String(domModeSelect.value || 'legacy') : 'legacy';
+                let maxItems = null;
+                try {
+                    maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+                } catch (e) {
+                    maxItems = null;
+                }
+                socket.emit('resume_agent', { prompt: prompt, dom_mode: domMode, max_items: maxItems });
                 addOutput('→ Resuming with: ' + prompt);
                 addOutput('');
                 promptInput.value = '';
             } else {
-                socket.emit('resume_agent', {});
+                const domMode = domModeSelect ? String(domModeSelect.value || 'legacy') : 'legacy';
+                let maxItems = null;
+                try {
+                    maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+                } catch (e) {
+                    maxItems = null;
+                }
+                socket.emit('resume_agent', { dom_mode: domMode, max_items: maxItems });
             }
             promptInput.focus();
         }
