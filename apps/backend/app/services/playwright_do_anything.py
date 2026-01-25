@@ -21,7 +21,7 @@ def _playwright_launch_kwargs() -> Dict[str, Any]:
     headless = headless_env not in {"0", "false", "no"}
 
     viewport_width = int(os.environ.get("PLAYWRIGHT_VIEWPORT_WIDTH", "1280"))
-    viewport_height = int(os.environ.get("PLAYWRIGHT_VIEWPORT_HEIGHT", "720"))
+    viewport_height = int(os.environ.get("PLAYWRIGHT_VIEWPORT_HEIGHT", "1280"))
     slow_mo = int(os.environ.get("PLAYWRIGHT_SLOW_MO_MS", "0"))
 
     return {

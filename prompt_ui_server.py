@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 from flask_socketio import SocketIO, emit
 import subprocess
 import threading
@@ -7,6 +7,8 @@ import os
 import sys
 import json
 import time
+import re
+import ast
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hemlo-secret-key-2024'
@@ -25,8 +27,47 @@ USER_DATA_DIR = os.path.join(os.path.expanduser("~"), ".hemlo_browser_data")
 running_process = None
 agent_state = "idle"
 stop_requested = False
-planner_assist_enabled = os.getenv("GEMINI_PLANNER_ASSIST", "1") != "0"
+planner_mode = "basic"
 groq_api_key_override = None
+overlay_log_buffer = []
+overlay_login_options_payload = None  # Last login options payload for overlay/floating panel
+log_mode = "dev"  # "dev" for raw logs, "user" for curated user-facing logs
+floating_panel_process = None
+FLOATING_PANEL_SCRIPT = os.path.join(os.path.dirname(__file__), "floating_panel.py")
+
+
+def _apply_overlay_cors(resp):
+    try:
+        origin = request.headers.get("Origin")
+    except Exception:
+        origin = None
+    try:
+        resp.headers["Access-Control-Allow-Origin"] = origin or "*"
+        resp.headers["Vary"] = "Origin"
+    except Exception:
+        resp.headers["Access-Control-Allow-Origin"] = "*"
+    try:
+        resp.headers["Access-Control-Allow-Private-Network"] = "true"
+    except Exception:
+        pass
+    return resp
+
+
+@socketio.on('set_log_mode')
+def handle_set_log_mode(data):
+    global log_mode
+    try:
+        mode = str((data or {}).get('mode') or '').strip().lower()
+    except Exception:
+        mode = ''
+    if mode not in {'dev', 'dev2', 'user'}:
+        return
+    log_mode = mode
+    emit('config', {'log_mode': log_mode}, broadcast=True)
+    try:
+        emit('output', {'data': f"Log mode set to: {log_mode.upper()}"})
+    except Exception:
+        pass
 
 
 def _get_effective_groq_key() -> str:
@@ -51,6 +92,8 @@ def _get_groq_key_source() -> str:
         return "env" if (os.getenv("GROQ_API_KEY") or "") else "none"
     except Exception:
         return "none"
+
+
 
 
 def _write_control(payload: dict) -> None:
@@ -80,11 +123,65 @@ def _reset_browser_profile() -> None:
     except Exception:
         pass
 
+
+def _ensure_floating_panel() -> None:
+    global floating_panel_process
+    try:
+        if os.getenv("HEMLO_DISABLE_FLOATING_PANEL", "0") == "1":
+            return
+    except Exception:
+        pass
+
+    try:
+        wk = os.environ.get("WERKZEUG_RUN_MAIN")
+        if wk is not None and str(wk).lower() not in {"true", "1", "yes"}:
+            return
+    except Exception:
+        pass
+
+    try:
+        if floating_panel_process and floating_panel_process.poll() is None:
+            return
+    except Exception:
+        floating_panel_process = None
+
+    try:
+        if not os.path.exists(FLOATING_PANEL_SCRIPT):
+            return
+    except Exception:
+        return
+
+    py = sys.executable
+    if not py:
+        try:
+            if os.path.exists(PYTHON_PATH):
+                py = PYTHON_PATH
+        except Exception:
+            py = None
+    if not py:
+        return
+
+    env = os.environ.copy()
+    try:
+        env.setdefault("HEMLO_PANEL_URL", "http://127.0.0.1:5000")
+    except Exception:
+        pass
+
+    try:
+        creationflags = 0
+        if os.name == "nt":
+            creationflags = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+        floating_panel_process = subprocess.Popen([py, FLOATING_PANEL_SCRIPT], env=env, creationflags=creationflags)
+    except Exception:
+        floating_panel_process = None
+
 def run_agent(prompt, sid, dom_mode=None, max_items=None):
     """Run the agent script and stream output"""
     global running_process
     global agent_state
     global stop_requested
+    global overlay_log_buffer
+    global overlay_login_options_payload
     
     try:
         _clear_agent_files()
@@ -104,7 +201,9 @@ def run_agent(prompt, sid, dom_mode=None, max_items=None):
         env = os.environ.copy()
         env['PYTHONUNBUFFERED'] = '1'
         env['PYTHONIOENCODING'] = 'utf-8'
-        env['GEMINI_PLANNER_ASSIST'] = '1' if planner_assist_enabled else '0'
+        mode = str(planner_mode or "basic").strip().lower()
+        env['HEMLO_PLANNER_MODE'] = mode
+        env['GEMINI_PLANNER_ASSIST'] = '1' if mode != 'off' else '0'
         if groq_api_key_override:
             env['GROQ_API_KEY'] = groq_api_key_override
         
@@ -150,12 +249,19 @@ def run_agent(prompt, sid, dom_mode=None, max_items=None):
                     try:
                         payload = json.loads(line_out[len("__LOGIN_OPTIONS__"):])
                         socketio.emit('login_options', payload, room=sid)
+                        overlay_login_options_payload = payload
                     except Exception:
                         pass
                     continue
 
                 # Send line to UI
                 socketio.emit('output', {'data': line_out}, room=sid)
+                try:
+                    overlay_log_buffer.append(line_out)
+                    if len(overlay_log_buffer) > 8000:
+                        overlay_log_buffer = overlay_log_buffer[-8000:]
+                except Exception:
+                    pass
                 socketio.sleep(0)  # Allow other greenlets to run
                 
         except Exception as e:
@@ -189,9 +295,367 @@ def run_agent(prompt, sid, dom_mode=None, max_items=None):
         agent_state = "idle"
         stop_requested = False
 
+
+def _build_user_logs_from_overlay(lines):
+    user_lines = []
+    current_has_plan = False
+    current_has_filtering = False
+    for raw in lines or []:
+        try:
+            s = str(raw)
+        except Exception:
+            s = ""
+        if not s:
+            continue
+
+        if "Agent started with goal:" in s:
+            current_has_plan = False
+            current_has_filtering = False
+            try:
+                part = s.split("Agent started with goal:", 1)[-1].strip()
+            except Exception:
+                part = ""
+            if part.startswith("'") and part.endswith("'") and len(part) >= 2:
+                part = part[1:-1]
+            if part:
+                user_lines.append("Prompt: " + part)
+            continue
+
+        if "Navigating to " in s and "..." in s:
+            try:
+                part = s.split("Navigating to ", 1)[-1]
+            except Exception:
+                part = ""
+            if part.endswith("..."):
+                part = part[:-3]
+            part = part.strip()
+            if not current_has_plan:
+                user_lines.append("Plan created")
+                current_has_plan = True
+            if part:
+                user_lines.append("Link to open: " + part)
+            continue
+
+        if "Opening target=_blank href in same tab:" in s:
+            try:
+                part = s.split("Opening target=_blank href in same tab:", 1)[-1].strip()
+            except Exception:
+                part = ""
+            if not current_has_plan:
+                user_lines.append("Plan created")
+                current_has_plan = True
+            if part:
+                user_lines.append("Link to open: " + part)
+            continue
+
+        if "Opening external host in same tab:" in s:
+            try:
+                part = s.split("Opening external host in same tab:", 1)[-1].strip()
+            except Exception:
+                part = ""
+            if not current_has_plan:
+                user_lines.append("Plan created")
+                current_has_plan = True
+            if part:
+                user_lines.append("Link to open: " + part)
+            continue
+
+        if "Filtering DOM for goal" in s:
+            if not current_has_filtering:
+                user_lines.append("Filtering and analysing the website")
+                current_has_filtering = True
+            continue
+
+        if "Deciding next action" in s:
+            user_lines.append("Deciding next action to click")
+            continue
+
+        if "Action Result:" in s:
+            res = ""
+            url = ""
+            try:
+                part = s.split("Action Result:", 1)[-1].strip()
+            except Exception:
+                part = ""
+            if part:
+                try:
+                    if "|" in part:
+                        before, after = part.split("|", 1)
+                    else:
+                        before, after = part, ""
+                    res = before.strip()
+                    if "URL:" in after:
+                        url = after.split("URL:", 1)[-1].strip()
+                except Exception:
+                    res = part.strip()
+            msg = "Action result: " + (res or "Unknown")
+            if url:
+                msg += " (" + url + ")"
+            user_lines.append(msg)
+            continue
+
+    return user_lines
+
+
+def _build_dev2_logs_from_overlay(lines):
+    """Build a sanitized dev-style log view.
+
+    - Mirrors raw dev logs but replaces vendor / model names with 'HEMLO'
+      (e.g. Gemini, Serper, OpenAI, Groq, etc.).
+    - For lines that look like a Python dict 'decision' payload, collapse
+      the dict down to just the action and name fields so the log is easier
+      to skim (e.g. "decision: click -> K - Wikipedia").
+    """
+    out = []
+    try:
+        vendor_re = re.compile(r"(?i)\\b(gemini|serper|openai|groq|claude|anthropic|ollama)\\b")
+    except Exception:
+        vendor_re = None
+
+    for raw in lines or []:
+        try:
+            s = str(raw)
+        except Exception:
+            s = ""
+        if not s:
+            continue
+
+        # 1) Anonymize vendor / model names
+        try:
+            if vendor_re is not None:
+                s_anon = vendor_re.sub("HEMLO", s)
+            else:
+                s_anon = s
+        except Exception:
+            s_anon = s
+
+        # 2) Simplify decision dict lines
+        simplified = False
+        try:
+            lower = s_anon.lower()
+        except Exception:
+            lower = s_anon
+        try:
+            if "decision:" in lower:
+                # Grab everything after 'decision:' and try to parse a dict
+                try:
+                    after = s_anon.split("decision:", 1)[-1].strip()
+                except Exception:
+                    after = ""
+                if after.startswith("{") and after.endswith("}"):
+                    try:
+                        payload = ast.literal_eval(after)
+                    except Exception:
+                        payload = None
+                    if isinstance(payload, dict):
+                        try:
+                            action = str(payload.get("action") or "").strip()
+                        except Exception:
+                            action = ""
+                        try:
+                            name = str(
+                                payload.get("name")
+                                or payload.get("text")
+                                or payload.get("label")
+                                or ""
+                            ).strip()
+                        except Exception:
+                            name = ""
+                        if action or name:
+                            msg = "decision:"
+                            if action:
+                                msg += f" {action}"
+                            if name:
+                                msg += f" -> {name}"
+                            out.append(msg)
+                            simplified = True
+        except Exception:
+            simplified = False
+
+        if not simplified:
+            out.append(s_anon)
+
+    return out
+
+
+@app.route("/overlay_logs", methods=["GET", "OPTIONS"])
+def overlay_logs():
+    if request.method == "OPTIONS":
+        resp = make_response("")
+        resp.headers["Access-Control-Allow-Methods"] = "GET,OPTIONS"
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Access-Control-Request-Private-Network"
+        return _apply_overlay_cors(resp)
+
+    n = 2000
+    try:
+        if request.args.get("n") is not None:
+            n = int(request.args.get("n") or 2000)
+    except Exception:
+        n = 2000
+    if n < 50:
+        n = 50
+    if n > 8000:
+        n = 8000
+
+    try:
+        raw_logs = overlay_log_buffer[-n:]
+    except Exception:
+        raw_logs = []
+
+    try:
+        mode = str(log_mode or "dev").strip().lower()
+    except Exception:
+        mode = "dev"
+
+    if mode == "user":
+        try:
+            logs_out = _build_user_logs_from_overlay(raw_logs)
+        except Exception:
+            logs_out = []
+    elif mode == "dev2":
+        try:
+            logs_out = _build_dev2_logs_from_overlay(raw_logs)
+        except Exception:
+            logs_out = raw_logs
+    else:
+        logs_out = raw_logs
+
+    try:
+        data = {"logs": logs_out[-n:], "state": agent_state}
+    except Exception:
+        data = {"logs": [], "state": agent_state}
+    resp = make_response(json.dumps(data, ensure_ascii=False))
+    resp.headers["Content-Type"] = "application/json"
+    return _apply_overlay_cors(resp)
+
+
+@app.route("/overlay_login_options", methods=["GET", "OPTIONS"])
+def overlay_login_options():
+    """Expose last seen login options for the floating panel.
+
+    This mirrors the Socket.IO 'login_options' payload but over HTTP so the
+    Tkinter floating panel can render provider buttons (Google, Email, etc.).
+    """
+    global overlay_login_options_payload
+
+    if request.method == "OPTIONS":
+        resp = make_response("")
+        resp.headers["Access-Control-Allow-Methods"] = "GET,OPTIONS"
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Access-Control-Request-Private-Network"
+        return _apply_overlay_cors(resp)
+
+    try:
+        payload = overlay_login_options_payload or {}
+    except Exception:
+        payload = {}
+
+    resp = make_response(json.dumps(payload, ensure_ascii=False))
+    resp.headers["Content-Type"] = "application/json"
+    return _apply_overlay_cors(resp)
+
+
+@app.route("/overlay_control", methods=["GET", "POST", "OPTIONS"])
+def overlay_control():
+    global running_process
+    global agent_state
+    global stop_requested
+
+    if request.method == "OPTIONS":
+        resp = make_response("")
+        resp.headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS"
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Access-Control-Request-Private-Network"
+        return _apply_overlay_cors(resp)
+
+    cmd = ""
+    if request.method == "GET":
+        try:
+            cmd = str(request.args.get("command") or "").lower()
+        except Exception:
+            cmd = ""
+    else:
+        try:
+            payload = request.get_json(silent=True) or {}
+        except Exception:
+            payload = {}
+        cmd = str(payload.get("command") or "").lower()
+    ok = False
+
+    if cmd == "stop":
+        if running_process:
+            try:
+                stop_requested = True
+                running_process.terminate()
+                ok = True
+            except Exception:
+                ok = False
+        else:
+            ok = True
+    elif cmd == "pause":
+        try:
+            _write_control({"command": "pause"})
+            ok = True
+        except Exception:
+            ok = False
+    elif cmd in {"resume", "new_task"}:
+        try:
+            _write_control({"command": "resume"})
+            ok = True
+        except Exception:
+            ok = False
+    elif cmd == "clear_logs":
+        try:
+            overlay_log_buffer.clear()
+            ok = True
+        except Exception:
+            ok = False
+    elif cmd in {"approve", "approve_money"}:
+        try:
+            with open(APPROVAL_FLAG_PATH, "w", encoding="utf-8") as f:
+                f.write("1")
+            ok = True
+        except Exception:
+            ok = False
+
+    resp = make_response(json.dumps({"ok": bool(ok)}))
+    resp.headers["Content-Type"] = "application/json"
+    return _apply_overlay_cors(resp)
+
+
+@app.route("/overlay_login_choice", methods=["POST", "OPTIONS"])
+def overlay_login_choice():
+    """Allow the floating panel to submit login choices via HTTP.
+
+    This mirrors the Socket.IO 'submit_login_choice' handler but is accessed
+    over HTTP so the Tkinter panel can write LOGIN_CHOICE_PATH for the agent.
+    """
+    if request.method == "OPTIONS":
+        resp = make_response("")
+        resp.headers["Access-Control-Allow-Methods"] = "POST,OPTIONS"
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Access-Control-Request-Private-Network"
+        return _apply_overlay_cors(resp)
+
+    ok = False
+    try:
+        payload = request.get_json(silent=True) or {}
+        with open(LOGIN_CHOICE_PATH, "w", encoding="utf-8") as f:
+            f.write(json.dumps(payload, ensure_ascii=False))
+        ok = True
+    except Exception:
+        ok = False
+
+    resp = make_response(json.dumps({"ok": bool(ok)}))
+    resp.headers["Content-Type"] = "application/json"
+    return _apply_overlay_cors(resp)
+
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('prompt_ui_2.html')
+
+
+@app.route('/ui2')
+def prompt_ui_2():
+    return render_template('prompt_ui_2.html')
 
 @socketio.on('connect')
 def handle_connect():
@@ -200,10 +664,11 @@ def handle_connect():
     emit(
         'config',
         {
-            'planner_assist_enabled': planner_assist_enabled,
+            'planner_mode': planner_mode,
             'groq_key_overridden': bool(groq_api_key_override),
             'groq_key_current': _get_effective_groq_key(),
             'groq_key_source': _get_groq_key_source(),
+            'log_mode': log_mode,
         },
     )
 
@@ -220,6 +685,12 @@ def handle_run_prompt(data):
     if not prompt:
         emit('status', {'status': 'error', 'message': 'No prompt provided'})
         return
+
+
+    try:
+        _ensure_floating_panel()
+    except Exception:
+        pass
     
     if running_process:
         try:
@@ -321,14 +792,16 @@ def handle_reset_session():
         emit('status', {'status': 'error', 'message': f'Reset failed: {str(e)}'})
 
 
-@socketio.on('set_planner_assist')
-def handle_set_planner_assist(data):
-    global planner_assist_enabled
-    enabled = bool((data or {}).get('enabled'))
-    planner_assist_enabled = enabled
-    emit('config', {'planner_assist_enabled': planner_assist_enabled}, broadcast=True)
+@socketio.on('set_planner_mode')
+def handle_set_planner_mode(data):
+    global planner_mode
+    mode = str((data or {}).get('mode') or '').strip().lower()
+    if mode not in {'off', 'basic', 'gold'}:
+        return
+    planner_mode = mode
+    emit('config', {'planner_mode': planner_mode}, broadcast=True)
     try:
-        emit('output', {'data': f"Planner Assist set to: {'ON' if planner_assist_enabled else 'OFF'} (applies on next run)"})
+        emit('output', {'data': f"Planner mode set to: {planner_mode.upper()} (applies on next run)"})
     except Exception:
         pass
 

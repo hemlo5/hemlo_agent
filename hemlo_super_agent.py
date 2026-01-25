@@ -7,12 +7,17 @@ import math
 import hashlib
 import contextlib
 import typing
+import threading
 from typing import List, Dict, Any, Optional, Union, Set, Tuple
 from urllib.parse import urlparse
 import urllib.request, urllib.error
 from dotenv import load_dotenv
 from playwright.sync_api import sync_playwright, Page
 from openai import OpenAI
+
+OVERLAY_AGENT_LOG_BUFFER: List[str] = []
+OVERLAY_AGENT_LOG_LOCK = threading.Lock()
+OVERLAY_AGENT_STATE = "idle"
 
 # Fix Windows console encoding for emojis and Unicode characters
 # and ensure line-buffered output so logs appear in real time.
@@ -31,6 +36,53 @@ if sys.platform == 'win32':
         line_buffering=True,
     )
 
+
+class _TeeTextIO:
+    def __init__(self, wrapped):
+        self._wrapped = wrapped
+        self._partial = ""
+
+    def write(self, s):
+        try:
+            txt = str(s)
+        except Exception:
+            txt = ""
+        if txt:
+            try:
+                self._partial += txt
+                while "\n" in self._partial:
+                    line, self._partial = self._partial.split("\n", 1)
+                    try:
+                        sline = str(line or "").replace("\r", "")
+                        if sline.strip():
+                            if len(sline) > 900:
+                                sline = sline[:900] + "..."
+                            with OVERLAY_AGENT_LOG_LOCK:
+                                OVERLAY_AGENT_LOG_BUFFER.append(sline)
+                                if len(OVERLAY_AGENT_LOG_BUFFER) > 8000:
+                                    del OVERLAY_AGENT_LOG_BUFFER[:-8000]
+                    except Exception:
+                        pass
+            except Exception:
+                pass
+        return self._wrapped.write(s)
+
+    def flush(self):
+        return self._wrapped.flush()
+
+    def __getattr__(self, name):
+        return getattr(self._wrapped, name)
+
+
+try:
+    sys.stdout = _TeeTextIO(sys.stdout)
+except Exception:
+    pass
+try:
+    sys.stderr = _TeeTextIO(sys.stderr)
+except Exception:
+    pass
+
 # Load environment variables
 load_dotenv()
 
@@ -41,6 +93,7 @@ class Config:
     GEMINI_API_KEY = os.getenv("OPENROUTER_API_KEY") or os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
     GEMINI_MODEL = os.getenv("PLANNER_MODEL") or os.getenv("GEMINI_MODEL") or "openai/gpt-4.1-mini"
     GEMINI_PLANNER_ASSIST = os.getenv("GEMINI_PLANNER_ASSIST", "1") != "0"
+    PLANNER_MODE = (os.getenv("HEMLO_PLANNER_MODE", "basic") or "basic").strip().lower()
     SUCCESS_JUDGE_ENABLED = os.getenv("HEMLO_SUCCESS_JUDGE", "1") != "0"
     SUCCESS_JUDGE_MODEL = os.getenv("SUCCESS_JUDGE_MODEL") or GEMINI_MODEL
     SUCCESS_JUDGE_MIN_CONF = float(os.getenv("SUCCESS_JUDGE_MIN_CONF", "0.8"))
@@ -56,6 +109,11 @@ class Config:
     DEBUG_PLANNER_ASSIST = os.getenv("HEMLO_DEBUG_PLANNER_ASSIST", "0") == "1"
 
 config = Config()
+try:
+    if config.PLANNER_MODE not in {"off", "basic", "gold"}:
+        config.PLANNER_MODE = "basic"
+except Exception:
+    config.PLANNER_MODE = "basic"
 
 if not config.GROQ_API_KEY:
     print("Error: GROQ_API_KEY not found in .env")
@@ -144,6 +202,24 @@ def _run_memory_add_milestone(run_memory: Optional[Dict[str, Any]], milestone: s
             run_memory["milestones"] = ms
         if milestone and milestone not in ms:
             ms.append(milestone)
+    except Exception:
+        return
+
+
+def _run_memory_add_progress(run_memory: Optional[Dict[str, Any]], note: str, limit: int = 40) -> None:
+    if not isinstance(run_memory, dict):
+        return
+    try:
+        notes = run_memory.get("progress_notes")
+        if not isinstance(notes, list):
+            notes = []
+            run_memory["progress_notes"] = notes
+        clean = str(note or "").strip()
+        if not clean:
+            return
+        notes.append(clean)
+        if len(notes) > int(limit or 40):
+            run_memory["progress_notes"] = notes[-int(limit or 40):]
     except Exception:
         return
 
@@ -836,7 +912,7 @@ def _extract_planner_keywords(planner_assist: Optional[Dict[str, Any]]) -> Dict[
     if not isinstance(planner_assist, dict) or not planner_assist:
         return {"must_include": must, "boost": boost}
     try:
-        plan = planner_assist.get("plan") or {}
+        plan = planner_assist.get("plan") or planner_assist
         steps = plan.get("steps") or []
         if isinstance(steps, list):
             for st in steps:
@@ -845,11 +921,22 @@ def _extract_planner_keywords(planner_assist: Optional[Dict[str, Any]]) -> Dict[
                 tt = st.get("target_text")
                 if isinstance(tt, str) and tt.strip():
                     must.append(tt.strip())
+                hint_target = st.get("target")
+                if isinstance(hint_target, str) and hint_target.strip():
+                    must.append(hint_target.strip())
                 alts = st.get("alternatives") or []
                 if isinstance(alts, list):
                     for a in alts:
                         if isinstance(a, str) and a.strip():
                             boost.append(a.strip())
+        hints = plan.get("hints") or []
+        if isinstance(hints, list):
+            for h in hints:
+                if not isinstance(h, dict):
+                    continue
+                ht = h.get("target")
+                if isinstance(ht, str) and ht.strip():
+                    must.append(ht.strip())
         cbtn = plan.get("candidate_button_texts") or []
         if isinstance(cbtn, list):
             for b in cbtn:
@@ -1250,7 +1337,7 @@ def playwright_filter_interactive_elements(page: Page, goal: str, planner_assist
 
     try:
         hybrid_raw = page.evaluate(
-            """() => {
+            r"""() => {
   const out = [];
   const seen = new Set();
   let c = 0;
@@ -2231,6 +2318,13 @@ def _has_visible_modal(page: Page) -> bool:
             }"""
         )
         return bool(val)
+    except Exception:
+        return False
+
+
+def _should_force_front() -> bool:
+    try:
+        return os.getenv("HEMLO_FORCE_FRONT", "0") == "1"
     except Exception:
         return False
 
@@ -3448,6 +3542,14 @@ def _brief_planner_assist(obj: Dict[str, Any]) -> Dict[str, Any]:
             out["steps"] = []
     except Exception:
         out["steps"] = []
+    try:
+        hints = obj.get("hints") or []
+        if isinstance(hints, list):
+            out["hints"] = hints[:8]
+        else:
+            out["hints"] = []
+    except Exception:
+        out["hints"] = []
     for k in ("candidate_button_texts", "candidate_field_labels", "success_indicators"):
         try:
             v = obj.get(k)
@@ -3570,6 +3672,187 @@ def gemini_planner_assist(goal: str, current_url: str, page_title: str = "") -> 
     except Exception as e:
         print(f"Planner-assist failed: {e}")
         return None
+
+
+def _build_planner_gold_overview(perception: Dict[str, Any], items: List[Dict[str, Any]]) -> Dict[str, Any]:
+    """Build a compact, fast overview of the current page for Planner Gold."""
+    overview: Dict[str, Any] = {}
+    try:
+        overview["url"] = perception.get("url")
+        overview["title"] = perception.get("title")
+        overview["mode"] = perception.get("mode")
+        overview["inputs"] = perception.get("inputs") or []
+        overview["top_controls"] = perception.get("top_controls") or []
+        overview["possible_gate_controls"] = perception.get("possible_gate_controls") or []
+        overview["success_signals"] = perception.get("success_signals") or {}
+    except Exception:
+        overview = {}
+
+    try:
+        sample: List[Dict[str, Any]] = []
+        for it in (items or [])[:30]:
+            if not isinstance(it, dict):
+                continue
+            sample.append({
+                "role": it.get("role"),
+                "name": it.get("name"),
+                "href_kind": it.get("href_kind"),
+                "aria_expanded": it.get("aria_expanded"),
+                "is_primary_input": it.get("is_primary_input"),
+            })
+        overview["controls_sample"] = sample
+    except Exception:
+        pass
+    return overview
+
+
+def planner_gold_assist(
+    goal: str,
+    current_url: str,
+    page_title: str,
+    overview: Dict[str, Any],
+    progress: Dict[str, Any],
+) -> Optional[Dict[str, Any]]:
+    """Planner Gold: lightweight hint generator using current page overview + progress."""
+    try:
+        if not config.GEMINI_PLANNER_ASSIST:
+            return None
+    except Exception:
+        return None
+    api_key = getattr(config, "GEMINI_API_KEY", None)
+    if not api_key:
+        return None
+    model = getattr(config, "GEMINI_MODEL", None) or "openai/gpt-4.1-mini"
+
+    try:
+        host = urlparse(current_url).hostname or ""
+    except Exception:
+        host = ""
+
+    prompt = (
+        "You are a fast planning assistant. Provide SHORT hints for the next few actions. "
+        "Return ONLY JSON (no markdown) with schema:\n"
+        "{\n"
+        "  \"site\": string,\n"
+        "  \"hints\": [\n"
+        "    {\"kind\": \"click\"|\"type\"|\"wait\"|\"navigate\", \"target\": string, \"value\": string|null, \"why\": string}\n"
+        "  ],\n"
+        "  \"candidate_button_texts\": [string],\n"
+        "  \"candidate_field_labels\": [string],\n"
+        "  \"success_indicators\": [string]\n"
+        "}\n"
+        "Rules: keep hints <= 6, be concise, and reference labels actually visible in the overview.\n\n"
+        f"Current host: {host}\n"
+        f"Current URL: {current_url}\n"
+        f"Current page title: {page_title}\n"
+        f"User goal: {goal}\n"
+        f"Progress summary (JSON): {json.dumps(progress, ensure_ascii=False)}\n"
+        f"Page overview (JSON): {json.dumps(overview, ensure_ascii=False)}\n"
+    )
+
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": 0.2,
+        "max_tokens": 420,
+    }
+    try:
+        endpoint = "https://openrouter.ai/api/v1/chat/completions"
+        req = urllib.request.Request(
+            endpoint,
+            data=json.dumps(payload).encode("utf-8"),
+            headers={
+                "Content-Type": "application/json",
+                "Authorization": f"Bearer {api_key}",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=18) as resp:
+            raw = resp.read().decode("utf-8")
+        data = json.loads(raw)
+        text = None
+        try:
+            text = data.get("choices", [{}])[0].get("message", {}).get("content")
+        except Exception:
+            text = None
+
+        try:
+            raw_record = {
+                "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "goal": goal,
+                "url": current_url,
+                "model": model,
+                "raw_response": data,
+                "raw_text": text,
+                "overview": overview,
+                "progress": progress,
+            }
+            with open("planner_gold_raw_log.jsonl", "a", encoding="utf-8") as f:
+                f.write(json.dumps(raw_record, ensure_ascii=False) + "\n")
+            with open("last_planner_gold_raw.json", "w", encoding="utf-8") as f:
+                json.dump(raw_record, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+
+        plan = _try_parse_json_object(text or "")
+        if not plan:
+            return None
+        record = {
+            "ts": time.strftime("%Y-%m-%d %H:%M:%S"),
+            "goal": goal,
+            "url": current_url,
+            "model": model,
+            "plan": plan,
+        }
+        try:
+            with open("planner_gold_log.jsonl", "a", encoding="utf-8") as f:
+                f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            with open("last_planner_gold.json", "w", encoding="utf-8") as f:
+                json.dump(record, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+        return plan
+    except urllib.error.HTTPError as e:
+        try:
+            err_body = e.read().decode("utf-8", errors="replace")
+        except Exception:
+            err_body = "(no body)"
+        print(f"Planner-gold HTTP {e.code} Error: {err_body}")
+        return None
+    except Exception as e:
+        print(f"Planner-gold failed: {e}")
+        return None
+
+
+def _build_planner_gold_progress(
+    run_memory: Optional[Dict[str, Any]],
+    recent_actions: Optional[List[str]] = None,
+    step: Optional[int] = None,
+    current_url: Optional[str] = None,
+) -> Dict[str, Any]:
+    progress: Dict[str, Any] = {}
+    try:
+        progress["step"] = int(step or 0)
+    except Exception:
+        progress["step"] = 0
+    try:
+        progress["url"] = current_url or ""
+    except Exception:
+        progress["url"] = ""
+    try:
+        if isinstance(recent_actions, list):
+            progress["recent_actions"] = recent_actions[-6:]
+    except Exception:
+        pass
+    try:
+        if isinstance(run_memory, dict):
+            progress["milestones"] = (run_memory.get("milestones") or [])[:12]
+            progress["recent_steps"] = (run_memory.get("recent_steps") or [])[-6:]
+            progress["progress_notes"] = (run_memory.get("progress_notes") or [])[-12:]
+            progress["repeat_streak"] = int(run_memory.get("repeat_streak") or 0)
+    except Exception:
+        pass
+    return progress
 
 
 def get_planner_assist(goal: str, current_url: str, page_title: str = "") -> Optional[Dict[str, Any]]:
@@ -3710,6 +3993,14 @@ def analyze_dom_and_act(
                 pass
             tmp.append(it)
         items_for_llm = tmp
+
+        # Highlight all candidate interactive elements so the user can see what
+        # the agent is considering before it chooses a specific action.
+        try:
+            _highlight_candidate_elements(page, items_for_llm, max_items=max_items)
+        except Exception:
+            pass
+
         compact: List[Dict[str, Any]] = []
         for it in items_for_llm:
             ci: Dict[str, Any] = {"role": it.get("role"), "name": it.get("name")}
@@ -4211,6 +4502,12 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
             except Exception:
                 pass
 
+            # Highlight the chosen click target with a hologram-style overlay
+            try:
+                _highlight_click_target(page, elem.first if hasattr(elem, 'first') else elem)
+            except Exception:
+                pass
+
             try:
                 if elem.count() > 0:
                     vis = False
@@ -4478,6 +4775,12 @@ def execute_action(page: Page, decision: Dict[str, Any], downloaded_files: Optio
                     return False
                 elem = page.locator(locator_str).first
 
+            # Highlight the input element before typing so the user sees the focus target
+            try:
+                _highlight_click_target(page, elem)
+            except Exception:
+                pass
+
             with contextlib.suppress(Exception):
                 elem.scroll_into_view_if_needed(timeout=5000)
             with contextlib.suppress(Exception):
@@ -4559,9 +4862,16 @@ def _launch_hemlo_context(p):
             ctx = p.chromium.launch_persistent_context(
                 USER_DATA_DIR,
                 headless=False,
-                viewport={"width": 1280, "height": 720},
+                no_viewport=True,  # Let Chrome handle viewport natively
                 accept_downloads=True,
+                bypass_csp=True,
                 args=[
+                    "--start-fullscreen",
+                    "--kiosk",
+                    "--allow-running-insecure-content",
+                    "--unsafely-treat-insecure-origin-as-secure=http://localhost:5000",
+                    "--unsafely-treat-insecure-origin-as-secure=http://127.0.0.1:5000",
+                    "--disable-features=BlockInsecurePrivateNetworkRequests,PrivateNetworkAccessRespectPreflightResults",
                     "--disable-blink-features=AutomationControlled",
                     "--disable-features=IsolateOrigins,site-per-process",
                 ],
@@ -4599,13 +4909,20 @@ def _launch_hemlo_context(p):
         browser = p.chromium.launch(
             headless=False,
             args=[
+                "--start-fullscreen",
+                "--kiosk",
+                "--allow-running-insecure-content",
+                "--unsafely-treat-insecure-origin-as-secure=http://localhost:5000",
+                "--unsafely-treat-insecure-origin-as-secure=http://127.0.0.1:5000",
+                "--disable-features=BlockInsecurePrivateNetworkRequests,PrivateNetworkAccessRespectPreflightResults",
                 "--disable-blink-features=AutomationControlled",
                 "--disable-features=IsolateOrigins,site-per-process",
             ],
         )
         context = browser.new_context(
-            viewport={"width": 1280, "height": 720},
+            no_viewport=True,  # Let Chrome handle viewport natively
             accept_downloads=True,
+            bypass_csp=True,
         )
         return context, browser
     except Exception as e:
@@ -4613,7 +4930,679 @@ def _launch_hemlo_context(p):
         raise
 
 
+def _install_browser_overlay(page: Page) -> None:
+    # Never inject the in-page overlay when running in "2nd Chrome" mode.
+    try:
+        if os.getenv("HEMLO_SECOND_CHROME", "0") == "1":
+            return
+    except Exception:
+        return
+    if os.getenv("HEMLO_ENABLE_INPAGE_OVERLAY", "0") != "1":
+        return
+    script = r"""
+    (() => {
+      try {
+        if (window.__HEMLO_OVERLAY_INSTALLED__) return;
+        window.__HEMLO_OVERLAY_INSTALLED__ = true;
+      } catch (e) {}
+      const hostCandidates = ['http://127.0.0.1:5000', 'http://localhost:5000'];
+      let host = hostCandidates[0];
+
+      const canUseBindings = () => {
+        try {
+          return typeof window.hemloOverlayGetLogs === 'function' && typeof window.hemloOverlayControl === 'function';
+        } catch (e) {
+          return false;
+        }
+      };
+      function createOverlay() {
+        try {
+          if (!document || !document.body) return;
+          if (document.getElementById('hemlo-overlay')) return;
+          const root = document.createElement('div');
+          root.id = 'hemlo-overlay';
+          root.style.position = 'fixed';
+          root.style.bottom = '8px';
+          root.style.right = '8px';
+          root.style.width = '380px';
+          root.style.maxHeight = '240px';
+          root.style.maxWidth = 'calc(100vw - 16px)';
+          root.style.boxSizing = 'border-box';
+          root.style.contain = 'layout paint style';
+          root.style.zIndex = '2147483647';
+          root.style.fontFamily = 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+          root.style.fontSize = '11px';
+          root.style.background = 'rgba(0,0,0,0.82)';
+          root.style.color = '#f5f5f5';
+          root.style.borderRadius = '6px';
+          root.style.boxShadow = '0 0 0 1px rgba(255,255,255,0.08), 0 8px 20px rgba(0,0,0,0.45)';
+          root.style.overflow = 'hidden';
+          root.style.userSelect = 'none';
+          try {
+            root.style.setProperty('position', 'fixed', 'important');
+            root.style.setProperty('right', '8px', 'important');
+            root.style.setProperty('bottom', '8px', 'important');
+            root.style.setProperty('z-index', '2147483647', 'important');
+            root.style.setProperty('pointer-events', 'auto', 'important');
+          } catch (e) {}
+
+          const header = document.createElement('div');
+          header.style.display = 'flex';
+          header.style.alignItems = 'center';
+          header.style.justifyContent = 'space-between';
+          header.style.padding = '4px 6px';
+          header.style.background = 'rgba(255,255,255,0.06)';
+          header.style.borderBottom = '1px solid rgba(255,255,255,0.10)';
+          header.style.cursor = 'move';
+
+          const title = document.createElement('span');
+          title.textContent = 'Hemlo Agent';
+          title.style.fontWeight = '600';
+          title.style.letterSpacing = '0.02em';
+
+          const btnRow = document.createElement('div');
+          btnRow.style.display = 'flex';
+          btnRow.style.gap = '4px';
+
+          function makeBtn(label, command, bg) {
+            const b = document.createElement('button');
+            b.textContent = label;
+            b.style.border = 'none';
+            b.style.padding = '2px 6px';
+            b.style.borderRadius = '4px';
+            b.style.cursor = 'pointer';
+            b.style.fontSize = '11px';
+            b.style.background = bg;
+            b.style.color = '#f5f5f5';
+            b.style.opacity = '0.92';
+            b.onmouseenter = () => { b.style.opacity = '1'; };
+            b.onmouseleave = () => { b.style.opacity = '0.92'; };
+            b.onmousedown = (ev) => {
+              try { if (ev) { ev.stopPropagation(); } } catch (e) {}
+            };
+            b.onclick = (ev) => {
+              try {
+                try { if (ev) { ev.stopPropagation(); } } catch (e) {}
+                if (canUseBindings()) {
+                  try { window.hemloOverlayControl(command); } catch (e) {}
+                } else {
+                  fetch(host + '/overlay_control?command=' + encodeURIComponent(command), {
+                    method: 'GET',
+                    cache: 'no-store',
+                  }).catch(() => {});
+                }
+              } catch (e) {}
+            };
+            return b;
+          }
+
+          btnRow.appendChild(makeBtn('Stop', 'stop', 'rgba(239,68,68,0.95)'));
+          btnRow.appendChild(makeBtn('Pause', 'pause', 'rgba(245,158,11,0.95)'));
+          btnRow.appendChild(makeBtn('Approve', 'approve', 'rgba(34,197,94,0.95)'));
+
+          header.appendChild(title);
+          header.appendChild(btnRow);
+
+          const log = document.createElement('div');
+          log.id = 'hemlo-overlay-log';
+          log.style.fontFamily = 'SFMono-Regular, ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace';
+          log.style.fontSize = '11px';
+          log.style.whiteSpace = 'pre';
+          log.style.padding = '4px 6px 6px 6px';
+          log.style.maxHeight = '190px';
+          log.style.overflowY = 'auto';
+          log.style.overflowX = 'auto';
+          log.style.lineHeight = '1.28';
+          log.style.userSelect = 'text';
+          log.textContent = 'Waiting for Hemlo logs...';
+
+          root.appendChild(header);
+          root.appendChild(log);
+          document.body.appendChild(root);
+          try {
+            const se = document.scrollingElement || document.documentElement || document.body;
+            if (se && typeof se.scrollLeft === 'number') se.scrollLeft = 0;
+          } catch (e) {}
+
+          // Restore last position if user dragged it.
+          try {
+            const saved = JSON.parse(localStorage.getItem('hemlo_overlay_pos') || 'null');
+            if (saved && typeof saved === 'object') {
+              if (typeof saved.left === 'number') { root.style.left = saved.left + 'px'; root.style.right = ''; }
+              if (typeof saved.top === 'number') { root.style.top = saved.top + 'px'; root.style.bottom = ''; }
+            }
+          } catch (e) {}
+
+          // Dragging
+          try {
+            let dragging = false;
+            let startX = 0, startY = 0;
+            let startLeft = 0, startTop = 0;
+
+            const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+            const onMove = (ev) => {
+              if (!dragging) return;
+              const x = (ev && ev.clientX) || 0;
+              const y = (ev && ev.clientY) || 0;
+              const dx = x - startX;
+              const dy = y - startY;
+              const rect = root.getBoundingClientRect();
+              const w = rect.width || 380;
+              const h = rect.height || 240;
+              const left = clamp(startLeft + dx, 4, Math.max(4, window.innerWidth - w - 4));
+              const top = clamp(startTop + dy, 4, Math.max(4, window.innerHeight - h - 4));
+              root.style.left = left + 'px';
+              root.style.top = top + 'px';
+              root.style.right = '';
+              root.style.bottom = '';
+            };
+
+            const onUp = () => {
+              if (!dragging) return;
+              dragging = false;
+              document.removeEventListener('mousemove', onMove);
+              document.removeEventListener('mouseup', onUp);
+              try {
+                const r = root.getBoundingClientRect();
+                localStorage.setItem('hemlo_overlay_pos', JSON.stringify({ left: Math.round(r.left), top: Math.round(r.top) }));
+              } catch (e) {}
+            };
+
+            header.addEventListener('mousedown', (ev) => {
+              try {
+                try {
+                  if (ev && ev.button !== 0) return;
+                  if (ev && ev.target && ev.target.closest && ev.target.closest('button')) return;
+                } catch (e) {}
+                dragging = true;
+                startX = ev.clientX;
+                startY = ev.clientY;
+                const r = root.getBoundingClientRect();
+                startLeft = r.left;
+                startTop = r.top;
+                document.addEventListener('mousemove', onMove);
+                document.addEventListener('mouseup', onUp);
+              } catch (e) { dragging = false; }
+            });
+
+            const clampNow = () => {
+              try {
+                const r = root.getBoundingClientRect();
+                const w = r.width || 380;
+                const h = r.height || 240;
+                const left = clamp(r.left, 4, Math.max(4, window.innerWidth - w - 4));
+                const top = clamp(r.top, 4, Math.max(4, window.innerHeight - h - 4));
+                root.style.left = left + 'px';
+                root.style.top = top + 'px';
+                root.style.right = '';
+                root.style.bottom = '';
+                try { localStorage.setItem('hemlo_overlay_pos', JSON.stringify({ left: Math.round(left), top: Math.round(top) })); } catch (e) {}
+                try {
+                  const se = document.scrollingElement || document.documentElement || document.body;
+                  if (se && typeof se.scrollLeft === 'number') se.scrollLeft = 0;
+                } catch (e) {}
+              } catch (e) {}
+            };
+
+            try { setTimeout(clampNow, 0); } catch (e) {}
+            try { window.addEventListener('resize', clampNow); } catch (e) {}
+          } catch (e) {}
+
+          async function pickHost() {
+            for (const h of hostCandidates) {
+              try {
+                const r = await fetch(h + '/overlay_logs?n=1', { cache: 'no-store' });
+                if (r && r.ok) { host = h; return; }
+              } catch (e) {}
+            }
+          }
+
+          async function poll() {
+            try {
+              const normalizeLine = (s) => {
+                try { s = String(s || ''); } catch (e) { s = ''; }
+                try { s = s.replace(/\r/g, ''); } catch (e) {}
+                try { s = s.replace(/\\n/g, ' '); } catch (e) {}
+                try { s = s.replace(/\s+/g, ' ').trim(); } catch (e) {}
+                if (!s) return '';
+                if (s.startsWith('__HEMLO_STATUS__')) return '';
+                if (s.length > 260) s = s.slice(0, 260) + '...';
+                return s;
+              };
+
+              const nearBottom = (() => {
+                try {
+                  return (log.scrollTop + log.clientHeight) >= (log.scrollHeight - 40);
+                } catch (e) {
+                  return true;
+                }
+              })();
+
+              if (canUseBindings()) {
+                let data = null;
+                try { data = await window.hemloOverlayGetLogs(8000); } catch (e) { data = null; }
+                const lines = data && Array.isArray(data.logs) ? data.logs : [];
+                const cleaned = lines.map(normalizeLine).filter(Boolean);
+                const txt = cleaned.slice(-160).join('\\n');
+                log.textContent = txt || '(no recent logs yet)';
+                if (nearBottom) log.scrollTop = log.scrollHeight || 0;
+              } else {
+                await pickHost();
+                const res = await fetch(host + '/overlay_logs?n=8000', { cache: 'no-store' });
+                if (res && res.ok) {
+                  const data = await res.json();
+                  const lines = Array.isArray(data.logs) ? data.logs : [];
+                  const cleaned = lines.map(normalizeLine).filter(Boolean);
+                  const txt = cleaned.slice(-160).join('\\n');
+                  log.textContent = txt || '(no recent logs yet)';
+                  if (nearBottom) log.scrollTop = log.scrollHeight || 0;
+                } else {
+                  log.textContent = 'Waiting for Hemlo logs... (cannot reach overlay server)';
+                }
+              }
+            } catch (e) {}
+            try {
+              setTimeout(poll, 1500);
+            } catch (e) {}
+          }
+          poll();
+        } catch (e) {}
+      }
+      if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        createOverlay();
+      } else {
+        window.addEventListener('DOMContentLoaded', createOverlay, { once: true });
+      }
+    })();
+    """
+    try:
+        page.add_init_script(script)
+    except Exception:
+        pass
+    try:
+        page.evaluate(script)
+    except Exception:
+        pass
+
+
+def _highlight_click_target(page: Page, elem) -> None:
+    """Render a hologram-style overlay around the element the agent is about to click.
+
+    Uses a dedicated #hemlo-click-highlight-layer so it can sit on top of any
+    broader candidate highlighting.
+    """
+    try:
+        if not elem:
+            return
+    except Exception:
+        return
+    try:
+        elem.evaluate(
+            """(el) => {
+        try {
+          if (!el || typeof el.getBoundingClientRect !== 'function') return;
+
+          try {
+            el.scrollIntoView({ block: 'center', inline: 'center', behavior: 'instant' });
+          } catch (e) {
+            try { el.scrollIntoView(true); } catch (_) {}
+          }
+
+          const doc = el.ownerDocument || document;
+
+          const styleId = 'hemlo-click-highlight-style';
+          if (!doc.getElementById(styleId)) {
+            const style = doc.createElement('style');
+            style.id = styleId;
+            style.textContent = `
+@keyframes hemloClickPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(96,165,250,0.95); opacity: 0.95; }
+  50%  { box-shadow: 0 0 0 14px rgba(56,189,248,0.0); opacity: 1.0; }
+  100% { box-shadow: 0 0 0 0 rgba(96,165,250,0.0); opacity: 0.88; }
+}
+.hemlo-click-holo {
+  border-radius: 10px;
+  border: 1px solid rgba(129,140,248,0.95);
+  box-shadow:
+    0 0 16px rgba(129,140,248,0.90),
+    0 0 40px rgba(14,165,233,0.75);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(56,189,248,0.45), transparent 55%),
+    radial-gradient(circle at 85% 100%, rgba(129,140,248,0.35), transparent 60%),
+    rgba(15,23,42,0.35);
+  mix-blend-mode: screen;
+  animation: hemloClickPulse 1.2s ease-out infinite;
+}
+`;
+            (doc.head || doc.documentElement || doc.body || document.body).appendChild(style);
+          }
+
+          let root = doc.getElementById('hemlo-click-highlight-layer');
+          if (!root) {
+            root = doc.createElement('div');
+            root.id = 'hemlo-click-highlight-layer';
+            root.style.position = 'fixed';
+            root.style.left = '0';
+            root.style.top = '0';
+            root.style.right = '0';
+            root.style.bottom = '0';
+            root.style.pointerEvents = 'none';
+            root.style.zIndex = '2147483646';
+            root.style.background = 'transparent';
+            root.style.mixBlendMode = 'screen';
+            (doc.body || doc.documentElement || document.body).appendChild(root);
+          }
+
+          try {
+            while (root.firstChild) root.removeChild(root.firstChild);
+          } catch (e) {}
+
+          const r = el.getBoundingClientRect();
+          const pad = 6;
+          const box = doc.createElement('div');
+          box.className = 'hemlo-click-holo';
+          box.style.position = 'absolute';
+          box.style.left = (r.left - pad) + 'px';
+          box.style.top = (r.top - pad) + 'px';
+          box.style.width = (Math.max(0, r.width) + pad * 2) + 'px';
+          box.style.height = (Math.max(0, r.height) + pad * 2) + 'px';
+          root.appendChild(box);
+        } catch (e) {}
+      }"""
+        )
+    except Exception:
+        return
+
+
+def _highlight_candidate_elements(page: Page, items: List[Dict[str, Any]], max_items: int = 40) -> None:
+    """Highlight many candidate interactive elements on the page.
+
+    Called right after we build the filtered interactive element list in
+    analyze_dom_and_act. Renders a softer hologram around up to max_items
+    candidates so you can see everything the agent is considering, even if it
+    never clicks some of them.
+    """
+    try:
+        if not page or not items:
+            return
+    except Exception:
+        return
+
+    rects: List[Dict[str, float]] = []
+    seen: Set[str] = set()
+
+    try:
+        for it in items:
+            if max_items and len(rects) >= int(max_items):
+                break
+            if not isinstance(it, dict):
+                continue
+
+            loc_type = str(it.get("locator_type") or "").strip().lower()
+            locator = None
+            try:
+                if loc_type == "role" and it.get("role"):
+                    locator = page.get_by_role(it.get("role"), name=it.get("name")).first
+                elif loc_type == "css" and it.get("locator"):
+                    locator = page.locator(str(it.get("locator"))).first
+                else:
+                    continue
+            except Exception:
+                locator = None
+            if locator is None:
+                continue
+
+            # Require visibility and a reasonably sized bounding box so we
+            # don't spam highlights on invisible/zero-sized nodes.
+            try:
+                vis = bool(locator.is_visible(timeout=600))
+            except Exception:
+                vis = False
+            if not vis:
+                continue
+            try:
+                bb = locator.bounding_box(timeout=600)
+            except Exception:
+                bb = None
+            if not bb:
+                continue
+            try:
+                w = float(bb.get("width") or 0)
+                h = float(bb.get("height") or 0)
+                x = float(bb.get("x") or 0)
+                y = float(bb.get("y") or 0)
+            except Exception:
+                continue
+            if w < 4 or h < 4:
+                continue
+
+            key = f"{int(x)}:{int(y)}:{int(w)}:{int(h)}"
+            if key in seen:
+                continue
+            seen.add(key)
+            rects.append({"left": x, "top": y, "width": w, "height": h})
+    except Exception:
+        rects = []
+
+    if not rects:
+        return
+
+    # Render all rects in a single fixed overlay layer.
+    try:
+        page.evaluate(
+            """(rects) => {
+        try {
+          if (!Array.isArray(rects) || !rects.length) return;
+          const doc = document;
+
+          const styleId = 'hemlo-candidate-highlight-style';
+          if (!doc.getElementById(styleId)) {
+            const style = doc.createElement('style');
+            style.id = styleId;
+            style.textContent = `
+@keyframes hemloCandidatePulse {
+  0%   { box-shadow: 0 0 0 0 rgba(56,189,248,0.65); opacity: 0.85; }
+  50%  { box-shadow: 0 0 0 10px rgba(56,189,248,0.0); opacity: 1.0; }
+  100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.0); opacity: 0.80; }
+}
+.hemlo-candidate-holo {
+  border-radius: 8px;
+  border: 1px solid rgba(56,189,248,0.85);
+  box-shadow:
+    0 0 10px rgba(56,189,248,0.75),
+    0 0 24px rgba(59,130,246,0.55);
+  background:
+    radial-gradient(circle at 10% 0%, rgba(56,189,248,0.25), transparent 55%),
+    radial-gradient(circle at 90% 100%, rgba(37,99,235,0.25), transparent 60%),
+    rgba(15,23,42,0.22);
+  mix-blend-mode: screen;
+  animation: hemloCandidatePulse 1.4s ease-out infinite;
+}
+`;
+            (doc.head || doc.documentElement || doc.body || document.body).appendChild(style);
+          }
+
+          let root = doc.getElementById('hemlo-candidate-highlight-layer');
+          if (!root) {
+            root = doc.createElement('div');
+            root.id = 'hemlo-candidate-highlight-layer';
+            root.style.position = 'fixed';
+            root.style.left = '0';
+            root.style.top = '0';
+            root.style.right = '0';
+            root.style.bottom = '0';
+            root.style.pointerEvents = 'none';
+            root.style.zIndex = '2147483645';
+            root.style.background = 'transparent';
+            root.style.mixBlendMode = 'screen';
+            (doc.body || doc.documentElement || document.body).appendChild(root);
+          }
+
+          try {
+            while (root.firstChild) root.removeChild(root.firstChild);
+          } catch (e) {}
+
+          for (const r of rects) {
+            if (!r) continue;
+            const w = Number(r.width || 0);
+            const h = Number(r.height || 0);
+            if (!w || !h || w < 4 || h < 4) continue;
+            const pad = 4;
+            const box = doc.createElement('div');
+            box.className = 'hemlo-candidate-holo';
+            box.style.position = 'absolute';
+            box.style.left = (Number(r.left || 0) - pad) + 'px';
+            box.style.top = (Number(r.top || 0) - pad) + 'px';
+            box.style.width = (Math.max(0, w) + pad * 2) + 'px';
+            box.style.height = (Math.max(0, h) + pad * 2) + 'px';
+            root.appendChild(box);
+          }
+        } catch (e) {}
+      }""",
+            rects,
+        )
+    except Exception:
+        return
+
+
+def _read_control_command(control_nonce: int) -> typing.Tuple[int, Optional[Dict[str, Any]]]:
+    """Read agent_control.json and only return commands with a higher nonce.
+
+    This prevents re-processing old commands.
+    """
+    try:
+        if not os.path.exists(CONTROL_PATH):
+            return control_nonce, None
+        with open(CONTROL_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        if not isinstance(data, dict):
+            return control_nonce, None
+        nonce = int(data.get("nonce") or 0)
+        if nonce <= int(control_nonce or 0):
+            return control_nonce, None
+        return nonce, data
+    except Exception:
+        return control_nonce, None
+
+
+def _try_maximize_window(page: Page) -> None:
+    """Use Chrome DevTools Protocol (CDP) to maximize the window.
+    
+    Enabled by default since --start-maximized is unreliable on Windows.
+    Set HEMLO_ENABLE_CDP_MAXIMIZE=0 to disable if needed.
+    """
+    try:
+        if os.getenv("HEMLO_ENABLE_CDP_MAXIMIZE", "0") != "1":
+            return
+    except Exception:
+        return
+    try:
+        session = page.context.new_cdp_session(page)
+    except Exception:
+        return
+    try:
+        info = session.send("Browser.getWindowForTarget")
+        wid = info.get("windowId")
+        if wid is None:
+            return
+        session.send("Browser.setWindowBounds", {"windowId": wid, "bounds": {"windowState": "maximized"}})
+    except Exception:
+        pass
+
+
+def _sync_viewport_to_screen(page: Page) -> None:
+    """Force the page viewport to track the actual window/screen size.
+
+    Empirically, on some Windows setups the Chromium window can be maximized
+    yet the page viewport stays at the original size (leading to a blank band
+    on the right). We read window inner dimensions and screen dimensions; if
+    the screen is wider/taller than the current inner size by a meaningful
+    margin, we set the viewport to the screen size to fill the window.
+    """
+    try:
+        dims = page.evaluate(
+            """
+            () => {
+              try {
+                const sw = (window.screen && (window.screen.availWidth || window.screen.width)) || 0;
+                const sh = (window.screen && (window.screen.availHeight || window.screen.height)) || 0;
+                const iw = window.innerWidth || (document.documentElement && document.documentElement.clientWidth) || 0;
+                const ih = window.innerHeight || (document.documentElement && document.documentElement.clientHeight) || 0;
+                return { innerW: iw, innerH: ih, screenW: sw, screenH: sh };
+              } catch (e) {
+                return { innerW: 0, innerH: 0, screenW: 0, screenH: 0 };
+              }
+            }
+            """
+        )
+    except Exception:
+        return
+
+    try:
+        iw = int(dims.get("innerW") or 0)
+        ih = int(dims.get("innerH") or 0)
+        sw = int(dims.get("screenW") or 0)
+        sh = int(dims.get("screenH") or 0)
+    except Exception:
+        return
+
+    target_w = iw
+    target_h = ih
+    # If the screen is significantly larger than the current inner size, bump to screen size
+    if sw and sw - iw > 40:
+        target_w = sw
+    if sh and sh - ih > 40:
+        target_h = sh
+
+    if target_w and target_h:
+        try:
+            page.set_viewport_size({"width": int(target_w), "height": int(target_h)})
+        except Exception:
+            pass
+
+
+def _should_sync_viewport() -> bool:
+    try:
+        return os.getenv("HEMLO_SYNC_VIEWPORT", "1") == "1"
+    except Exception:
+        return True
+
+
+def _minimize_window(page: Page) -> None:
+    """Minimize the Chromium window via CDP so it sits on the taskbar until clicked."""
+    try:
+        if os.getenv("HEMLO_MINIMIZE_ON_LAUNCH", "1") == "0":
+            return
+    except Exception:
+        return
+    try:
+        session = page.context.new_cdp_session(page)
+    except Exception:
+        return
+    try:
+        info = session.send("Browser.getWindowForTarget")
+        wid = info.get("windowId")
+        if wid is None:
+            return
+        session.send("Browser.setWindowBounds", {"windowId": wid, "bounds": {"windowState": "minimized"}})
+    except Exception:
+        pass
+
+
+def _should_minimize_on_launch() -> bool:
+    try:
+        return os.getenv("HEMLO_MINIMIZE_ON_LAUNCH", "0") == "1"
+    except Exception:
+        return False
+
+
 def _emit_status(status: str, message: Optional[str] = None, **extra: Any) -> None:
+    global OVERLAY_AGENT_STATE
+    try:
+        OVERLAY_AGENT_STATE = str(status or "")
+    except Exception:
+        OVERLAY_AGENT_STATE = ""
     payload: Dict[str, Any] = {"status": status}
     if message is not None:
         payload["message"] = message
@@ -4633,22 +5622,6 @@ def _emit_status(status: str, message: Optional[str] = None, **extra: Any) -> No
         sys.stdout.flush()
     except Exception:
         pass
-
-
-def _read_control_command(control_nonce: int) -> tuple[int, Optional[Dict[str, Any]]]:
-    try:
-        if not os.path.exists(CONTROL_PATH):
-            return control_nonce, None
-        with open(CONTROL_PATH, "r", encoding="utf-8") as f:
-            data = json.load(f)
-        if not isinstance(data, dict):
-            return control_nonce, None
-        nonce = int(data.get("nonce") or 0)
-        if nonce <= control_nonce:
-            return control_nonce, None
-        return nonce, data
-    except Exception:
-        return control_nonce, None
 
 
 def main():
@@ -4715,24 +5688,186 @@ def main():
             print(f"Workflow memory disabled for this run: {e}")
             workflow_mem = None
 
+    # Detect "2nd Chrome" debug mode: launch a minimal, non-persistent browser
+    # with as few custom flags as possible so we can compare layout/OS behavior
+    # against the normal Hemlo-launch path.
+    second_chrome = False
+    try:
+        second_chrome = os.getenv("HEMLO_SECOND_CHROME", "0") == "1"
+    except Exception:
+        second_chrome = False
+
     with sync_playwright() as p:
-        # Robust launch: prefer persistent profile, auto-reset if corrupted,
-        # and fall back to non-persistent if needed.
         context = None
         browser = None
+        if second_chrome:
+            print("HEMLO_SECOND_CHROME=1 detected. Launching minimal non-persistent Chromium for this run.")
+            try:
+                # Kiosk mode for true fullscreen
+                browser = p.chromium.launch(headless=False, args=["--start-fullscreen", "--kiosk"])
+                context = browser.new_context(
+                    no_viewport=True,
+                    accept_downloads=True,
+                    bypass_csp=True,
+                )
+            except Exception as e:
+                print(f"2nd Chrome launch failed, falling back to normal Hemlo context: {e}")
+                browser = None
+                context = None
+
+        if not context:
+            # Robust launch: prefer persistent profile, auto-reset if corrupted,
+            # and fall back to non-persistent if needed.
+            try:
+                context, browser = _launch_hemlo_context(p)
+            except Exception:
+                # If everything fails, abort early with a clear message.
+                print("Fatal error: unable to launch any Chromium context. Aborting run.")
+                return
+
         try:
-            context, browser = _launch_hemlo_context(p)
+            def _overlay_get_logs(source=None, n=None):
+                try:
+                    nn = int(n or 8000)
+                except Exception:
+                    nn = 8000
+                if nn < 50:
+                    nn = 50
+                if nn > 8000:
+                    nn = 8000
+                try:
+                    with OVERLAY_AGENT_LOG_LOCK:
+                        logs = list(OVERLAY_AGENT_LOG_BUFFER[-nn:])
+                except Exception:
+                    logs = []
+                try:
+                    st = str(OVERLAY_AGENT_STATE or "")
+                except Exception:
+                    st = ""
+                return {"logs": logs, "state": st}
+
+            def _write_control(payload: Dict[str, Any]) -> None:
+                pld = dict(payload or {})
+                try:
+                    pld["nonce"] = int(time.time() * 1000)
+                except Exception:
+                    pld["nonce"] = int(time.time())
+                tmp = CONTROL_PATH + ".tmp"
+                with open(tmp, "w", encoding="utf-8") as f:
+                    f.write(json.dumps(pld, ensure_ascii=False))
+                os.replace(tmp, CONTROL_PATH)
+
+            def _overlay_control(source=None, command=None):
+                cmd = ""
+                try:
+                    cmd = str(command or "").strip().lower()
+                except Exception:
+                    cmd = ""
+                if cmd in {"pause", "resume", "new_task", "stop"}:
+                    try:
+                        c = "resume" if cmd in {"resume", "new_task"} else cmd
+                        _write_control({"command": c})
+                    except Exception:
+                        pass
+                elif cmd in {"approve", "approve_money"}:
+                    try:
+                        with open(APPROVAL_FLAG_PATH, "w", encoding="utf-8") as f:
+                            f.write("1")
+                    except Exception:
+                        pass
+                return {"ok": True}
+
+            try:
+                context.expose_binding("hemloOverlayGetLogs", _overlay_get_logs)
+            except Exception:
+                pass
+            try:
+                context.expose_binding("hemloOverlayControl", _overlay_control)
+            except Exception:
+                pass
         except Exception:
-            # If everything fails, abort early with a clear message.
-            print("Fatal error: unable to launch any Chromium context. Aborting run.")
-            return
+            pass
+
+        try:
+            def _on_new_page(p2):
+                minimize = _should_minimize_on_launch()
+                try:
+                    _install_browser_overlay(p2)
+                except Exception:
+                    pass
+                if minimize:
+                    # Ensure window is maximized first so restore comes back full screen
+                    try:
+                        _try_maximize_window(p2)
+                    except Exception:
+                        pass
+                    # Disabled viewport sync - using fixed viewport from context creation
+                    # try:
+                    #     _sync_viewport_to_screen(p2)
+                    # except Exception:
+                    #     pass
+                    try:
+                        _minimize_window(p2)
+                    except Exception:
+                        pass
+                else:
+                    try:
+                        _try_maximize_window(p2)
+                    except Exception:
+                        pass
+                    # Disabled viewport sync - using fixed viewport from context creation
+                    # try:
+                    #     _sync_viewport_to_screen(p2)
+                    # except Exception:
+                    #     pass
+                    if os.getenv("HEMLO_FORCE_FRONT", "0") == "1":
+                        try:
+                            p2.bring_to_front()
+                        except Exception:
+                            pass
+                        try:
+                            p2.evaluate("() => { try { window.focus(); } catch (e) {} }")
+                        except Exception:
+                            pass
+
+            context.on("page", _on_new_page)
+        except Exception:
+            pass
 
         page = context.new_page()
+        minimize = _should_minimize_on_launch()
+        try:
+            _install_browser_overlay(page)
+        except Exception:
+            pass
+        
+        # Kiosk mode handles fullscreen - no viewport manipulation needed
+        if minimize:
+            try:
+                _minimize_window(page)
+            except Exception:
+                pass
+        else:
+            if _should_force_front():
+                try:
+                    page.bring_to_front()
+                except Exception:
+                    pass
 
         print(f"Navigating to {target_url}...")
         try:
             page.goto(target_url, timeout=60000)
             page.wait_for_load_state("domcontentloaded")
+            # Kiosk mode handles fullscreen natively
+            if not minimize and _should_force_front():
+                try:
+                    page.bring_to_front()
+                except Exception:
+                    pass
+                try:
+                    page.evaluate("() => { try { window.focus(); } catch (e) {} }")
+                except Exception:
+                    pass
         except Exception as e:
             print(f"Navigation failed: {e}")
             return
@@ -4740,7 +5875,8 @@ def main():
         downloaded_files: List[str] = []
 
         planner_assist: Optional[Dict[str, Any]] = None
-        # Log Gemini planner-assist configuration and inputs at the start of the run
+        planner_mode = str(getattr(config, "PLANNER_MODE", "basic") or "basic").strip().lower()
+        # Log planner configuration and inputs at the start of the run
         try:
             page_title = _safe_page_title(page)
         except Exception:
@@ -4754,29 +5890,34 @@ def main():
         except Exception:
             gemini_model = "gemini-1.5-flash"
         try:
-            print(f"Gemini planner-assist enabled: {gemini_enabled} | model: {gemini_model}")
-            print(f"Gemini planner input goal: {args.prompt}")
-            print(f"Gemini planner input URL: {page.url}")
-            print(f"Gemini planner input page title: {page_title}")
+            print(f"Planner mode: {planner_mode} | Gemini enabled: {gemini_enabled} | model: {gemini_model}")
+            print(f"Planner input goal: {args.prompt}")
+            print(f"Planner input URL: {page.url}")
+            print(f"Planner input page title: {page_title}")
         except Exception:
             pass
-        try:
-            planner_assist = get_planner_assist(args.prompt, page.url, page_title)
-        except Exception:
-            planner_assist = None
-        try:
-            if isinstance(planner_assist, dict) and planner_assist:
-                print("Gemini planner-assist plan received.")
-                try:
-                    site = planner_assist.get("site") or ""
-                except Exception:
-                    site = ""
-                if site:
-                    print(f"Gemini planner-assist site: {site}")
-            else:
-                print("Gemini planner-assist plan NOT received; proceeding without planner map.")
-        except Exception:
-            pass
+        if planner_mode == "basic":
+            try:
+                planner_assist = get_planner_assist(args.prompt, page.url, page_title)
+            except Exception:
+                planner_assist = None
+            try:
+                if isinstance(planner_assist, dict) and planner_assist:
+                    print("Planner-assist plan received (basic mode).")
+                    try:
+                        site = planner_assist.get("site") or ""
+                    except Exception:
+                        site = ""
+                    if site:
+                        print(f"Planner-assist site: {site}")
+                else:
+                    print("Planner-assist plan NOT received; proceeding without planner map.")
+            except Exception:
+                pass
+        elif planner_mode == "gold":
+            print("Planner Gold enabled: will fetch iterative hints during the run.")
+        else:
+            print("Planner mode OFF: skipping planner assist.")
 
         # 2. Fast path: try workflow replay if we have a cached recipe
         if workflow_mem and workflow_mem.enabled and cached_workflow:
@@ -4788,17 +5929,26 @@ def main():
                 print(f"Workflow replay error, falling back to live planning: {e}")
             if replay_ok:
                 print("Workflow replay succeeded. Skipping live planning loop.")
+                run_succeeded = True
                 if session_mode:
+                    # In Prompt UI session mode, report completion but keep
+                    # the browser window open for inspection.
                     _emit_status("completed")
-                else:
-                    input("Press Enter to close browser...")
-                try:
-                    context.close()
-                except Exception:
-                    pass
-                if not session_mode:
                     return
-                return
+                else:
+                    # CLI mode: preserve old behaviour of waiting for Enter
+                    # and then closing the browser.
+                    input("Press Enter to close browser...")
+                    try:
+                        context.close()
+                    except Exception:
+                        pass
+                    if browser is not None:
+                        try:
+                            browser.close()
+                        except Exception:
+                            pass
+                    return
             else:
                 print("Workflow replay failed or incomplete. Falling back to live planning and will refresh workflow.")
 
@@ -4819,10 +5969,17 @@ def main():
         run_memory: Dict[str, Any] = {
             "milestones": [],
             "recent_steps": [],
+            "progress_notes": [],
             "choice_counts": {},
             "avoid_choices": [],
             "repeat_streak": 0,
             "last_choice": None,
+        }
+        planner_gold_state: Dict[str, Any] = {
+            "last_call_step": 0,
+            "last_url": "",
+            "last_mode": "",
+            "last_dom_hash": "",
         }
         blocked_choices: Set[Tuple[Any, ...]] = set()
         last_choice: Optional[tuple] = None
@@ -4838,6 +5995,13 @@ def main():
                 control_nonce, cmd = _read_control_command(control_nonce)
                 if cmd:
                     c = str(cmd.get("command") or "")
+                    if c == "stop":
+                        _emit_status("stopped")
+                        try:
+                            context.close()
+                        except Exception:
+                            pass
+                        return
                     if c == "pause":
                         _emit_status("paused")
                         while True:
@@ -4846,6 +6010,13 @@ def main():
                             if not cmd2:
                                 continue
                             c2 = str(cmd2.get("command") or "")
+                            if c2 == "stop":
+                                _emit_status("stopped")
+                                try:
+                                    context.close()
+                                except Exception:
+                                    pass
+                                return
                             if c2 in {"resume", "new_task"}:
                                 p2 = cmd2.get("prompt")
                                 if isinstance(p2, str) and p2.strip():
@@ -5592,18 +6763,22 @@ def main():
                 print(f"Workflow save error: {e}")
 
         if session_mode:
+            # In session mode, just emit final status and leave the browser
+            # running so the user can keep the tab open.
             _emit_status("completed" if run_succeeded else "stopped")
+            return
         else:
+            # CLI mode: wait for Enter and then close the browser window.
             input("Press Enter to close browser...")
-        try:
-            context.close()
-        except Exception:
-            pass
-        if browser is not None:
             try:
-                browser.close()
+                context.close()
             except Exception:
                 pass
+            if browser is not None:
+                try:
+                    browser.close()
+                except Exception:
+                    pass
 
 if __name__ == "__main__":
     main()

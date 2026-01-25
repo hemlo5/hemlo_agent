@@ -1,14 +1,14 @@
 {
-  "ts": "2026-01-20 20:57:20",
-  "goal": "in canva upload an image and edit it by changing its filter to fresco",
-  "url": "https://www.canva.com/ai",
+  "ts": "2026-01-24 00:14:59",
+  "goal": "edit a photo by changing its filter in adobe express",
+  "url": "https://www.adobe.com/express/feature/image/filter",
   "model": "xiaomi/mimo-v2-flash:free",
   "raw_response": {
-    "id": "gen-1768922836-v1KGihjt7S5Z4M1Mac4E",
+    "id": "gen-1769193864-5pXYc0tcgkzvmBFyTTkM",
     "provider": "Xiaomi",
     "model": "xiaomi/mimo-v2-flash:free",
     "object": "chat.completion",
-    "created": 1768922836,
+    "created": 1769193864,
     "choices": [
       {
         "logprobs": null,
@@ -17,20 +17,20 @@
         "index": 0,
         "message": {
           "role": "assistant",
-          "content": "{\n  \"site\": \"canva.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Create a design\", \"alternatives\": [\"Create\", \"Start a design\", \"Create new\"], \"value\": null, \"notes\": \"Open design creation modal\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"Upload\", \"alternatives\": [\"Uploads\", \"Upload files\"], \"value\": null, \"notes\": \"Go to uploads tab\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Upload files\", \"alternatives\": [\"Upload\", \"Add files\"], \"value\": null, \"notes\": \"Open file picker\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"file input\", \"alternatives\": [\"Choose files\", \"Select files\"], \"value\": null, \"notes\": \"Select image file from system\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Use in a new design\", \"alternatives\": [\"Use in design\", \"Add to design\"], \"value\": null, \"notes\": \"Add uploaded image to canvas\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Edit image\", \"alternatives\": [\"Edit\", \"Adjust\", \"Image options\"], \"value\": null, \"notes\": \"Open image editing panel\"},\n    {\"step\": 7, \"action\": \"click\", \"target_text\": \"Filters\", \"alternatives\": [\"Filter\", \"Effects\"], \"value\": null, \"notes\": \"Open filters section\"},\n    {\"step\": 8, \"action\": \"click\", \"target_text\": \"Fresco\", \"alternatives\": [\"Fresco filter\", \"Fresco effect\"], \"value\": null, \"notes\": \"Apply fresco filter\"}\n  ],\n  \"candidate_button_texts\": [\"Create a design\", \"Upload\", \"Upload files\", \"Use in a new design\", \"Edit image\", \"Filters\", \"Fresco\"],\n  \"candidate_field_labels\": [\"Upload files\", \"Choose files\", \"Search filters\"],\n  \"success_indicators\": [\"Fresco filter applied\", \"Image edited\", \"Filter changed to Fresco\"]\n}",
+          "content": "{\n  \"site\": \"adobe.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Upload\", \"alternatives\": [\"Upload your photo\", \"Upload image\", \"Browse\"], \"value\": null, \"notes\": \"Start by uploading the photo to edit.\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"Browse on your device\", \"alternatives\": [\"Browse\", \"Select from device\"], \"value\": null, \"notes\": \"Select a local image file to upload.\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Filters\", \"alternatives\": [\"Filter\", \"Effects\"], \"value\": null, \"notes\": \"Open the filters panel after upload.\"},\n    {\"step\": 4, \"action\": \"click\", \"target_text\": \"Vivid\", \"alternatives\": [\"Dramatic\", \"B&W\", \"Vintage\", \"Warm\"], \"value\": null, \"notes\": \"Choose a specific filter to apply; exact label varies by available options.\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Download\", \"alternatives\": [\"Export\", \"Save\", \"Download as\"], \"value\": null, \"notes\": \"Save the edited photo after applying the filter.\"}\n  ],\n  \"candidate_button_texts\": [\"Upload\", \"Browse on your device\", \"Filters\", \"Download\", \"Export\", \"Save\"],\n  \"candidate_field_labels\": [\"Upload your photo\", \"Filter\", \"Effects\", \"Vivid\", \"Dramatic\", \"B&W\", \"Vintage\", \"Warm\"],\n  \"success_indicators\": [\"Photo uploaded successfully\", \"Filter applied\", \"Download started\", \"Export complete\"]\n}",
           "refusal": null,
           "reasoning": null
         }
       }
     ],
     "usage": {
-      "prompt_tokens": 279,
-      "completion_tokens": 481,
-      "total_tokens": 760,
+      "prompt_tokens": 282,
+      "completion_tokens": 372,
+      "total_tokens": 654,
       "cost": 0,
       "is_byok": false,
       "prompt_tokens_details": {
-        "cached_tokens": 33,
+        "cached_tokens": 34,
         "audio_tokens": 0,
         "video_tokens": 0
       },
@@ -45,5 +45,5 @@
       }
     }
   },
-  "raw_text": "{\n  \"site\": \"canva.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Create a design\", \"alternatives\": [\"Create\", \"Start a design\", \"Create new\"], \"value\": null, \"notes\": \"Open design creation modal\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"Upload\", \"alternatives\": [\"Uploads\", \"Upload files\"], \"value\": null, \"notes\": \"Go to uploads tab\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Upload files\", \"alternatives\": [\"Upload\", \"Add files\"], \"value\": null, \"notes\": \"Open file picker\"},\n    {\"step\": 4, \"action\": \"type\", \"target_text\": \"file input\", \"alternatives\": [\"Choose files\", \"Select files\"], \"value\": null, \"notes\": \"Select image file from system\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Use in a new design\", \"alternatives\": [\"Use in design\", \"Add to design\"], \"value\": null, \"notes\": \"Add uploaded image to canvas\"},\n    {\"step\": 6, \"action\": \"click\", \"target_text\": \"Edit image\", \"alternatives\": [\"Edit\", \"Adjust\", \"Image options\"], \"value\": null, \"notes\": \"Open image editing panel\"},\n    {\"step\": 7, \"action\": \"click\", \"target_text\": \"Filters\", \"alternatives\": [\"Filter\", \"Effects\"], \"value\": null, \"notes\": \"Open filters section\"},\n    {\"step\": 8, \"action\": \"click\", \"target_text\": \"Fresco\", \"alternatives\": [\"Fresco filter\", \"Fresco effect\"], \"value\": null, \"notes\": \"Apply fresco filter\"}\n  ],\n  \"candidate_button_texts\": [\"Create a design\", \"Upload\", \"Upload files\", \"Use in a new design\", \"Edit image\", \"Filters\", \"Fresco\"],\n  \"candidate_field_labels\": [\"Upload files\", \"Choose files\", \"Search filters\"],\n  \"success_indicators\": [\"Fresco filter applied\", \"Image edited\", \"Filter changed to Fresco\"]\n}"
+  "raw_text": "{\n  \"site\": \"adobe.com\",\n  \"steps\": [\n    {\"step\": 1, \"action\": \"click\", \"target_text\": \"Upload\", \"alternatives\": [\"Upload your photo\", \"Upload image\", \"Browse\"], \"value\": null, \"notes\": \"Start by uploading the photo to edit.\"},\n    {\"step\": 2, \"action\": \"click\", \"target_text\": \"Browse on your device\", \"alternatives\": [\"Browse\", \"Select from device\"], \"value\": null, \"notes\": \"Select a local image file to upload.\"},\n    {\"step\": 3, \"action\": \"click\", \"target_text\": \"Filters\", \"alternatives\": [\"Filter\", \"Effects\"], \"value\": null, \"notes\": \"Open the filters panel after upload.\"},\n    {\"step\": 4, \"action\": \"click\", \"target_text\": \"Vivid\", \"alternatives\": [\"Dramatic\", \"B&W\", \"Vintage\", \"Warm\"], \"value\": null, \"notes\": \"Choose a specific filter to apply; exact label varies by available options.\"},\n    {\"step\": 5, \"action\": \"click\", \"target_text\": \"Download\", \"alternatives\": [\"Export\", \"Save\", \"Download as\"], \"value\": null, \"notes\": \"Save the edited photo after applying the filter.\"}\n  ],\n  \"candidate_button_texts\": [\"Upload\", \"Browse on your device\", \"Filters\", \"Download\", \"Export\", \"Save\"],\n  \"candidate_field_labels\": [\"Upload your photo\", \"Filter\", \"Effects\", \"Vivid\", \"Dramatic\", \"B&W\", \"Vintage\", \"Warm\"],\n  \"success_indicators\": [\"Photo uploaded successfully\", \"Filter applied\", \"Download started\", \"Export complete\"]\n}"
 }

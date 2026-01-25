@@ -1,0 +1,5 @@
+{
+  "name": "WebGL Shader & Liquid Button",
+  "description": "A demo application showcasing a Three.js WebGL shader background and a sophisticated Liquid Glass Button component.",
+  "requestFramePermissions": []
+}

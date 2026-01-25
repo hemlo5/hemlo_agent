@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemlo Prompt UI 2</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.min.js"></script>
+    <style>
+        :root {
+            --bg0: #070A12;
+            --bg1: #0B1220;
+            --panel: rgba(17, 24, 39, 0.72);
+            --panelBorder: rgba(255, 255, 255, 0.12);
+            --muted: rgba(226, 232, 240, 0.72);
+            --text: rgba(226, 232, 240, 0.96);
+            --accent: #60a5fa;
+            --ok: #22c55e;
+            --warn: #f59e0b;
+            --bad: #ef4444;
+            --shadow: rgba(0, 0, 0, 0.5);
+            --white: #ffffff;
+            --black: #000000;
+            --blue-500: #3b82f6;
+            --indigo-300: #a5b4fc;
+            --blue-300: #93c5fd;
+            --violet-200: #ddd6fe;
+            --blue-400: #60a5fa;
+            --transparent: transparent;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+            background: #000000;
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        .shader-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 0;
+        }
+
+        .bg-image {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("{{ url_for('static', filename='ui2-bg.jpeg') }}");
+            background-size: cover;
+            background-position: center;
+            filter: blur(14px);
+            transform: scale(1.06);
+            z-index: 0;
+        }
+
+        .topbar {
+            position: fixed;
+            top: 18px;
+            right: 18px;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 14px 40px var(--shadow);
+            color: var(--muted);
+            font-size: 13px;
+            user-select: none;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(148, 163, 184, 0.9);
+            box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.12);
+        }
+
+        .dot.connected { background: rgba(96, 165, 250, 0.95); box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.16); }
+        .dot.running { background: rgba(34, 197, 94, 0.95); box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16); }
+        .dot.paused { background: rgba(245, 158, 11, 0.95); box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.16); }
+        .dot.disconnected { background: rgba(239, 68, 68, 0.95); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.16); }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 14px 40px var(--shadow);
+            color: rgba(226, 232, 240, 0.9);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: transform 160ms ease, background 160ms ease;
+        }
+
+        .icon-btn:hover { transform: translateY(-1px); background: rgba(0, 0, 0, 0.32); }
+
+        .center {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .prompt-shell {
+            width: 100%;
+            max-width: 720px;
+        }
+
+        .prompt-title {
+            color: #ffffff;
+            font-size: 90px;
+            font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px; /* Reduced gap */
+        }
+
+        .prompt-logo {
+            height: 176px;
+            width: auto;
+            display: block;
+            filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.7));
+        }
+
+        .prompt-card {
+            border-radius: 18px;
+            padding: 24px 22px 22px 22px;
+            position: relative;
+        }
+
+        .prompt-card::before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #6366f1, #a855f7, #ec4899);
+            opacity: 0.2;
+            filter: blur(12px);
+            z-index: -2;
+        }
+
+        .prompt-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: rgba(9, 9, 11, 0.9);
+            border: 1px solid rgba(63, 63, 70, 0.9);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.85);
+            z-index: -1;
+        }
+
+        .prompt-row {
+            display: grid;
+            grid-template-columns: 1fr 140px;
+            gap: 18px;
+            align-items: center;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 64px;
+            max-height: 180px;
+            resize: none;
+            border-radius: 14px;
+            border: 1px solid rgba(63, 63, 70, 0.9);
+            outline: none;
+            background: rgba(9, 9, 11, 0.9);
+            color: #f9fafb;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 18px 14px;
+            box-shadow: inset 0 0 0 1px rgba(24, 24, 27, 0.8);
+        }
+
+        textarea::placeholder { color: rgba(113, 113, 122, 0.9); }
+
+        .go {
+            position: relative;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            width: 100%;
+            height: 56px;
+            background: #ffffff;
+            color: #000000;
+            overflow: hidden;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+            transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+        }
+
+        .go-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #000000;
+        }
+
+        .go::before,
+        .go::after {
+            content: none;
+        }
+
+        .go:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.55);
+            background-color: #f4f4f5;
+        }
+
+        .go:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .hint {
+            margin-top: 14px;
+            color: rgba(161, 161, 170, 0.95);
+            font-size: 13px;
+            user-select: none;
+            text-align: center;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.60);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 18px;
+            z-index: 80;
+        }
+
+        .modal.open { display: flex; }
+
+        .modal-card {
+            width: min(980px, calc(100vw - 24px));
+            max-height: calc(100vh - 24px);
+            overflow: hidden;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(17, 24, 39, 0.92);
+            box-shadow: 0 30px 120px rgba(0, 0, 0, 0.65);
+            display: grid;
+            grid-template-rows: auto auto 1fr;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .modal-title {
+            font-weight: 700;
+            letter-spacing: 0.02em;
+        }
+
+        .close {
+            width: 36px;
+            height: 36px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(226, 232, 240, 0.9);
+            cursor: pointer;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+        }
+
+        .tab {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(226, 232, 240, 0.88);
+            padding: 8px 12px;
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .tab.active {
+            background: rgba(96, 165, 250, 0.16);
+            border-color: rgba(96, 165, 250, 0.32);
+            color: rgba(226, 232, 240, 0.96);
+        }
+
+        .pane {
+            display: none;
+            padding: 14px 16px 18px 16px;
+            overflow: auto;
+        }
+
+        .pane.active { display: block; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .field {
+            display: grid;
+            gap: 8px;
+        }
+
+        .label {
+            color: rgba(148, 163, 184, 0.92);
+            font-size: 12px;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .input, select {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(0, 0, 0, 0.18);
+            color: rgba(226, 232, 240, 0.95);
+            padding: 10px 12px;
+            outline: none;
+        }
+
+        .row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 12px;
+            padding: 10px 12px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(226, 232, 240, 0.92);
+        }
+
+        .btn.primary { background: rgba(96, 165, 250, 0.92); color: rgba(0, 0, 0, 0.86); }
+        .btn.good { background: rgba(34, 197, 94, 0.92); color: rgba(0, 0, 0, 0.86); }
+        .btn.warn { background: rgba(245, 158, 11, 0.92); color: rgba(0, 0, 0, 0.86); }
+        .btn.bad { background: rgba(239, 68, 68, 0.92); color: rgba(0, 0, 0, 0.86); }
+
+        .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .log {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            line-height: 1.35;
+            background: rgba(0, 0, 0, 0.28);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 12px;
+            min-height: 260px;
+        }
+
+        .log-section {
+            display: grid;
+            gap: 6px;
+        }
+
+        .log-title {
+            font-size: 13px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(209, 213, 219, 0.92);
+        }
+
+        .log-title-secondary {
+            color: rgba(148, 163, 184, 0.9);
+        }
+
+        .log-secondary {
+            background: rgba(15, 23, 42, 0.85);
+        }
+
+        .pretty-log {
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.88));
+            padding: 10px 12px 12px 12px;
+            min-height: 140px;
+            max-height: 260px;
+            overflow-y: auto;
+        }
+
+        .pretty-log-empty {
+            font-size: 13px;
+            color: rgba(148, 163, 184, 0.95);
+        }
+
+        .pretty-log-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            padding: 6px 8px;
+            border-radius: 10px;
+            color: rgba(226, 232, 240, 0.98);
+        }
+
+        .pretty-log-item + .pretty-log-item {
+            margin-top: 4px;
+        }
+
+        .pretty-log-pill {
+            min-width: 18px;
+            height: 18px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .pretty-log-pill.task {
+            background: rgba(59, 130, 246, 0.9);
+            color: rgba(15, 23, 42, 0.98);
+        }
+
+        .pretty-log-pill.success {
+            background: rgba(34, 197, 94, 0.9);
+            color: rgba(15, 23, 42, 0.98);
+        }
+
+        .pretty-log-pill.warn {
+            background: rgba(245, 158, 11, 0.9);
+            color: rgba(15, 23, 42, 0.98);
+        }
+
+        .pretty-log-pill.error {
+            background: rgba(239, 68, 68, 0.9);
+            color: rgba(15, 23, 42, 0.98);
+        }
+
+        .pretty-log-pill.info {
+            background: rgba(148, 163, 184, 0.9);
+            color: rgba(15, 23, 42, 0.98);
+        }
+
+        .pretty-log-text {
+            flex: 1;
+        }
+
+        .login-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .login-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .login-chip {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 999px;
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+
+        .hidden { display: none !important; }
+
+        .log-mode-toggle {
+            display: flex;
+            justify-content: flex-end;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .log-mode-btn {
+            border-radius: 999px;
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            background: rgba(15, 23, 42, 0.6);
+            color: rgba(226, 232, 240, 0.9);
+            font-size: 11px;
+            padding: 3px 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .log-mode-btn.active {
+            background: rgba(59, 130, 246, 0.9);
+            border-color: rgba(59, 130, 246, 1);
+            color: rgba(15, 23, 42, 0.98);
+        }
+
+        .prompt-log-shell {
+            max-width: 720px;
+            margin: 16px auto 0;
+        }
+
+        .prompt-log-shell .log {
+            max-height: 220px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 820px) {
+            .grid { grid-template-columns: 1fr; }
+            .prompt-log-shell { margin-top: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-image"></div>
+    <canvas id="shaderCanvas" class="shader-canvas"></canvas>
+    <div class="topbar">
+        <div class="chip">
+            <span class="dot" id="statusDot"></span>
+            <span id="statusText">Initializing…</span>
+        </div>
+        <button class="icon-btn" id="settingsBtn" type="button" aria-label="Settings" title="Settings">
+            <span style="font-size: 18px; line-height: 1;">⚙</span>
+        </button>
+    </div>
+
+    <div class="center">
+        <div class="prompt-shell">
+            <div class="prompt-title">
+                <span>HEMLO</span>
+                <img src="{{ url_for('static', filename='hemlo-logo.ico') }}" alt="Hemlo logo" class="prompt-logo">
+            </div>
+            <div class="prompt-card">
+                <div class="prompt-row">
+                    <textarea id="promptInput" placeholder="ask me to perform your daily boring task" autocomplete="off"></textarea>
+                    <button class="go" id="goBtn" type="button" aria-label="Go" title="Go">
+                        <div class="go-inner"><span id="goBtnLabel">Go</span></div>
+                    </button>
+                </div>
+            </div>
+            <div class="hint">Open Settings to access controls, planner settings, DOM mode, and API key.</div>
+
+            <div class="prompt-log-shell hidden" id="primaryLogShell">
+                <div class="log" id="outputContainer">Waiting for logs…</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="settingsModal" role="dialog" aria-modal="true" aria-label="Prompt UI 2 Settings">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">Hemlo – Settings</div>
+                <button class="close" id="closeSettings" type="button" aria-label="Close">✕</button>
+            </div>
+
+            <div class="tabs" id="tabs">
+                <button class="tab active" data-tab="controls" type="button">Controls</button>
+                <button class="tab" data-tab="logs" type="button">Logs</button>
+                <button class="tab" data-tab="config" type="button">Config</button>
+                <button class="tab" data-tab="login" type="button">Login</button>
+            </div>
+
+            <div class="pane active" id="pane-controls">
+                <div class="row">
+                    <button class="btn bad" id="stopBtn" type="button">Stop</button>
+                    <button class="btn warn" id="pauseBtn" type="button">Pause</button>
+                    <button class="btn primary" id="resumeBtn" type="button">Resume</button>
+                    <button class="btn" id="newTaskBtn" type="button">New Task</button>
+                    <button class="btn" id="resetBtn" type="button">Reset</button>
+                    <button class="btn" id="rememberBtn" type="button">Remember</button>
+                    <button class="btn good" id="approveBtn" type="button">Approve</button>
+                </div>
+                <div style="height: 14px;"></div>
+                <div style="color: rgba(148,163,184,0.9); font-size: 13px;">Tip: Use <b>New Task</b> to queue another prompt during a session.</div>
+            </div>
+
+            <div class="pane" id="pane-logs">
+                <div style="color: rgba(148,163,184,0.9); font-size: 13px;">
+                    Logs are now shown directly below the prompt bar on the main screen.
+                </div>
+            </div>
+
+            <div class="pane" id="pane-config">
+                <div class="grid">
+                    <div class="field">
+                        <div class="label">Planner Mode</div>
+                        <div class="log-mode-toggle">
+                            <button class="log-mode-btn" type="button" id="plannerModeOffBtn" data-mode="off">Off</button>
+                            <button class="log-mode-btn active" type="button" id="plannerModeBasicBtn" data-mode="basic">Basic</button>
+                            <button class="log-mode-btn" type="button" id="plannerModeGoldBtn" data-mode="gold">Gold</button>
+                        </div>
+                        <div style="color: rgba(148,163,184,0.9); font-size: 12px;">Basic = current one-shot planner. Gold = iterative hints with page context.</div>
+                    </div>
+                    <div class="field">
+                        <div class="label">DOM Mode</div>
+                        <select id="domModeSelect">
+                            <option value="legacy">Legacy</option>
+                            <option value="gold" selected>Gold</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="label">Max Items</div>
+                        <input class="input" type="number" id="maxItemsInput" min="20" max="400" value="40" />
+                    </div>
+                    <div class="field">
+                        <div class="label">GROQ API Key</div>
+                        <div class="row" style="gap: 8px;">
+                            <input class="input" type="password" id="groqKeyInput" placeholder="Enter GROQ API key" style="flex: 1; min-width: 220px;" />
+                            <button class="btn" id="groqShowBtn" type="button">Show</button>
+                            <button class="btn" id="groqApplyBtn" type="button">Apply</button>
+                        </div>
+                        <div style="color: rgba(148,163,184,0.9); font-size: 12px;" id="groqStatusText"></div>
+                    </div>
+                    <div class="field">
+                        <div class="label">Log View</div>
+                        <div class="log-mode-toggle">
+                            <button class="log-mode-btn active" type="button" id="logModeDevBtn" data-mode="dev">Dev</button>
+                            <button class="log-mode-btn" type="button" id="logModeDev2Btn" data-mode="dev2">Dev 2</button>
+                            <button class="log-mode-btn" type="button" id="logModeUserBtn" data-mode="user">User</button>
+                        </div>
+                        <div style="color: rgba(148,163,184,0.9); font-size: 12px;">Switch between raw dev logs, anonymized dev logs, and a user-friendly story view.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pane" id="pane-login">
+                <div class="login-options" id="loginOptionsContainer">
+                    <div style="color: rgba(148,163,184,0.9); font-size: 13px;">Login options will appear here when needed.</div>
+                    <div class="login-list" id="loginOptionsList"></div>
+                    <div class="row hidden" id="loginEmailRow" data-provider="">
+                        <input class="input" type="email" id="loginEmailInput" placeholder="Email" autocomplete="email" style="flex: 1; min-width: 220px;" />
+                        <input class="input" type="password" id="loginPasswordInput" placeholder="Password" autocomplete="current-password" style="flex: 1; min-width: 220px;" />
+                        <button class="btn primary" type="button" id="loginSubmitBtn">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function initShaderBackground() {
+            try {
+                const canvas = document.getElementById('shaderCanvas');
+                if (!canvas || !(window && window.THREE)) return;
+
+                const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+                renderer.setPixelRatio(window.devicePixelRatio || 1);
+                renderer.setClearColor(new THREE.Color(0x000000));
+
+                const scene = new THREE.Scene();
+                const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, -1);
+
+                const uniforms = {
+                    resolution: { value: [window.innerWidth, window.innerHeight] },
+                    time: { value: 0.0 },
+                    xScale: { value: 1.0 },
+                    yScale: { value: 0.5 },
+                    distortion: { value: 0.05 },
+                };
+
+                const vertexShader = [
+                    'attribute vec3 position;',
+                    'void main() {',
+                    '  gl_Position = vec4(position, 1.0);',
+                    '}',
+                ].join('\n');
+
+                const fragmentShader = [
+                    'precision highp float;',
+                    'uniform vec2 resolution;',
+                    'uniform float time;',
+                    'uniform float xScale;',
+                    'uniform float yScale;',
+                    'uniform float distortion;',
+                    'void main() {',
+                    '  vec2 p = (gl_FragCoord.xy * 2.0 - resolution) / min(resolution.x, resolution.y);',
+                    '  float d = length(p) * distortion;',
+                    '  float rx = p.x * (1.0 + d);',
+                    '  float gx = p.x;',
+                    '  float bx = p.x * (1.0 - d);',
+                    '  float r = 0.05 / abs(p.y + sin((rx + time) * xScale) * yScale);',
+                    '  float g = 0.05 / abs(p.y + sin((gx + time) * xScale) * yScale);',
+                    '  float b = 0.05 / abs(p.y + sin((bx + time) * xScale) * yScale);',
+                    '  gl_FragColor = vec4(r, g, b, 1.0);',
+                    '}',
+                ].join('\n');
+
+                const positions = new Float32Array([
+                    -1.0, -1.0, 0.0,
+                     1.0, -1.0, 0.0,
+                    -1.0,  1.0, 0.0,
+                     1.0, -1.0, 0.0,
+                    -1.0,  1.0, 0.0,
+                     1.0,  1.0, 0.0,
+                ]);
+
+                const geometry = new THREE.BufferGeometry();
+                geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+                const material = new THREE.RawShaderMaterial({
+                    vertexShader: vertexShader,
+                    fragmentShader: fragmentShader,
+                    uniforms: uniforms,
+                    side: THREE.DoubleSide,
+                });
+
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+
+                function handleResize() {
+                    try {
+                        const width = window.innerWidth || 0;
+                        const height = window.innerHeight || 0;
+                        renderer.setSize(width, height, false);
+                        uniforms.resolution.value = [width, height];
+                    } catch (e) {}
+                }
+
+                function animate() {
+                    try {
+                        uniforms.time.value += 0.01;
+                        renderer.render(scene, camera);
+                    } catch (e) {}
+                    window.requestAnimationFrame(animate);
+                }
+
+                handleResize();
+                window.addEventListener('resize', handleResize);
+                window.requestAnimationFrame(animate);
+            } catch (e) {}
+        })();
+
+        const socket = io();
+
+        let isRunning = false;
+        let isPaused = false;
+
+        const settingsBtn = document.getElementById('settingsBtn');
+        const settingsModal = document.getElementById('settingsModal');
+        const closeSettings = document.getElementById('closeSettings');
+        const tabs = document.getElementById('tabs');
+
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+
+        const promptInput = document.getElementById('promptInput');
+        const goBtn = document.getElementById('goBtn');
+        const goBtnLabel = document.getElementById('goBtnLabel');
+
+        const stopBtn = document.getElementById('stopBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resumeBtn = document.getElementById('resumeBtn');
+        const newTaskBtn = document.getElementById('newTaskBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const rememberBtn = document.getElementById('rememberBtn');
+        const approveBtn = document.getElementById('approveBtn');
+
+        const outputContainer = document.getElementById('outputContainer');
+        const primaryLogShell = document.getElementById('primaryLogShell');
+        const logModeDevBtn = document.getElementById('logModeDevBtn');
+        const logModeDev2Btn = document.getElementById('logModeDev2Btn');
+        const logModeUserBtn = document.getElementById('logModeUserBtn');
+
+        const plannerModeOffBtn = document.getElementById('plannerModeOffBtn');
+        const plannerModeBasicBtn = document.getElementById('plannerModeBasicBtn');
+        const plannerModeGoldBtn = document.getElementById('plannerModeGoldBtn');
+        const domModeSelect = document.getElementById('domModeSelect');
+        const maxItemsInput = document.getElementById('maxItemsInput');
+        const groqKeyInput = document.getElementById('groqKeyInput');
+        const groqShowBtn = document.getElementById('groqShowBtn');
+        const groqApplyBtn = document.getElementById('groqApplyBtn');
+        const groqStatusText = document.getElementById('groqStatusText');
+
+        const loginOptionsContainer = document.getElementById('loginOptionsContainer');
+        const loginOptionsList = document.getElementById('loginOptionsList');
+        const loginEmailRow = document.getElementById('loginEmailRow');
+        const loginEmailInput = document.getElementById('loginEmailInput');
+        const loginPasswordInput = document.getElementById('loginPasswordInput');
+        const loginSubmitBtn = document.getElementById('loginSubmitBtn');
+
+        let plannerMode = 'basic';
+        let groqKeyOverridden = false;
+        let groqKeyCurrent = '';
+        let groqKeySource = '';
+        let groqKeyShown = false;
+
+        let devLogLines = [];
+        let dev2LogLines = [];
+        let userLogLines = [];
+        const MAX_LOG_LINES = 1200;
+        let logMode = 'dev';
+        let userLogHasPlan = false;
+        let userLogHasFiltering = false;
+
+        function openModal() {
+            settingsModal.classList.add('open');
+        }
+
+        function closeModal() {
+            settingsModal.classList.remove('open');
+        }
+
+        settingsBtn.addEventListener('click', openModal);
+        closeSettings.addEventListener('click', closeModal);
+        settingsModal.addEventListener('click', (e) => {
+            if (e.target === settingsModal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        function setActiveTab(name) {
+            const allTabs = Array.from(tabs.querySelectorAll('.tab'));
+            allTabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+            ['controls','logs','config','login'].forEach(k => {
+                const pane = document.getElementById('pane-' + k);
+                if (pane) pane.classList.toggle('active', k === name);
+            });
+        }
+
+        tabs.addEventListener('click', (e) => {
+            const btn = e.target && e.target.closest ? e.target.closest('.tab') : null;
+            if (!btn) return;
+            const name = btn.dataset.tab;
+            if (name) setActiveTab(name);
+        });
+
+        function updateStatusDot(status, text) {
+            statusDot.className = 'dot ' + (status || '');
+            statusText.textContent = text || '';
+        }
+
+        socket.on('connect', () => {
+            updateStatusDot('connected', 'Connected');
+        });
+
+        socket.on('disconnect', () => {
+            updateStatusDot('disconnected', 'Disconnected');
+        });
+
+        socket.on('config', (cfg) => {
+            if (!cfg || typeof cfg !== 'object') return;
+            if (typeof cfg.planner_mode === 'string') {
+                plannerMode = String(cfg.planner_mode || '').toLowerCase() || 'basic';
+            }
+            if (typeof cfg.groq_key_overridden === 'boolean') {
+                groqKeyOverridden = cfg.groq_key_overridden;
+            }
+            if (typeof cfg.groq_key_current === 'string') {
+                groqKeyCurrent = cfg.groq_key_current;
+            }
+            if (typeof cfg.groq_key_source === 'string') {
+                groqKeySource = cfg.groq_key_source;
+            }
+            if (typeof cfg.log_mode === 'string') {
+                setLogMode(cfg.log_mode);
+            }
+            updateConfigUI();
+        });
+
+        function updateConfigUI() {
+            try {
+                if (plannerModeOffBtn && plannerModeBasicBtn && plannerModeGoldBtn) {
+                    plannerModeOffBtn.classList.toggle('active', plannerMode === 'off');
+                    plannerModeBasicBtn.classList.toggle('active', plannerMode === 'basic');
+                    plannerModeGoldBtn.classList.toggle('active', plannerMode === 'gold');
+                }
+                if (groqKeyInput) {
+                    if (typeof groqKeyCurrent === 'string' && document.activeElement !== groqKeyInput) {
+                        groqKeyInput.value = groqKeyCurrent;
+                    }
+                    groqKeyInput.type = groqKeyShown ? 'text' : 'password';
+                }
+                if (groqShowBtn) {
+                    groqShowBtn.textContent = groqKeyShown ? 'Hide' : 'Show';
+                }
+                if (groqStatusText) {
+                    const src = groqKeySource || (groqKeyOverridden ? 'override' : 'env');
+                    const label = src === 'override' ? 'override' : (src === 'env' ? '.env' : 'none');
+                    groqStatusText.textContent = 'Using: ' + label;
+                }
+            } catch (e) {}
+        }
+
+        function setPlannerMode(mode) {
+            const m = (mode || '').toString().toLowerCase();
+            if (m !== 'off' && m !== 'basic' && m !== 'gold') return;
+            plannerMode = m;
+            updateConfigUI();
+            socket.emit('set_planner_mode', { mode: plannerMode });
+        }
+
+        function applyGroqKey() {
+            const key = (groqKeyInput && groqKeyInput.value ? String(groqKeyInput.value) : '').trim();
+            socket.emit('set_groq_key', { key });
+        }
+
+        if (plannerModeOffBtn) {
+            plannerModeOffBtn.addEventListener('click', () => setPlannerMode('off'));
+        }
+        if (plannerModeBasicBtn) {
+            plannerModeBasicBtn.addEventListener('click', () => setPlannerMode('basic'));
+        }
+        if (plannerModeGoldBtn) {
+            plannerModeGoldBtn.addEventListener('click', () => setPlannerMode('gold'));
+        }
+        groqApplyBtn.addEventListener('click', applyGroqKey);
+        groqKeyInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') applyGroqKey();
+        });
+        groqShowBtn.addEventListener('click', () => {
+            groqKeyShown = !groqKeyShown;
+            updateConfigUI();
+        });
+
+        function setLogMode(mode) {
+            if (mode === 'user') {
+                logMode = 'user';
+            } else if (mode === 'dev2') {
+                logMode = 'dev2';
+            } else {
+                logMode = 'dev';
+            }
+            try {
+                if (logModeDevBtn && logModeUserBtn && logModeDev2Btn) {
+                    logModeDevBtn.classList.toggle('active', logMode === 'dev');
+                    logModeDev2Btn.classList.toggle('active', logMode === 'dev2');
+                    logModeUserBtn.classList.toggle('active', logMode === 'user');
+                }
+            } catch (e) {}
+            renderLogs();
+        }
+
+        function renderLogs() {
+            if (!outputContainer) return;
+            try {
+                let lines;
+                if (logMode === 'user') {
+                    lines = userLogLines;
+                } else if (logMode === 'dev2') {
+                    lines = dev2LogLines;
+                } else {
+                    lines = devLogLines;
+                }
+                if (lines && lines.length) {
+                    outputContainer.textContent = lines.join('\n');
+                } else {
+                    outputContainer.textContent = 'Waiting for logs…';
+                }
+                outputContainer.scrollTop = outputContainer.scrollHeight || 0;
+            } catch (e) {}
+        }
+
+        function resetLogsForNewRun(prompt) {
+            try {
+                devLogLines = [];
+                dev2LogLines = [];
+                userLogLines = [];
+                userLogHasPlan = false;
+                userLogHasFiltering = false;
+                const p = (prompt && String(prompt)) || '';
+                if (p) {
+                    userLogLines.push('Prompt: ' + p);
+                }
+            } catch (e) {}
+            try {
+                if (primaryLogShell) primaryLogShell.classList.remove('hidden');
+            } catch (e) {}
+            renderLogs();
+        }
+
+        function addUserEventFromLine(text) {
+            let s = '';
+            try { s = String(text || ''); } catch (e) { s = ''; }
+            if (!s) return;
+
+            // Link / navigation events
+            try {
+                let m = s.match(/Navigating to (.+?)\.\.\./i);
+                if (m && m[1]) {
+                    if (!userLogHasPlan) {
+                        userLogLines.push('Plan created');
+                        userLogHasPlan = true;
+                    }
+                    userLogLines.push('Link to open: ' + m[1].trim());
+                    return;
+                }
+            } catch (e) {}
+
+            try {
+                let m = s.match(/Opening target=_blank href in same tab:\s*(.+)$/i);
+                if (m && m[1]) {
+                    if (!userLogHasPlan) {
+                        userLogLines.push('Plan created');
+                        userLogHasPlan = true;
+                    }
+                    userLogLines.push('Link to open: ' + m[1].trim());
+                    return;
+                }
+            } catch (e) {}
+
+            try {
+                let m = s.match(/Opening external host in same tab:\s*(.+)$/i);
+                if (m && m[1]) {
+                    if (!userLogHasPlan) {
+                        userLogLines.push('Plan created');
+                        userLogHasPlan = true;
+                    }
+                    userLogLines.push('Link to open: ' + m[1].trim());
+                    return;
+                }
+            } catch (e) {}
+
+            // Filtering DOM
+            if (s.indexOf('Filtering DOM for goal') !== -1) {
+                if (!userLogHasFiltering) {
+                    userLogLines.push('Filtering and analysing the website');
+                    userLogHasFiltering = true;
+                }
+                return;
+            }
+
+            // Deciding next action
+            if (s.indexOf('Deciding next action') !== -1) {
+                userLogLines.push('Deciding next action to click');
+                return;
+            }
+
+            // Action result
+            if (s.indexOf('Action Result:') !== -1) {
+                try {
+                    const m = s.match(/Action Result:\s*([A-Za-z]+)/i);
+                    const res = m && m[1] ? m[1] : '';
+                    const mUrl = s.match(/URL:\s*(.+)$/i);
+                    const url = mUrl && mUrl[1] ? mUrl[1].trim() : '';
+                    let msg = 'Action result: ' + (res || 'Unknown');
+                    if (url) msg += ' (' + url + ')';
+                    userLogLines.push(msg);
+                } catch (e) {}
+                return;
+            }
+        }
+
+        function addOutput(text) {
+            try {
+                const s = String(text || '');
+                devLogLines.push(s);
+                if (devLogLines.length > MAX_LOG_LINES) devLogLines = devLogLines.slice(-MAX_LOG_LINES);
+                try {
+                    const s2 = buildDev2Line(s);
+                    if (s2) {
+                        dev2LogLines.push(s2);
+                        if (dev2LogLines.length > MAX_LOG_LINES) dev2LogLines = dev2LogLines.slice(-MAX_LOG_LINES);
+                    }
+                } catch (e) {}
+                addUserEventFromLine(s);
+                renderLogs();
+            } catch (e) {}
+        }
+
+        function buildDev2Line(text) {
+            let s = '';
+            try { s = String(text || ''); } catch (e) { s = ''; }
+            if (!s) return s;
+
+            // Replace vendor / model names with "HEMLO"
+            let sAnon;
+            try {
+                sAnon = s.replace(/(gemini|serper|openai|groq|claude|anthropic|ollama)/gi, 'HEMLO');
+            } catch (e) {
+                sAnon = s;
+            }
+
+            let lower;
+            try { lower = sAnon.toLowerCase(); } catch (e) { lower = sAnon; }
+
+            // Simplify decision dict logs down to action + name
+            if (lower.indexOf('decision:') !== -1) {
+                try {
+                    const m = sAnon.match(/decision:\s*(\{.*\})/i);
+                    const dictPart = m && m[1] ? m[1].trim() : '';
+                    if (dictPart && dictPart[0] === '{' && dictPart[dictPart.length - 1] === '}') {
+                        const actionMatch = dictPart.match(/'action'\s*:\s*'([^']+)'/i);
+                        const nameMatch = dictPart.match(/'name'\s*:\s*'([^']+)'/i);
+                        const action = actionMatch && actionMatch[1] ? actionMatch[1].trim() : '';
+                        const name = nameMatch && nameMatch[1] ? nameMatch[1].trim() : '';
+                        if (action || name) {
+                            let msg = 'decision:';
+                            if (action) msg += ' ' + action;
+                            if (name) msg += ' -> ' + name;
+                            return msg;
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            return sAnon;
+        }
+
+        function runPrompt() {
+            const prompt = (promptInput && promptInput.value ? String(promptInput.value) : '').trim();
+            if (!prompt) return;
+
+            const domMode = domModeSelect ? String(domModeSelect.value || 'gold') : 'gold';
+            let maxItems = null;
+            try {
+                maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+            } catch (e) {
+                maxItems = null;
+            }
+
+            resetLogsForNewRun(prompt);
+            addOutput('→ Executing: ' + prompt);
+            addOutput('');
+            socket.emit('run_prompt', { prompt: prompt, dom_mode: domMode, max_items: maxItems });
+        }
+
+        function handleGoClick() {
+            if (isRunning) {
+                stopAgent();
+            } else {
+                runPrompt();
+            }
+        }
+
+        function sendNewTask() {
+            const prompt = (promptInput && promptInput.value ? String(promptInput.value) : '').trim();
+            if (!prompt) return;
+
+            const domMode = domModeSelect ? String(domModeSelect.value || 'gold') : 'gold';
+            let maxItems = null;
+            try {
+                maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+            } catch (e) {
+                maxItems = null;
+            }
+
+            try {
+                userLogLines.push('Prompt: ' + prompt);
+            } catch (e) {}
+            addOutput('→ New task: ' + prompt);
+            addOutput('');
+            socket.emit('run_prompt', { prompt: prompt, dom_mode: domMode, max_items: maxItems });
+            promptInput.value = '';
+            promptInput.focus();
+        }
+
+        function stopAgent() { socket.emit('stop_agent'); }
+        function pauseAgent() { if (!isRunning || isPaused) return; socket.emit('pause_agent'); }
+        function resumeAgent() {
+            if (!isRunning) return;
+            const prompt = (promptInput && promptInput.value ? String(promptInput.value) : '').trim();
+            const domMode = domModeSelect ? String(domModeSelect.value || 'gold') : 'gold';
+            let maxItems = null;
+            try {
+                maxItems = maxItemsInput && maxItemsInput.value ? parseInt(String(maxItemsInput.value), 10) : null;
+            } catch (e) {
+                maxItems = null;
+            }
+            if (prompt) {
+                socket.emit('resume_agent', { prompt: prompt, dom_mode: domMode, max_items: maxItems });
+                addOutput('→ Resuming with: ' + prompt);
+                addOutput('');
+                promptInput.value = '';
+            } else {
+                socket.emit('resume_agent', { dom_mode: domMode, max_items: maxItems });
+            }
+            promptInput.focus();
+        }
+
+        function resetSession() {
+            const ok = confirm('Reset session? This will stop the agent and reset the browser profile.');
+            if (!ok) return;
+            socket.emit('reset_session');
+        }
+
+        function rememberWorkflow() {
+            if (!isRunning) {
+                addOutput('Remember is only available while the agent is running');
+                return;
+            }
+            socket.emit('save_workflow');
+            addOutput('Remember requested: current steps will be saved as a workflow (if possible).');
+        }
+
+        function approveMoneyAction() {
+            if (!isRunning) {
+                addOutput('Approval is only available while the agent is running');
+                return;
+            }
+            socket.emit('approve_money_action');
+            addOutput('Approval sent for current money action (if any is waiting).');
+        }
+
+        stopBtn.addEventListener('click', stopAgent);
+        pauseBtn.addEventListener('click', pauseAgent);
+        resumeBtn.addEventListener('click', resumeAgent);
+        newTaskBtn.addEventListener('click', sendNewTask);
+        resetBtn.addEventListener('click', resetSession);
+        rememberBtn.addEventListener('click', rememberWorkflow);
+        approveBtn.addEventListener('click', approveMoneyAction);
+
+        goBtn.addEventListener('click', handleGoClick);
+        promptInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                if (isRunning) {
+                    stopAgent();
+                } else {
+                    runPrompt();
+                }
+            }
+        });
+
+        if (logModeDevBtn) {
+            logModeDevBtn.addEventListener('click', () => {
+                setLogMode('dev');
+                try { socket.emit('set_log_mode', { mode: 'dev' }); } catch (e) {}
+            });
+        }
+        if (logModeDev2Btn) {
+            logModeDev2Btn.addEventListener('click', () => {
+                setLogMode('dev2');
+                try { socket.emit('set_log_mode', { mode: 'dev2' }); } catch (e) {}
+            });
+        }
+        if (logModeUserBtn) {
+            logModeUserBtn.addEventListener('click', () => {
+                setLogMode('user');
+                try { socket.emit('set_log_mode', { mode: 'user' }); } catch (e) {}
+            });
+        }
+
+        function setControlsEnabled() {
+            stopBtn.disabled = !isRunning;
+            pauseBtn.disabled = !isRunning || isPaused;
+            resumeBtn.disabled = !isRunning;
+            newTaskBtn.disabled = !isRunning;
+            rememberBtn.disabled = !isRunning;
+            approveBtn.disabled = !isRunning;
+        }
+
+        setControlsEnabled();
+
+        socket.on('status', (data) => {
+            const status = data && data.status ? String(data.status) : '';
+
+            if (status === 'running') {
+                isRunning = true;
+                isPaused = false;
+                updateStatusDot('running', 'Running');
+                goBtn.disabled = false;
+                if (goBtnLabel) {
+                    goBtnLabel.textContent = 'Stop';
+                }
+            } else if (status === 'paused') {
+                isRunning = true;
+                isPaused = true;
+                updateStatusDot('paused', 'Paused');
+                goBtn.disabled = false;
+                if (goBtnLabel) {
+                    goBtnLabel.textContent = 'Stop';
+                }
+            } else if (status === 'completed') {
+                isRunning = false;
+                isPaused = false;
+                updateStatusDot('connected', 'Ready');
+                goBtn.disabled = false;
+                if (goBtnLabel) {
+                    goBtnLabel.textContent = 'Go';
+                }
+                hideLoginOptions();
+                addOutput('✓ Task completed successfully');
+            } else if (status === 'stopped') {
+                isRunning = false;
+                isPaused = false;
+                updateStatusDot('connected', 'Ready');
+                goBtn.disabled = false;
+                if (goBtnLabel) {
+                    goBtnLabel.textContent = 'Go';
+                }
+                hideLoginOptions();
+                addOutput('⚠ Agent stopped by user');
+            } else if (status === 'idle') {
+                isRunning = false;
+                isPaused = false;
+                updateStatusDot('connected', 'Ready');
+                goBtn.disabled = false;
+                if (goBtnLabel) {
+                    goBtnLabel.textContent = 'Go';
+                }
+                hideLoginOptions();
+                if (data && data.message) addOutput(String(data.message));
+            } else if (status === 'error') {
+                isRunning = false;
+                isPaused = false;
+                updateStatusDot('connected', 'Ready');
+                goBtn.disabled = false;
+                if (goBtnLabel) {
+                    goBtnLabel.textContent = 'Go';
+                }
+                hideLoginOptions();
+                addOutput('✗ Error: ' + (data && data.message ? String(data.message) : 'Unknown error'));
+            }
+
+            setControlsEnabled();
+        });
+
+        socket.on('output', (data) => {
+            if (!data) return;
+            addOutput(data.data);
+        });
+
+        socket.on('login_options', (payload) => {
+            if (!payload || !Array.isArray(payload.options)) return;
+            renderLoginOptions(payload.options);
+        });
+
+        function hideLoginOptions() {
+            try {
+                loginOptionsList.innerHTML = '';
+                loginEmailRow.classList.add('hidden');
+            } catch (e) {}
+        }
+
+        function renderLoginOptions(options) {
+            loginOptionsList.innerHTML = '';
+            loginEmailRow.classList.add('hidden');
+            if (!options.length) return;
+
+            setActiveTab('login');
+            openModal();
+
+            options.forEach((opt) => {
+                const provider = (opt && opt.provider ? String(opt.provider) : '').trim();
+                const label = (opt && opt.label ? String(opt.label) : provider).trim();
+                if (!provider) return;
+
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'login-chip';
+                btn.textContent = label || provider;
+                btn.addEventListener('click', () => {
+                    try {
+                        loginEmailRow.dataset.provider = provider;
+                        loginEmailRow.classList.remove('hidden');
+                        loginEmailInput.value = '';
+                        loginPasswordInput.value = '';
+                        loginEmailInput.focus();
+                    } catch (e) {}
+                    socket.emit('submit_login_choice', { provider });
+                    addOutput('Login choice selected: ' + provider);
+                });
+                loginOptionsList.appendChild(btn);
+            });
+        }
+
+        loginSubmitBtn.addEventListener('click', () => {
+            try {
+                const provider = loginEmailRow.dataset.provider || '';
+                const email = (loginEmailInput && loginEmailInput.value ? String(loginEmailInput.value) : '').trim();
+                const password = (loginPasswordInput && loginPasswordInput.value ? String(loginPasswordInput.value) : '').trim();
+                socket.emit('submit_login_choice', { provider, email, password });
+                addOutput('Login credentials submitted for: ' + provider);
+                loginEmailRow.classList.add('hidden');
+            } catch (e) {}
+        });
+
+        function autosize() {
+            try {
+                promptInput.style.height = 'auto';
+                const h = Math.min(promptInput.scrollHeight || 54, 240);
+                promptInput.style.height = h + 'px';
+            } catch (e) {}
+        }
+
+        promptInput.addEventListener('input', autosize);
+        autosize();
+
+        setLogMode('dev');
+        setActiveTab('controls');
+        updateConfigUI();
+    </script>
+</body>
+</html>

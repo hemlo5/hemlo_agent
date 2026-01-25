@@ -1,81 +1,36 @@
 {
-  "ts": "2026-01-20 20:57:20",
-  "goal": "in canva upload an image and edit it by changing its filter to fresco",
-  "url": "https://www.canva.com/ai",
+  "ts": "2026-01-24 00:14:59",
+  "goal": "edit a photo by changing its filter in adobe express",
+  "url": "https://www.adobe.com/express/feature/image/filter",
   "model": "xiaomi/mimo-v2-flash:free",
   "plan": {
-    "site": "canva.com",
+    "site": "adobe.com",
     "steps": [
       {
         "step": 1,
         "action": "click",
-        "target_text": "Create a design",
+        "target_text": "Upload",
         "alternatives": [
-          "Create",
-          "Start a design",
-          "Create new"
+          "Upload your photo",
+          "Upload image",
+          "Browse"
         ],
         "value": null,
-        "notes": "Open design creation modal"
+        "notes": "Start by uploading the photo to edit."
       },
       {
         "step": 2,
         "action": "click",
-        "target_text": "Upload",
+        "target_text": "Browse on your device",
         "alternatives": [
-          "Uploads",
-          "Upload files"
+          "Browse",
+          "Select from device"
         ],
         "value": null,
-        "notes": "Go to uploads tab"
+        "notes": "Select a local image file to upload."
       },
       {
         "step": 3,
-        "action": "click",
-        "target_text": "Upload files",
-        "alternatives": [
-          "Upload",
-          "Add files"
-        ],
-        "value": null,
-        "notes": "Open file picker"
-      },
-      {
-        "step": 4,
-        "action": "type",
-        "target_text": "file input",
-        "alternatives": [
-          "Choose files",
-          "Select files"
-        ],
-        "value": null,
-        "notes": "Select image file from system"
-      },
-      {
-        "step": 5,
-        "action": "click",
-        "target_text": "Use in a new design",
-        "alternatives": [
-          "Use in design",
-          "Add to design"
-        ],
-        "value": null,
-        "notes": "Add uploaded image to canvas"
-      },
-      {
-        "step": 6,
-        "action": "click",
-        "target_text": "Edit image",
-        "alternatives": [
-          "Edit",
-          "Adjust",
-          "Image options"
-        ],
-        "value": null,
-        "notes": "Open image editing panel"
-      },
-      {
-        "step": 7,
         "action": "click",
         "target_text": "Filters",
         "alternatives": [
@@ -83,38 +38,57 @@
           "Effects"
         ],
         "value": null,
-        "notes": "Open filters section"
+        "notes": "Open the filters panel after upload."
       },
       {
-        "step": 8,
+        "step": 4,
         "action": "click",
-        "target_text": "Fresco",
+        "target_text": "Vivid",
         "alternatives": [
-          "Fresco filter",
-          "Fresco effect"
+          "Dramatic",
+          "B&W",
+          "Vintage",
+          "Warm"
         ],
         "value": null,
-        "notes": "Apply fresco filter"
+        "notes": "Choose a specific filter to apply; exact label varies by available options."
+      },
+      {
+        "step": 5,
+        "action": "click",
+        "target_text": "Download",
+        "alternatives": [
+          "Export",
+          "Save",
+          "Download as"
+        ],
+        "value": null,
+        "notes": "Save the edited photo after applying the filter."
       }
     ],
     "candidate_button_texts": [
-      "Create a design",
       "Upload",
-      "Upload files",
-      "Use in a new design",
-      "Edit image",
+      "Browse on your device",
       "Filters",
-      "Fresco"
+      "Download",
+      "Export",
+      "Save"
     ],
     "candidate_field_labels": [
-      "Upload files",
-      "Choose files",
-      "Search filters"
+      "Upload your photo",
+      "Filter",
+      "Effects",
+      "Vivid",
+      "Dramatic",
+      "B&W",
+      "Vintage",
+      "Warm"
     ],
     "success_indicators": [
-      "Fresco filter applied",
-      "Image edited",
-      "Filter changed to Fresco"
+      "Photo uploaded successfully",
+      "Filter applied",
+      "Download started",
+      "Export complete"
     ]
   }
 }
